@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>LaTex-Suit</title>
+
+  <link rel="stylesheet" href="bootstrap3/css/bootstrap.min.css">
+  <link rel="stylesheet" href="bootstrap3/css/bootstrap-theme.min.css">
+  <link rel="stylesheet" href="Font-Awesome/css/font-awesome.min.css">
+  <link rel="stylesheet" href="css/style.css">
+
+</head>
+<body>
+
+<div class="navbar navbar-inverse bg-midnight-blue navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+        <span class="sr-only">Adou Wiki</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="#">Vimwiki</a>
+    </div>
+    <div class="collapse navbar-collapse">
+      <ul class="nav navbar-nav">
+        <li><a href="index.html">首页</a></li>
+        <li><a href="计划.html">计划</a></li>
+        <li><a href="学习计划.html">学习计划</a></li>
+        <li><a href="小小工具.html">小小工具</a></li>
+        <li><a href="娱乐.html">娱乐</a></li>
+        <li><a href="tips.html">tips</a></li>
+        <li><a href="about me.html">关于我</a></li>
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div>
+</div>
+
+<div class="container">
+  <div class="row">
+    <div class="col-md-8 col-md-offset-2 bg-clouds col-lg-8 col-lg-offset-2 col-xs-12 content-block" id="main-content">
+
+      
+<h1 id="toc_1">LaTex-Suit</h1>
+
+
+<h3 id="toc_1.0.1">简单快捷键</h3>
+<p>
+\ll 编译
+\lv 查看
+xelatex 编译
+</p>
+
+
+<h3 id="toc_1.0.2">1、下载插件</h3>
+<p>
+从<a href="http://sourceforge.net/projects/vim-latex/files/下载vim-latex插件。">http://sourceforge.net/projects/vim-latex/files/下载vim-latex插件。</a>
+</p>
+
+
+<h3 id="toc_1.0.3">2、安装插件</h3>
+<p>
+解压下载的压缩包到~/.vim目录。 设置vimrc。详细参见：<a href="http://vim-latex.sourceforge.net/documentation/latex-suite/recommended-settings.html">http://vim-latex.sourceforge.net/documentation/latex-suite/recommended-settings.html</a> 安装help文件。helptags ~/.vim/doc 设置Vim-latex-suite。使用xelatex命令进行文档的编译，利用evince浏览生成的pdf文档。可以通过修改~/.vim/ftplugin/latex-suite/texrc完成这些操作。 #第88到92行，我进行了如下修改,就是让tex总是被编译成pdf
+</p>
+
+<pre>
+if has('macunix')
+TexLet g:Tex_DefaultTargetFormat = 'pdf'
+else
+TexLet g:Tex_DefaultTargetFormat = 'pdf'
+endif
+ 
+#第117行修改,使用xelatex完成 tex -&gt; pdf 的编译
+" ways to generate pdf files. there are soo many...
+" NOTE: pdflatex generates the same output as latex. therefore quickfix is
+"       possible.
+TexLet g:Tex_CompileRule_pdf = 'xelatex -interaction=nonstopmode $*'
+ 
+修改147行,指定用evince程序打开pdf文档
+elseif has('macunix')
+" Let the system pick.  If you want, you can override the choice here.
+TexLet g:Tex_ViewRule_ps = ''
+TexLet g:Tex_ViewRule_pdf = 'evince
+</pre>
+ 
+<h3 id="toc_1.0.4">5.重启vim。</h3>
+<p>
+====================转======================
+1. 初用时需熟记的几个键：Ctrl-J，F5， F7，F9，Shift-F5，Shift-F7，\ll （compile快捷键），\lv（view pdf 快捷键），\ls，Ctrl-X Ctrl-K（根据字典补全） 等。
+</p>
+ 
+<p>
+2. 写出\cite{ 后按F9无反应，没有给出交叉引用，原因在于vim中的 Python 接口对 latex-suite 来说有些问题，将其禁用即可。只需要将
+</p>
+<blockquote>
+~/.vim/ftplugin/latex-suite/texrc
+中默认的打开~/.vim/ftplugin/latex-suite/texrc，将 TexLet
+g:Tex_UsePython = 1
+TexLet g:Tex_UsePython = 0
+就行了
+</blockquote>
+
+<p>
+3. 为了能够正向搜索，应设定好参数并使用 \ll 编译，然而当工作目录下有 makefile 时， \ll 并非执行设定的编译命令，而是执行makefile，于 是导致无法正向搜索，郁闷了半天。其实只要禁用makefile即可，同样~/.vim/ftplugin/latex-suite/texrc中 TexLet g:Tex_UseMakefile = 0
+</p>
+ 
+<p>
+4. 正向搜索设置，在 ~/.vim/ftplugin/tex.vim 中指定
+let g:Tex_CompileRule_dvi='latex -src-specials -interaction=nonstopmode $*'
+说明上说还要设定 :TCTarget dvi ，可是没有设也行，反而把这句话写在上面文件中时运行vi会提示错误，但是在vi中执行该命令却可以，反正能用就不管它了。设定好了以后需重新编译tex文件（用\ll），然后\ls可以搜索并预览。
+</p>
+ 
+<p>
+5. 反向搜索，参考了
+<a href="http://bbs.ctex.org/viewthread.php?tid=39072&amp;extra=&amp;page=1">http://bbs.ctex.org/viewthread.php?tid=39072&amp;extra=&amp;page=1</a> 注意反向搜索仅支持gvim，且gvim要以远程模式启动：
+gvim --servername latex-suite --remote-silent filename.tex
+启动后 为了能够使用反向搜索，必须让 xdvi 知道当前编辑器是工作在 remote 模式下的 VIM，以便在用户搜索的时候调用编辑器显示查找结果。在你的 ~/.vimrc 或~/.vim/ftplugin/tex.vim中添加以下内容：
+let g:Tex_ViewRule_dvi="xdvi -editor 'gvim --servername latex-suite --remote-silent'"
+这样便可\ll编译后\ls查看了，反向搜索时记住要按着Ctrl键双击某处 （似乎左键单击即可），就会跳到tex源文件的相应地方。
+</p>
+ 
+<p>
+6. 为了方便，自己也做了一些设置，包括快捷键，在 ~/.vim/ftplugin/tex.vim 中：
+map    &lt;F4&gt;   &lt;ESC&gt;:q&lt;CR&gt;      "F4关闭窗口(buffer) 
+map    &lt;F2&gt;   &lt;ESC&gt;:w&lt;CR&gt;\ll   "F2保存并编译
+imap   &lt;F2&gt;   &lt;ESC&gt;:w&lt;CR&gt;\ll
+map    &lt;F3&gt;   &lt;ESC&gt;\lv         "F3查看
+imap   &lt;F3&gt;   &lt;ESC&gt;\lv
+nmap   &lt;Tab&gt;  &lt;C-j&gt;            "用Tab键来代替Ctrl-j跳转，方便多了
+imap   &lt;Tab&gt;  &lt;C-j&gt;
+vmap   &lt;Tab&gt;  &lt;C-j&gt;
+set keywordprg=:help         
+</p>
+<blockquote>
+"按K键查找光标处单词的帮助，默认是man
+</blockquote>
+<p>
+cmap  xxx   !make                
+set    iskeyword+=.,_ 
+</p>
+<blockquote>
+"便于fig.xx，prl101_12345等形式的搜索补全，否则默认情况下不把fig.xx当成一个词，而是当成fig和xx两个次，中间的“.”被当做词的分隔符了。
+</blockquote>
+
+<p>
+7. 其实只要 latex -src-specials -interaction=nonstopmode xxx.tex 编译出的dvi文件，就已经包含了正向与反向搜索的信息，就可以正向或反向搜索，如果是用xdvi打开的话，按Ctrl左键单击便可反向搜索，只不过xdvi默认弹出的是 xterm -e vi 的窗口，其实是可以自己指定编辑器的，比如 xdvi -editor gedit 照样反向搜索，至于上面所加的gvim的参数只是保证不是每次反向搜索都要打开一个gvim窗口而已。
+</p>
+
+<p>
+8. 临时取消快捷键定义，比如你想输入双引号，可是一打出"就自动变成``，那么要怎么禁止自动替换，直接输出"呢？ 记住 &lt;Ctrl-v&gt; 即可！ &lt;Ctrl-v&gt;" 得到 " SS&lt;Ctrl-v&gt;S 得到 SSS ~&lt;Ctrl-v&gt;~ 得到 ~~
+</p>
+
+      
+      <br>
+      <div class="pull-right">
+        <!-- JiaThis Button BEGIN -->
+        <div class="jiathis_style_24x24">
+          <a class="jiathis_button_qzone"></a>
+          <a class="jiathis_button_tsina"></a>
+          <a class="jiathis_button_weixin"></a>
+          <a class="jiathis_button_renren"></a>
+          <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jtico jtico_jiathis" target="_blank"></a>
+        </div>
+        <script type="text/javascript" src="http://v3.jiathis.com/code/jia.js" charset="utf-8"></script>
+        <!-- JiaThis Button END -->
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-8 col-md-offset-2 bg-clouds col-lg-8 col-lg-offset-2 col-xs-12 content-block">
+
+      <!-- Duoshuo Comment BEGIN -->
+      <div class="ds-thread"></div>
+      <script type="text/javascript">
+      var duoshuoQuery = {short_name:"adousj"};
+        (function() {
+          var ds = document.createElement('script');
+          ds.type = 'text/javascript';ds.async = true;
+          ds.src = 'http://static.duoshuo.com/embed.js';
+          ds.charset = 'UTF-8';
+          (document.getElementsByTagName('head')[0] 
+          || document.getElementsByTagName('body')[0]).appendChild(ds);
+        })();
+        </script>
+      <!-- Duoshuo Comment END -->
+
+    </div>
+  </div>
+</div>
+
+<script type="text/javascript" src="js/jquery-1.9.1.min.js"></script>
+<script type="text/javascript" src="bootstrap3/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="js/blog.js"></script>
+
+</body>
+</html>

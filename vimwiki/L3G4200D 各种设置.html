@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>L3G4200D 各种设置</title>
+
+  <link rel="stylesheet" href="bootstrap3/css/bootstrap.min.css">
+  <link rel="stylesheet" href="bootstrap3/css/bootstrap-theme.min.css">
+  <link rel="stylesheet" href="Font-Awesome/css/font-awesome.min.css">
+  <link rel="stylesheet" href="css/style.css">
+
+</head>
+<body>
+
+<div class="navbar navbar-inverse bg-midnight-blue navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+        <span class="sr-only">Adou Wiki</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="#">Vimwiki</a>
+    </div>
+    <div class="collapse navbar-collapse">
+      <ul class="nav navbar-nav">
+        <li><a href="index.html">首页</a></li>
+        <li><a href="计划.html">计划</a></li>
+        <li><a href="学习计划.html">学习计划</a></li>
+        <li><a href="小小工具.html">小小工具</a></li>
+        <li><a href="娱乐.html">娱乐</a></li>
+        <li><a href="tips.html">tips</a></li>
+        <li><a href="about me.html">关于我</a></li>
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div>
+</div>
+
+<div class="container">
+  <div class="row">
+    <div class="col-md-8 col-md-offset-2 bg-clouds col-lg-8 col-lg-offset-2 col-xs-12 content-block" id="main-content">
+
+      
+<h1 id="toc_1">L3G4200D 各种设置</h1>
+
+
+<h2 id="toc_1.1">5</h2>
+<p>
+对了，其实不用求补码的，直接乘以0.00875就行了，我现在是这样，先取出数据，合并成16位的int型，判断其正负，正的打印“+”，负的打印“-”，接着求绝对值，然后乘以0.00875，悲剧，看来我C语言基础很不好
+</p>
+
+
+<h2 id="toc_1.2">4</h2>
+
+<p>
+以前写的
+</p>
+
+<p>
+  I2C_Write(gyro_address, 0x21, 0x06); //高通滤波器设置        ,1Hz  
+  I2C_Write(gyro_address, 0x23, 0xD0); //BDU=1(推荐),        BLE=1,正负500dps量程
+  I2C_Write(gyro_address, 0x24, 0x12); //滤波器使能,高低通都有
+  I2C_Write(gyro_address, 0x20, 0xFF); //800Hz更新速率，110hz cut-off
+</p>
+
+<hr />
+<p>
+if( gyro_status&amp;0x08==0x08)
+{
+</p>
+<blockquote>
+GYRO_Data[0] = I2C_Read(gyro_address, 0x28);//read OUT_X_L_A (MSB)
+//Delay(1);
+GYRO_Data[1] = I2C_Read(gyro_address, 0x29);//read OUT_X_H_A (LSB)
+//Delay(1);
+GYRO_Data[2] = I2C_Read(gyro_address, 0x2A);//read OUT_Y_L_A (MSB)
+//Delay(1);
+GYRO_Data[3] = I2C_Read(gyro_address, 0x2B);//read OUT_Y_H_A (LSB)
+//Delay(1);
+GYRO_Data[4] = I2C_Read(gyro_address, 0x2C);//read OUT_Z_L_A (MSB)
+//Delay(1);
+GYRO_Data[5] = I2C_Read(gyro_address, 0x2D);//read OUT_Z_H_A (LSB)
+//=======================================
+</blockquote>
+<blockquote>
+Gx = ((GYRO_Data[0] &lt;&lt; 8) | GYRO_Data[1]);
+Gy = ((GYRO_Data[2] &lt;&lt; 8) | GYRO_Data[3]);
+Gz = ((GYRO_Data[4] &lt;&lt; 8) | GYRO_Data[5]);
+</blockquote>
+<blockquote>
+Gx-=4;//陀螺采样值偏移量修正，通过实验方法获得修正量，保证时漂最小化
+Gy+=5;
+Gz+=27;
+</blockquote>
+<blockquote>
+//if(Gx&gt;10||Gx&lt;-10)
+Gx_ave=(Gx_new+Gx)/2;
+// if(Gy&gt;10||Gy&lt;-10)
+Gy_ave=(Gy_new+Gy)/2;
+// if(Gz&gt;10||Gz&lt;-10)
+Gz_ave=(Gz_new+Gz)/2;
+</blockquote>
+<blockquote>
+/*
+Gx_ave=Gx_ave*3/4+Gx/4;
+Gy_ave=Gy_ave*3/4+Gy/4;
+Gz_ave=Gz_ave*3/4+Gz/4;
+*/
+</blockquote>
+<blockquote>
+Gx_new=Gx;
+Gy_new=Gy;
+Gz_new=Gz;
+</blockquote>
+<blockquote>
+//if(Gy_ave&gt;40||Gy_ave&lt;-40) 
+roll2_dt=(float)Gy_ave*17.5*0.95*2.5/1000.0;         //17.5是灵敏度，0.95是灵敏度修正系数（实验得到），2.5是采样时间间隔
+//if(Gx_ave&gt;40||Gx_ave&lt;-40) 
+pitch2_dt=(float)Gx_ave*17.5*0.95*2.5/1000.0;
+//if(Gz_ave&gt;40||Gz_ave&lt;-40) 
+yaw2_dt=(float)Gz_ave*17.5*2.5/1000.0;
+</blockquote>
+<blockquote>
+roll2+=roll2_dt/1000;
+pitch2+=pitch2_dt/1000;
+yaw2+=yaw2_dt/1000;
+</blockquote>
+
+
+<h2 id="toc_1.3">3</h2>
+<pre>
+CS_GYROSCOPE;
+SPISendnWait(0x8F);
+if(SPIRecenWait() != 0xD3)
+{
+    return 1;
+}
+US_GYROSCOPE;
+CS_GYROSCOPE;
+SPISendnWait(0x60);//从0x20开始连续写数据
+SPISendnWait(0x00);//20 POWER-Down
+SPISendnWait(0x00);//21 高通滤波器
+SPISendnWait(0x08);//22 INT推拉 INT2:DRDY
+SPISendnWait(0x90);//23 BDU模式 小端 500dps;
+SPISendnWait(0x02);//24 FIFO禁用 低通滤波器能使 高通关闭
+US_GYROSCOPE;
+CS_GYROSCOPE;
+SPISendnWait(0x2E);
+SPISendnWait(0x00);//2E bypass
+US_GYROSCOPE;
+CS_GYROSCOPE;
+SPISendnWait(0x20);
+SPISendnWait(0xEE);//20 设置速率带宽 800Hz 带宽50 三轴使能
+US_GYROSCOPE;
+</pre>
+<p>
+这是我的初始化...仅供参考(注释有可能不是对应的)...我也走了不少弯路...希望对大家有帮助~
+</p>
+
+
+<h2 id="toc_1.4">2</h2>
+<p>
+你的通频带设置有问题，参考如下：        
+</p>
+
+<p>
+L3G4200_Write(CTRL_REG3, 0x08);//Data Ready on DRDY/INT2
+L3G4200_Write(CTRL_REG4, 0x00);//Data Continous Updata, 250dps
+L3G4200_Write(REFERENCE, 0x00);//Write Reference
+L3G4200_Write(CTRL_REG5, 0x10);//HPF enable,
+</p>
+        
+<p>
+L3G4200_Write(CTRL_REG2, 0x29);//HPF Cut-off 0.1Hz
+L3G4200_Write(CTRL_REG1, 0xCF);//LPF Cut-Off 110Hz
+</p>
+
+
+<h2 id="toc_1.5">1</h2>
+<p>
+参数如下
+</p>
+<pre>
+twi_write_8(CTRL_REG1, 0x0f);        
+twi_write_8(CTRL_REG2, 0x00);
+twi_write_8(CTRL_REG3, 0x08);        
+twi_write_8(CTRL_REG4, 0x00);
+twi_write_8(CTRL_REG5, 0x00);        
+twi_write_8(0x25, 0);
+</pre>
+
+      
+      <br>
+      <div class="pull-right">
+        <!-- JiaThis Button BEGIN -->
+        <div class="jiathis_style_24x24">
+          <a class="jiathis_button_qzone"></a>
+          <a class="jiathis_button_tsina"></a>
+          <a class="jiathis_button_weixin"></a>
+          <a class="jiathis_button_renren"></a>
+          <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jtico jtico_jiathis" target="_blank"></a>
+        </div>
+        <script type="text/javascript" src="http://v3.jiathis.com/code/jia.js" charset="utf-8"></script>
+        <!-- JiaThis Button END -->
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-8 col-md-offset-2 bg-clouds col-lg-8 col-lg-offset-2 col-xs-12 content-block">
+
+      <!-- Duoshuo Comment BEGIN -->
+      <div class="ds-thread"></div>
+      <script type="text/javascript">
+      var duoshuoQuery = {short_name:"adousj"};
+        (function() {
+          var ds = document.createElement('script');
+          ds.type = 'text/javascript';ds.async = true;
+          ds.src = 'http://static.duoshuo.com/embed.js';
+          ds.charset = 'UTF-8';
+          (document.getElementsByTagName('head')[0] 
+          || document.getElementsByTagName('body')[0]).appendChild(ds);
+        })();
+        </script>
+      <!-- Duoshuo Comment END -->
+
+    </div>
+  </div>
+</div>
+
+<script type="text/javascript" src="js/jquery-1.9.1.min.js"></script>
+<script type="text/javascript" src="bootstrap3/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="js/blog.js"></script>
+
+</body>
+</html>

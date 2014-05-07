@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>joosy</title>
+
+  <link rel="stylesheet" href="bootstrap3/css/bootstrap.min.css">
+  <link rel="stylesheet" href="bootstrap3/css/bootstrap-theme.min.css">
+  <link rel="stylesheet" href="Font-Awesome/css/font-awesome.min.css">
+  <link rel="stylesheet" href="css/style.css">
+
+</head>
+<body>
+
+<div class="navbar navbar-inverse bg-midnight-blue navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+        <span class="sr-only">Adou Wiki</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="#">Vimwiki</a>
+    </div>
+    <div class="collapse navbar-collapse">
+      <ul class="nav navbar-nav">
+        <li><a href="index.html">首页</a></li>
+        <li><a href="计划.html">计划</a></li>
+        <li><a href="学习计划.html">学习计划</a></li>
+        <li><a href="小小工具.html">小小工具</a></li>
+        <li><a href="娱乐.html">娱乐</a></li>
+        <li><a href="tips.html">tips</a></li>
+        <li><a href="about me.html">关于我</a></li>
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div>
+</div>
+
+<div class="container">
+  <div class="row">
+    <div class="col-md-8 col-md-offset-2 bg-clouds col-lg-8 col-lg-offset-2 col-xs-12 content-block" id="main-content">
+
+      
+<h1 id="toc_1">joosy</h1>
+
+
+<p>
+joosy.ws
+</p>
+
+<p>
+front end framework
+</p>
+
+<p>
+rails g joosy:application blog
+rails g joosy:preloader blog
+</p>
+
+
+<p>
+class @Comment extends Joosy.Resource.REST
+  @entity 'commen'
+  @source '/foo'
+  @promaryKey 'id'
+  @collection CommentsCollection
+</p>
+
+<p>
+class @Post extends Joosy.Resource.REST
+  @beforeLoad (data)-&gt;
+</p>
+<blockquote>
+data.date = new Date(data.date)
+data
+</blockquote>
+
+
+<p>
+rails g joosy:page blog/posts/index
+rails g joosy:page blog/posts/show
+rails g joosy:page blog/posts/edit
+rails g joosy:page blog/posts/new
+</p>
+
+<p>
+@beforeLoad -&gt;
+</p>
+
+<p>
+@navigate('/)
+</p>
+
+<p>
+Joosy.Router.map
+  404 : (path) -&gt; alter "Page '#{path}' was not found :("
+  '/' : -&gt; @navigate '/posts'
+</p>
+  
+<p>
+  '/posts'
+</p>
+<blockquote>
+'/' : Posts.IndexPage
+'/new': Posts.NewPage
+'/:id/edit': Posts.EditPage
+'/:id': Posts.ShowPage
+</blockquote>
+
+
+<p>
+templates/pages/posts/_form.js.haml
+%form.well
+  %input.span10{:name =&gt; 'post[title]', :placeholder =&gt; 'Title'}
+  %textarea.span10{:name =&gt; 'post[body]', :placeholder =&gt; 'Body'}
+  %input.btn.btn-success.span4{:type =&gt; 'submit', :value =&gt; 'Save'}
+</p>
+  
+
+<p>
+raisl g joosy:widget blog/title_editor
+</p>
+
+
+
+
+<p>
+class @TitleEditorWidget extends Joosy.Widget
+  @view 'title_editor'
+</p>
+  
+<p>
+  constructor: (post) -&gt;
+</p>
+<blockquote>
+@data = post: post
+</blockquote>
+    
+<p>
+  elements:
+</p>
+<blockquote>
+'titlePane': 'h1'
+'titleForm': 'form'
+</blockquote>
+
+<p>
+  events:
+</p>
+<blockquote>
+'click $titlePane': (element)-&gt;
+@titlePane.hide()
+@titleForm.show()
+</blockquote>
+
+<p>
+  @afterLoad -&gt;
+</p>
+<blockquote>
+Joosy.Form.attach @titleForm
+resource: @data.post
+success: =&gt;
+@data.post('title', @titleForm.find('input[type=text]').val())
+@titleForm.hide()
+@titlePane.show()
+</blockquote>
+
+
+
+<h2 id="toc_1.1">helpers</h2>
+<p>
+!= @tag 'div', {id: 'foo'}, 'content'
+</p>
+
+<p>
+= @renderWrapped '_partial', -&gt;
+  %span Inner
+</p>
+
+<p>
+!= @render 'layouts/_menu'
+!= @yield
+</p>
+
+<p>
+!= @n12br 'foo\nbar'
+</p>
+
+
+<p>
+!= @formFor resource, {class: 'foo'}, (f) -&gt;
+  != f.label 'field', {class: 'foo'}, 'inner text'
+  != f.radioButton 'field', 'value', {class: 'foo'}
+  != f.textArea 'field', {class: 'foo'}
+  != f.checkBox 'field', {class: 'foo'}
+  != f.textField 'field', {class: 'foo'}
+  != f.fileField 'field', {class: 'foo'}
+  != f.hiddenField 'field', {class: 'foo'}
+  != f.passwordField 'field', {class: 'foo'}
+</p>
+
+      
+      <br>
+      <div class="pull-right">
+        <!-- JiaThis Button BEGIN -->
+        <div class="jiathis_style_24x24">
+          <a class="jiathis_button_qzone"></a>
+          <a class="jiathis_button_tsina"></a>
+          <a class="jiathis_button_weixin"></a>
+          <a class="jiathis_button_renren"></a>
+          <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jtico jtico_jiathis" target="_blank"></a>
+        </div>
+        <script type="text/javascript" src="http://v3.jiathis.com/code/jia.js" charset="utf-8"></script>
+        <!-- JiaThis Button END -->
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-8 col-md-offset-2 bg-clouds col-lg-8 col-lg-offset-2 col-xs-12 content-block">
+
+      <!-- Duoshuo Comment BEGIN -->
+      <div class="ds-thread"></div>
+      <script type="text/javascript">
+      var duoshuoQuery = {short_name:"adousj"};
+        (function() {
+          var ds = document.createElement('script');
+          ds.type = 'text/javascript';ds.async = true;
+          ds.src = 'http://static.duoshuo.com/embed.js';
+          ds.charset = 'UTF-8';
+          (document.getElementsByTagName('head')[0] 
+          || document.getElementsByTagName('body')[0]).appendChild(ds);
+        })();
+        </script>
+      <!-- Duoshuo Comment END -->
+
+    </div>
+  </div>
+</div>
+
+<script type="text/javascript" src="js/jquery-1.9.1.min.js"></script>
+<script type="text/javascript" src="bootstrap3/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="js/blog.js"></script>
+
+</body>
+</html>

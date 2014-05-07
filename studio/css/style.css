@@ -1,0 +1,60 @@
+body {
+  border: 0;
+  padding: 0;
+  margin: 0;
+  background-color: #67b6d6;
+}
+
+.content {
+}
+
+.brand {
+  margin: 20px 50px;
+  font-size: 36pt;
+  font-style: bold;
+}
+
+#flash {
+  margin: 0 auto;
+  z-index: 0 !important;
+}
+
+#users {
+  float: right;
+  z-index: 9999 !important;
+  position: relative;
+}
+
+#users .users {
+  list-style: none;
+}
+
+.users .user {
+  /*width: 300px;*/
+  background-color: #7d8778;
+  height: 100px;
+  margin-top: 10px;
+}
+
+.user .img {
+  width: 80px;
+  float: right;
+  overflow: hidden;
+  /*display: inline;*/
+  margin-right: 10px;
+}
+
+.user .info {
+  width: 200px;
+  float: right;
+  line-height: 12px;
+  text-align: left;
+  /*display: inline;*/
+  overflow: hidden;
+  white-space:nowrap;  
+}
+
+.user .info .name {
+  font-size: 14pt;
+  font-weight: bolder;
+}

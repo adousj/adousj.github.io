@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>编译 OpenCV</title>
+
+  <link rel="stylesheet" href="bootstrap3/css/bootstrap.min.css">
+  <link rel="stylesheet" href="bootstrap3/css/bootstrap-theme.min.css">
+  <link rel="stylesheet" href="Font-Awesome/css/font-awesome.min.css">
+  <link rel="stylesheet" href="css/style.css">
+
+</head>
+<body>
+
+<div class="navbar navbar-inverse bg-midnight-blue navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+        <span class="sr-only">Adou Wiki</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="#">Vimwiki</a>
+    </div>
+    <div class="collapse navbar-collapse">
+      <ul class="nav navbar-nav">
+        <li><a href="index.html">首页</a></li>
+        <li><a href="计划.html">计划</a></li>
+        <li><a href="学习计划.html">学习计划</a></li>
+        <li><a href="小小工具.html">小小工具</a></li>
+        <li><a href="娱乐.html">娱乐</a></li>
+        <li><a href="tips.html">tips</a></li>
+        <li><a href="about me.html">关于我</a></li>
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div>
+</div>
+
+<div class="container">
+  <div class="row">
+    <div class="col-md-8 col-md-offset-2 bg-clouds col-lg-8 col-lg-offset-2 col-xs-12 content-block" id="main-content">
+
+      
+<h1 id="toc_1">编译 OpenCV</h1>
+
+
+<p>
+安装opencv方法有简单有容易的，看你喜欢那种。
+</p>
+
+<p>
+1.  最容易的，不过难以跟上时代步伐。
+看看这篇（<a href="http://blog.csdn.net/moc062066/article/details/6544234），或者这篇，有点过时但是很实用，点这里。">http://blog.csdn.net/moc062066/article/details/6544234），或者这篇，有点过时但是很实用，点这里。</a>
+</p>
+
+<p>
+缺点：你只能选择官网已经编译好好的版本（例如opencv2.1），如果你这时候想要用到opencv2.2或者opencv2.3，那这种方法就无能为力了。优点是：方便、快捷、不需要理会太多东西。
+</p>
+
+<p>
+2.  比较麻烦，下载源代码，编译，安装。
+2.1安装前的准备，安装一下必须的东西。
+</p>
+<blockquote>
+First, you need to install many dependencies, such as support for reading and writing image files, drawing on the screen, some needed tools, etc… This step is very easy, you only need to write the following command in the Terminal
+</blockquote>
+<blockquote>
+在终端输入下如内容，复制粘贴就行了：
+</blockquote>
+
+<p>
+sudo apt-get install build-essential libgtk2.0-dev libjpeg62-dev libtiff4-dev libjasper-dev libopenexr-dev cmake python-dev python-numpy libtbb-dev libeigen2-dev yasm libfaac-dev libopencore-amrnb-dev libopencore-amrwb-dev libtheora-dev libvorbis-dev libxvidcore-dev
+</p>
+
+<p>
+2.2  安装ffmpeg
+</p>
+<blockquote>
+注意：不安装ffmpeg的话，很多视频文件肯能都是打不开的。下载ffmpeg，地址
+</blockquote>
+
+<p>
+<a href="http://ffmpeg.org/releases/ffmpeg-0.7-rc1.tar.gz">http://ffmpeg.org/releases/ffmpeg-0.7-rc1.tar.gz</a>
+（1）解压
+（2）三步走，./configure  -&gt; make -&gt; sudo make install
+</p>
+<blockquote>
+提示：  ./configure 的参数如下，也就用
+</blockquote>
+<p>
+./configure --enable-gpl --enable-version3 --enable-nonfree --enable-postproc --enable-libfaac --enable-libopencore-amrnb --enable-libopencore-amrwb --enable-libtheora --enable-libvorbis --enable-libxvid --enable-x11grab --enable-swscale --enable-shared
+</p>
+<blockquote>
+代替./configure
+</blockquote>
+<blockquote>
+然后，make，接着sudo make install
+</blockquote>
+
+<p>
+2.3 安装opencv2.2
+</p>
+<blockquote>
+下载opencv2.2的源代码，<a href="http://downloads.sourceforge.net/project/opencvlibrary/opencv-unix/2.2/OpenCV-2.2.0.tar.bz2">http://downloads.sourceforge.net/project/opencvlibrary/opencv-unix/2.2/OpenCV-2.2.0.tar.bz2</a>
+</blockquote>
+
+<p>
+（1）解压
+（2）安装cmake，安装cmake的方法又很多，这里直接介绍最简单的。
+why cmake？自己google去。
+</p>
+
+<p>
+接着
+</p>
+
+<p>
+（3）一般来说，编译安装都是三步走（./configure  -&gt; make -&gt; sudo make install），但是opencv2.2是没有./configure 的，所以要用cmake处理一下opencv2.2的源代码。
+</p>
+
+<p>
+在终端输入：
+</p>
+
+<p>
+打开一个如下图所示的界面，
+</p>
+
+<p>
+然后，在选择源文件所在的文件夹及cmake以后的文件存在何处，如下图
+</p>
+
+<p>
+点击，，直到不再是灰色，可以按下。按下，等一下几秒钟就可以关闭cmake的GUI界面了。在终端中cd进入cmake以后的文件夹（本文是OpenCV-2.2.0_new），
+</p>
+
+<p>
+如果在编译的过程中报错，可以参考这里，<a href="http://blog.csdn.net/moc062066/article/details/6616902">http://blog.csdn.net/moc062066/article/details/6616902</a>  。
+</p>
+
+<p>
+make完以后，就sudo make install 。到此，opencv2.2的安装是好了，但是还要配置一下。
+</p>
+
+<p>
+2.4 配置opencv2.2
+终端中输入以下这行命令：
+sudo gedit /etc/ld.so.conf.d/opencv.conf 
+打开的文档中添加 下面这一行代码
+/usr/local/lib 
+效果如下图。保存关闭文档。紧接着，终端输入 
+sudo ldconfig 
+打开另外一个文件，终端中输入以下这行代码：
+sudo gedit /etc/bash.bashrc
+在该文档的最后添加以下这两行：
+PKG_CONFIG_PATH=$PKG_CONFIG_PATH:/usr/local/lib/pkgconfig
+export PKG_CONFIG_PATH
+保存，关闭该文档。
+</p>
+
+<p>
+2.5 测试sample文件。
+cd ~/OpenCV-2.2.0/samples/c  #cd 进入OpenCV-2.2.0是最开始的源代码，不是cmake以后的！！
+chmod +x build_all.sh
+./build_all.sh
+以上三步是连续执行的。每一个人把OpenCV-2.2.0放在不同的位置，根据自己的具体情况来定。
+接着，终端输入下面这行命令
+./facedetect --cascade="/usr/local/share/opencv/haarcascades/haarcascade_frontalface_alt.xml" --scale=1.5 lena.jpg
+</p>
+
+      
+      <br>
+      <div class="pull-right">
+        <!-- JiaThis Button BEGIN -->
+        <div class="jiathis_style_24x24">
+          <a class="jiathis_button_qzone"></a>
+          <a class="jiathis_button_tsina"></a>
+          <a class="jiathis_button_weixin"></a>
+          <a class="jiathis_button_renren"></a>
+          <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jtico jtico_jiathis" target="_blank"></a>
+        </div>
+        <script type="text/javascript" src="http://v3.jiathis.com/code/jia.js" charset="utf-8"></script>
+        <!-- JiaThis Button END -->
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-8 col-md-offset-2 bg-clouds col-lg-8 col-lg-offset-2 col-xs-12 content-block">
+
+      <!-- Duoshuo Comment BEGIN -->
+      <div class="ds-thread"></div>
+      <script type="text/javascript">
+      var duoshuoQuery = {short_name:"adousj"};
+        (function() {
+          var ds = document.createElement('script');
+          ds.type = 'text/javascript';ds.async = true;
+          ds.src = 'http://static.duoshuo.com/embed.js';
+          ds.charset = 'UTF-8';
+          (document.getElementsByTagName('head')[0] 
+          || document.getElementsByTagName('body')[0]).appendChild(ds);
+        })();
+        </script>
+      <!-- Duoshuo Comment END -->
+
+    </div>
+  </div>
+</div>
+
+<script type="text/javascript" src="js/jquery-1.9.1.min.js"></script>
+<script type="text/javascript" src="bootstrap3/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="js/blog.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>电路板</title>
+
+  <link rel="stylesheet" href="bootstrap3/css/bootstrap.min.css">
+  <link rel="stylesheet" href="bootstrap3/css/bootstrap-theme.min.css">
+  <link rel="stylesheet" href="Font-Awesome/css/font-awesome.min.css">
+  <link rel="stylesheet" href="css/style.css">
+
+</head>
+<body>
+
+<div class="navbar navbar-inverse bg-midnight-blue navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+        <span class="sr-only">Adou Wiki</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="#">Vimwiki</a>
+    </div>
+    <div class="collapse navbar-collapse">
+      <ul class="nav navbar-nav">
+        <li><a href="index.html">首页</a></li>
+        <li><a href="计划.html">计划</a></li>
+        <li><a href="学习计划.html">学习计划</a></li>
+        <li><a href="小小工具.html">小小工具</a></li>
+        <li><a href="娱乐.html">娱乐</a></li>
+        <li><a href="tips.html">tips</a></li>
+        <li><a href="about me.html">关于我</a></li>
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div>
+</div>
+
+<div class="container">
+  <div class="row">
+    <div class="col-md-8 col-md-offset-2 bg-clouds col-lg-8 col-lg-offset-2 col-xs-12 content-block" id="main-content">
+
+      
+<h1 id="toc_1">电路板</h1>
+
+
+<h2 id="toc_1.1">充电</h2>
+<p>
+充电器已经能够使用了。
+</p>
+
+<p>
+充电电流与Rprog电阻大小关系 
+</p>
+<blockquote>
+500mA   1.6k 
+400mA   2k 
+300mA   3k 
+200mA   5k 
+100mA   10k 
+50mA    20k
+</blockquote>
+
+<p>
+模块指示灯信息：
+状态            红灯CHRG    绿灯STDBY
+充电状态            亮      灭
+</p>
+
+<p>
+充电完成            灭      亮
+</p>
+
+<p>
+电源欠压电池反接    灭      灭
+</p>
+
+<p>
+无电池              闪烁    亮
+</p>
+
+<h2 id="toc_1.2">已画stm32电路图</h2>
+
+<h3 id="toc_1.2.1">3号是最初的板子,可用</h3>
+<p>
+测试最初板子：芯片没有问题，稍有发热，但是仍然能够uart发数据
+</p>
+<blockquote>
+uart和led测试都通过，连续运行10分钟都没问题，还是发热有点大。
+电路确实有接近短路的地方，用手指按在板子后面就有可能使芯片停止运行. 
+</blockquote>
+        
+<h2 id="toc_1.3">ADXL345 I2C</h2>
+<p>
+注意：
+a. cs_n必须上拉至VDD以启动I2C总线模式
+b．SDA和SCL需上拉电阻，（2.2KΩ-400Kbitps，10KΩ—100kbitps）
+c．SDA为双向通信端口，故在FPGA的IO配置时，需将其配置为inout类型，在SOPC中SDA信号线需设置为bidirectional（tri-state）ports。
+d．ALT_ADDRESS的接法对应的ADXL345的设备从地址不一样，具体为：
+若ALT_ADDRESS = 1，ADXL345_slave_addr=0x1D;
+相应的I2C第一字节：read-——0x3B，write——0x3A
+若ALT_ADDRESS = 0，ADXL345_slave_addr=0x53；
+相应的I2C第一字节：read——0xA7，write——0xA6
+</p>
+
+
+<h3 id="toc_1.3.1">i2c 失败</h3>
+<p>
+测试 i2c 初始化函数 i2cInit() 无法成功 , 最后一句总是失败 。
+知道原因了：mlgb，lm3s618 根本就没有 i2c
+</p>
+
+<p>
+TRST 不用上拉电阻 。
+</p>
+    
+<p>
+新电路板电源改为10uf胆电容，确实有用 。
+</p>
+
+
+<h3 id="toc_1.3.2">新电路板问题</h3>
+<p>
+nrf2401 的 IRQ 脚没连接上 ， 对应的是 lm3s811 的 INT1 。
+已收到新电路板 ， 做出了一个新的 ， 焊接了之前认为损坏的芯片 ，
+首次连接能够下载 ， 但是还没下载完就失败 。 之后再也连接不上了 。
+芯片下面的电容有发热
+ht7333封转可以更小
+可能 /TRST 需要上拉电阻
+</p>
+<blockquote>
+不用上拉电阻也是可以的
+</blockquote>
+<p>
+这可是真的错误了：
+</p>
+<blockquote>
+L3G4200D 的 cs 引脚应该连接到 VDD ， 因为使用的是 i2c 。
+</blockquote>
+<p>
+mini USB 封装大了
+</p>
+
+<h3 id="toc_1.3.3">旧电路板问题：</h3>
+<blockquote>
+封装 -- 陀螺仪 、 加速度 、 插针孔太小
+电池 ， 电机孔
+</blockquote>
+
+<h3 id="toc_1.3.4">Jlink 2脚输出，最好不要和1脚连接</h3>
+<p>
+我已经证明，只用四个引脚 vcc gnd  swclk  swctl ，确实能够调试。
+</p>
+
+      
+      <br>
+      <div class="pull-right">
+        <!-- JiaThis Button BEGIN -->
+        <div class="jiathis_style_24x24">
+          <a class="jiathis_button_qzone"></a>
+          <a class="jiathis_button_tsina"></a>
+          <a class="jiathis_button_weixin"></a>
+          <a class="jiathis_button_renren"></a>
+          <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jtico jtico_jiathis" target="_blank"></a>
+        </div>
+        <script type="text/javascript" src="http://v3.jiathis.com/code/jia.js" charset="utf-8"></script>
+        <!-- JiaThis Button END -->
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-8 col-md-offset-2 bg-clouds col-lg-8 col-lg-offset-2 col-xs-12 content-block">
+
+      <!-- Duoshuo Comment BEGIN -->
+      <div class="ds-thread"></div>
+      <script type="text/javascript">
+      var duoshuoQuery = {short_name:"adousj"};
+        (function() {
+          var ds = document.createElement('script');
+          ds.type = 'text/javascript';ds.async = true;
+          ds.src = 'http://static.duoshuo.com/embed.js';
+          ds.charset = 'UTF-8';
+          (document.getElementsByTagName('head')[0] 
+          || document.getElementsByTagName('body')[0]).appendChild(ds);
+        })();
+        </script>
+      <!-- Duoshuo Comment END -->
+
+    </div>
+  </div>
+</div>
+
+<script type="text/javascript" src="js/jquery-1.9.1.min.js"></script>
+<script type="text/javascript" src="bootstrap3/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="js/blog.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>CSS 居中</title>
+
+  <link rel="stylesheet" href="bootstrap3/css/bootstrap.min.css">
+  <link rel="stylesheet" href="bootstrap3/css/bootstrap-theme.min.css">
+  <link rel="stylesheet" href="Font-Awesome/css/font-awesome.min.css">
+  <link rel="stylesheet" href="css/style.css">
+
+</head>
+<body>
+
+<div class="navbar navbar-inverse bg-midnight-blue navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+        <span class="sr-only">Adou Wiki</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="#">Vimwiki</a>
+    </div>
+    <div class="collapse navbar-collapse">
+      <ul class="nav navbar-nav">
+        <li><a href="index.html">首页</a></li>
+        <li><a href="计划.html">计划</a></li>
+        <li><a href="学习计划.html">学习计划</a></li>
+        <li><a href="小小工具.html">小小工具</a></li>
+        <li><a href="娱乐.html">娱乐</a></li>
+        <li><a href="tips.html">tips</a></li>
+        <li><a href="about me.html">关于我</a></li>
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div>
+</div>
+
+<div class="container">
+  <div class="row">
+    <div class="col-md-8 col-md-offset-2 bg-clouds col-lg-8 col-lg-offset-2 col-xs-12 content-block" id="main-content">
+
+      
+<h1 id="toc_1">CSS 居中</h1>
+<div class="toc">
+<ul>
+<li><a href="#toc_1">CSS 居中</a>
+<ul>
+<li><a href="#toc_1.1">2</a>
+<li><a href="#toc_1.2">1</a>
+</ul>
+</ul>
+</div>
+
+<h2 id="toc_1.1">2</h2>
+<p>
+水平居中:
+运用两个css属性即可：
+text-align：center 和 margin：0 auto。
+</p>
+
+<p>
+html代码如下：
+&lt;body&gt;
+ <div>
+ &lt;img src=”sample.jpg” /&gt;
+ &lt;p&gt;这是实例&lt;/p&gt;
+ </div>
+ &lt;/body&gt;
+第一种仅仅实现图片和文字居中于div中，css代码如：
+div{
+ width：800px;
+ text-align:center;
+ }
+第二种：实现div居中于浏览器且图片和文字居中于div
+ css代码如：
+body{
+ text-align:center;
+ }
+ div{
+ width:800px;
+ margin:0 auto;
+ }
+第三种：实现div居中于浏览器但图片和文字不居中于div
+ css代码如：
+body{
+ text-align:center;
+ }
+ div{
+ width:800px;
+ margin:0 auto;
+ text-align:left;
+ }
+垂直居中：
+ （本想自己写个，但发现原来网上已有很好的教程，所以转载了个）
+ 该CSS垂直居中的条件:
+1.已有一个已定义高度的容器(如<div>)
+ 2.内部有一个未知高度的对象(也许是后台动态生成的文本，放在另一个<div>中)
+3.我想让内部的对象在容器内垂直居中。
+4.不使用HTML的表格(table元素)，也不使用Javascript。
+ 该CSS垂直居中的方法:
+最大的问题:IE浏览器的Bug。
+ 大部分浏览器能理解CSS中的display:table之类的表格方式声明，但IE7及其以下的旧版IE无法理解这个声明。
+ 解决办法:让大部分能理解display:table声明的浏览器使用vertical-align属性达到垂 直居中，让IE7及以下版本用自己理解高度的Bug来解决居中问题。
+IE Bug:　
+IE7及以下版本理解高度的Bug:如果a容器内有b对象，a容器并没有设置高度值，如果b对象有实际内容(如 文字)，那么就会将a的高度理解为与b相等。那么如果对b采取相对定位，b就会相对于在a中的原始位置移动(主要利用百分比高 度)。
+eg:a未定义高度，b的高度为100px，将b相对定位，并设top:-50%
+在这种情况下:标准浏览器由于未知a的高度,所以b不动。而IE7及以下版本则会让b相对a的高度(其实等于b 的高度)上移50%，也就是50px 。
+ 如何仅让IE7及以下版本理解对它们的声明？
+1.Pixy曾发明underscore hack， 就是在每个CSS属 性前加一个下划 线”_”，这个hack是专门针对IE6及以下版本的，也就是说IE7无法理解。如:_position:absolute;  所以这种hack就PASS!
+ 2.在属性前加”#”的声明正好可以仅让IE7及以下版本理解，而其它任何浏览器都无法理解这个”#”，所以”#”后的声明就会被其它浏览器忽略掉。 OK~~就这个！
+ 兼容性:
+目前为止兼容直到IE8.x的所有IE浏览器、Gecko核心浏览器(Mozilla,Firefox,Netscape 7)、Opera 7、Webkit核心浏览器(Safari及Google Chrome)。
+ 代码:
+CSS部分:
+</p>
+
+<p>
+#outer {
+ display:table;
+ height:400px;
+ #position:relative;
+ overflow:hidden;
+ }
+ #middle {
+ display:table-cell;
+ vertical-align:middle;
+ #position:absolute;
+ #top:50%;
+ }
+ #inner {
+ #position:relative;
+ #top:-50%;
+ }
+</p>
+
+ 
+<p>
+ XHTML部分:
+</p>
+
+<p>
+<div id=”outer”>
+ <div id=”middle”>
+ <div id=”inner”>
+ &lt;!–这里是要垂直居中的内容 –&gt;
+ </div>
+ </div>
+ </div>
+</p>
+
+<p>
+经测试，该方法也适用于图片垂直居中，建议大家在使用的时候定义好outer层的宽度。
+ 垂直居中方法转载自：<a href="http://blog.bingo929.com/css-vertical-center.html">http://blog.bingo929.com/css-vertical-center.html</a>
+</p>
+
+
+
+<h2 id="toc_1.2">1</h2>
+<pre>
+&lt;html&gt;
+
+    &lt;head&gt;
+        &lt;meta charset="utf-8" /&gt;
+        &lt;title&gt;Hello&lt;/title&gt;
+        &lt;style type="text/css"&gt;
+            body {
+                margin:0;
+                border:0;
+                background-color:#404040 ;
+                text-align:center ;
+            }
+            .container{
+                position:relative ;
+                margin:0 auto ;
+                text-align:left ;
+                width:800px ;
+            }
+            .content{
+                background-color:white ;
+            }
+            .banner{
+                position:absolute;
+                //top:96%;
+                width:100%;
+                //margin:0 auto ;
+                //float:center;
+                //background-color:gray;
+                text-align:center ;
+            }
+            p{
+                background-color:gray;
+            }
+            input{
+                width:120;
+                text-align:center;
+            }
+        &lt;/style&gt;
+        &lt;script type="text/javascript" src="E:/web/doc/jquery-1.7.1.js"&gt;&lt;/script&gt;
+        &lt;script type="text/javascript" src="me.js"&gt;&lt;/script&gt;
+    &lt;/head&gt;
+
+    &lt;body&gt;
+        &lt;div class="container"&gt;
+            &lt;div class="content"&gt;
+                &lt;p&gt;Hello, World!&lt;/p&gt;
+                &lt;p&gt;
+                Hello, World!&lt;br&gt;
+                Hello, World!&lt;br&gt;
+                Hello, World!&lt;br&gt;
+                Hello, World!&lt;br&gt;
+                Hello, World!&lt;br&gt;
+                Hello, World!&lt;br&gt;
+                Hello, World!&lt;br&gt;
+                Hello, World!&lt;br&gt;
+                Hello, World!&lt;br&gt;
+                &lt;/p&gt;
+                &lt;input type="button" value="Next red" /&gt;&lt;br&gt;
+                &lt;img src="d:\\OpenCV24\\doc\\lena.jpg" /&gt;
+            &lt;/div&gt;
+        &lt;div class="banner"&gt;
+            CopyRight 2012 Adou , All Rights Reserved .
+        &lt;/div&gt;
+        &lt;/div&gt;
+        &lt;ul&gt;
+            &lt;li style="display:inline"&gt;1&lt;/li&gt;
+            &lt;li style="display:inline"&gt;2&lt;/li&gt;
+            &lt;li style="display:inline"&gt;3&lt;/li&gt;
+            &lt;li style="display:inline"&gt;4&lt;/li&gt;
+            &lt;li style="display:inline"&gt;5&lt;/li&gt;
+        &lt;/ul&gt;
+
+    &lt;/body&gt;
+
+&lt;/html&gt;
+</pre>
+
+      
+      <br>
+      <div class="pull-right">
+        <!-- JiaThis Button BEGIN -->
+        <div class="jiathis_style_24x24">
+          <a class="jiathis_button_qzone"></a>
+          <a class="jiathis_button_tsina"></a>
+          <a class="jiathis_button_weixin"></a>
+          <a class="jiathis_button_renren"></a>
+          <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jtico jtico_jiathis" target="_blank"></a>
+        </div>
+        <script type="text/javascript" src="http://v3.jiathis.com/code/jia.js" charset="utf-8"></script>
+        <!-- JiaThis Button END -->
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-8 col-md-offset-2 bg-clouds col-lg-8 col-lg-offset-2 col-xs-12 content-block">
+
+      <!-- Duoshuo Comment BEGIN -->
+      <div class="ds-thread"></div>
+      <script type="text/javascript">
+      var duoshuoQuery = {short_name:"adousj"};
+        (function() {
+          var ds = document.createElement('script');
+          ds.type = 'text/javascript';ds.async = true;
+          ds.src = 'http://static.duoshuo.com/embed.js';
+          ds.charset = 'UTF-8';
+          (document.getElementsByTagName('head')[0] 
+          || document.getElementsByTagName('body')[0]).appendChild(ds);
+        })();
+        </script>
+      <!-- Duoshuo Comment END -->
+
+    </div>
+  </div>
+</div>
+
+<script type="text/javascript" src="js/jquery-1.9.1.min.js"></script>
+<script type="text/javascript" src="bootstrap3/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="js/blog.js"></script>
+
+</body>
+</html>

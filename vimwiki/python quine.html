@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>python quine</title>
+
+  <link rel="stylesheet" href="bootstrap3/css/bootstrap.min.css">
+  <link rel="stylesheet" href="bootstrap3/css/bootstrap-theme.min.css">
+  <link rel="stylesheet" href="Font-Awesome/css/font-awesome.min.css">
+  <link rel="stylesheet" href="css/style.css">
+
+</head>
+<body>
+
+<div class="navbar navbar-inverse bg-midnight-blue navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+        <span class="sr-only">Adou Wiki</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="#">Vimwiki</a>
+    </div>
+    <div class="collapse navbar-collapse">
+      <ul class="nav navbar-nav">
+        <li><a href="index.html">首页</a></li>
+        <li><a href="计划.html">计划</a></li>
+        <li><a href="学习计划.html">学习计划</a></li>
+        <li><a href="小小工具.html">小小工具</a></li>
+        <li><a href="娱乐.html">娱乐</a></li>
+        <li><a href="tips.html">tips</a></li>
+        <li><a href="about me.html">关于我</a></li>
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div>
+</div>
+
+<div class="container">
+  <div class="row">
+    <div class="col-md-8 col-md-offset-2 bg-clouds col-lg-8 col-lg-offset-2 col-xs-12 content-block" id="main-content">
+
+      
+<h1 id="toc_1">python quuine</h1>
+
+<h2 id="toc_1.1">2. 自己仿写</h2>
+<pre>
+s = '''
+a , b = 1 , 2
+print "s = " + chr(39)*3 + s + chr(39)*3 + chr(10) + s
+'''
+a , b = 1 , 2
+print "s = " + chr(39)*3 + s + chr(39)*3 + chr(10) + s
+</pre>
+  
+  
+<h2 id="toc_1.2">1. Quine程序</h2>
+<p>
+所谓Quine程序，就是能把自己源代码打印出来的程序。听上去好像简单，仔细想想还是挺麻烦的，因为按照最直接的print/printf方法，那是无论如何也把自己无法打印出来的。当然，前提是不能作弊，例如打开源文件直接读取并打印出来，或者使用一些程序特殊的机制打印自己的片段，或者干脆就是一个空文件。
+</p>
+
+<p>
+这几天学习计算理论里面的递归理论，才知道了原理，很惭愧以前一直没想到呢。其实就是首先使用一个变量保存这个变量以后的程序，然后再在这个变量以后的程序打印出变量的赋值语句与之前的语句，然后打印出这个变量的值(也就是这个变量之后的语句)。所以直接的print/printf肯定是不行的。下面是一个python的例子：
+</p>
+<pre>
+#s = 'print "s = " + chr(39) + s + chr(39) + chr(10) + s'
+#print "s = " + chr(39) + s + chr(39) + chr(10) + s
+</pre>
+<p>
+第一句就是一个赋值语句，将这个赋值语句后面的语句直接复制到常量字符串中，然后第二句就是打印了，打印出前面的语句，不过可以用s代表自己的值，这样就避免了无限递归了。递归定理，其实就是这样简单。
+</p>
+
+      
+      <br>
+      <div class="pull-right">
+        <!-- JiaThis Button BEGIN -->
+        <div class="jiathis_style_24x24">
+          <a class="jiathis_button_qzone"></a>
+          <a class="jiathis_button_tsina"></a>
+          <a class="jiathis_button_weixin"></a>
+          <a class="jiathis_button_renren"></a>
+          <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jtico jtico_jiathis" target="_blank"></a>
+        </div>
+        <script type="text/javascript" src="http://v3.jiathis.com/code/jia.js" charset="utf-8"></script>
+        <!-- JiaThis Button END -->
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-8 col-md-offset-2 bg-clouds col-lg-8 col-lg-offset-2 col-xs-12 content-block">
+
+      <!-- Duoshuo Comment BEGIN -->
+      <div class="ds-thread"></div>
+      <script type="text/javascript">
+      var duoshuoQuery = {short_name:"adousj"};
+        (function() {
+          var ds = document.createElement('script');
+          ds.type = 'text/javascript';ds.async = true;
+          ds.src = 'http://static.duoshuo.com/embed.js';
+          ds.charset = 'UTF-8';
+          (document.getElementsByTagName('head')[0] 
+          || document.getElementsByTagName('body')[0]).appendChild(ds);
+        })();
+        </script>
+      <!-- Duoshuo Comment END -->
+
+    </div>
+  </div>
+</div>
+
+<script type="text/javascript" src="js/jquery-1.9.1.min.js"></script>
+<script type="text/javascript" src="bootstrap3/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="js/blog.js"></script>
+
+</body>
+</html>

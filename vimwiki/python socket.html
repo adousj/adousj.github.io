@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>python socket</title>
+
+  <link rel="stylesheet" href="bootstrap3/css/bootstrap.min.css">
+  <link rel="stylesheet" href="bootstrap3/css/bootstrap-theme.min.css">
+  <link rel="stylesheet" href="Font-Awesome/css/font-awesome.min.css">
+  <link rel="stylesheet" href="css/style.css">
+
+</head>
+<body>
+
+<div class="navbar navbar-inverse bg-midnight-blue navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+        <span class="sr-only">Adou Wiki</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="#">Vimwiki</a>
+    </div>
+    <div class="collapse navbar-collapse">
+      <ul class="nav navbar-nav">
+        <li><a href="index.html">首页</a></li>
+        <li><a href="计划.html">计划</a></li>
+        <li><a href="学习计划.html">学习计划</a></li>
+        <li><a href="小小工具.html">小小工具</a></li>
+        <li><a href="娱乐.html">娱乐</a></li>
+        <li><a href="tips.html">tips</a></li>
+        <li><a href="about me.html">关于我</a></li>
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div>
+</div>
+
+<div class="container">
+  <div class="row">
+    <div class="col-md-8 col-md-offset-2 bg-clouds col-lg-8 col-lg-offset-2 col-xs-12 content-block" id="main-content">
+
+      
+<h1 id="toc_1">python socket</h1>
+<div class="toc">
+<ul>
+<li><a href="#toc_1">python socket</a>
+<ul>
+<li><a href="#toc_1.1">1. python socket的简单例子</a>
+<li><a href="#toc_1.2">2. python实现socket通讯(TCP)</a>
+</ul>
+</ul>
+</div>
+
+<h2 id="toc_1.1">1. python socket的简单例子</h2>
+<p>
+服务端的通信过程：
+socket—&gt;bind—&gt;listen(连接请求)—&gt;accept—&gt;send(发送数据)—&gt;recv(接受数据)—&gt;close
+客户端的通信过程：
+socket—&gt;bind(可选)—&gt;connect(连接服务器)—&gt;sends(发送数据)—&gt;recv(接受数据)—&gt;close
+下面是一个简单的服务端客户端的实现：
+server.py：
+</p>
+<pre>
+#!/usr/bin/python
+#encoding=utf-8
+ 
+import socket
+ 
+s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+#第一个参数AF_INET，AF_INET6,AF_UNIX默认AF_INET,第二个参数有SOCK_STREAM和SOCK_DGRAM
+#默认为SOCK_STREAM流套接字提供双向有序且不重复的数据服务也可以直接写s=socket.socket()
+ 
+#host = socket.gethostname()
+host = ''
+port = 1234
+s.bind((host, port)) #绑定socket地址只有一个参数 是一个地址+端口的元组
+ 
+s.listen(10) #开始监听，参数是队列长度
+ 
+while True:
+    c, addr = s.accept() #接受一个连接
+ 
+    print 'Get connection from', addr
+    c.send('This is a simple server') #发送数据
+    print c.recv(1024) #读取数据
+    c.close()
+</pre>
+  
+
+<p>
+client.py：
+</p>
+<pre>
+view sourceprint?
+#!/usr/bin/python
+#encoding=utf-8
+ 
+import socket
+ 
+s = socket.socket() #生成一个socket对象
+ 
+server = socket.gethostname()
+print server
+port = 1234 #一般1024以下端口号可能会有权限限制
+s.connect((server, port)) #连接服务器
+print s.recv(1024) #读取数据
+ 
+say = raw_input(u'说点什么...'.encode('gbk'))
+s.send(str(say))
+ 
+s.close() #关闭连接
+</pre>
+  
+<h2 id="toc_1.2">2. python实现socket通讯(TCP)</h2>
+<p>
+Server
+</p>
+<pre>
+# server
+
+import socket
+
+address = ('127.0.0.1', 31500)
+s = socket.socket(socket.AF_INET, socket.SOCK_STREAM) # s = socket.socket()
+s.bind(address)
+s.listen(5)
+
+ss, addr = s.accept()
+print 'got connected from',addr
+
+ss.send('byebye')
+ra = ss.recv(512)
+print ra
+
+ss.close()
+s.close()
+</pre>
+
+<p>
+Client
+</p>
+<pre>
+# client
+
+import socket
+
+address = ('127.0.0.1', 31500)
+s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+s.connect(address)
+
+data = s.recv(512)
+print 'the data received is',data
+
+s.send('hihi')
+
+s.close()
+</pre>
+<p>
+运行结果：
+</p>
+<pre>
+server
+[work@db-testing-com06-vm3.db01.baidu.com python]$ python server.py 
+got connected from ('127.0.0.1', 47872)
+hihi
+ 
+client
+[work@db-testing-com06-vm3.db01.baidu.com python]$ python client.py 
+the data received is byebye
+</pre>
+<p>
+参考资料：<a href="http://www.cppblog.com/lai3d/archive/2008/02/19/42919.html">http://www.cppblog.com/lai3d/archive/2008/02/19/42919.html</a>
+一个简单的服务器和客户端通信的例子
+服务器：
+</p>
+<pre>
+import socket
+s=socket.socket()
+s.bind(('xxx.xxx.xxx.xxx',xxxx))    #ip地址和端口号
+s.listen(5)
+cs,address = s.accept()
+print 'got connected from',address
+cs.send('byebye')
+ra=cs.recv(512)
+print ra
+cs.close()
+</pre>
+<p>
+客户端：
+</p>
+<pre {>
+import socket
+s=socket.socket()
+s.connect(('xxx.xxx.xxx.xxx',xxxx))   #与服务器程序ip地址和端口号相同
+data=s.recv(512)
+s.send('hihi')
+s.close()
+print 'the data received is',data
+</pre>
+ 
+<p>
+运行：
+在本机测试（windows环境下，可以将ip地址改为本机ip，端口号在1024以上，windows将1024以下的为保留），运行--CMD--进入命令行模式
+先python 服务器程序，后python 客户端程序即可。
+或者启动服务器程序后，用telnet ip地址 端口号，也可以得到同样结果。
+让server持续接受连接
+server.py
+</p>
+<pre>
+import socket
+s=socket.socket()
+s.bind(('192.168.43.137',2000))
+s.listen(5)
+
+while 1:
+    cs,address = s.accept()
+    print 'got connected from',address
+    cs.send('hello I am server,welcome')
+    ra=cs.recv(512)
+    print ra
+    cs.close()
+</pre>
+ 
+<p>
+测试两个一个程序中两个socket并存是否可行
+client.py
+</p>
+<pre>
+import socket
+s=socket.socket()
+s.connect(('192.168.43.137',2000))   
+data=s.recv(512)
+print 'the data received is/n    ',data
+s.send('hihi I am client')
+
+sock2 = socket.socket()
+sock2.connect(('192.168.43.137',2000))
+data2=sock2.recv(512)
+print 'the data received from server is/n   ',data2
+sock2.send('client send use sock2')
+sock2.close()
+
+s.close()
+</pre>
+
+      
+      <br>
+      <div class="pull-right">
+        <!-- JiaThis Button BEGIN -->
+        <div class="jiathis_style_24x24">
+          <a class="jiathis_button_qzone"></a>
+          <a class="jiathis_button_tsina"></a>
+          <a class="jiathis_button_weixin"></a>
+          <a class="jiathis_button_renren"></a>
+          <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jtico jtico_jiathis" target="_blank"></a>
+        </div>
+        <script type="text/javascript" src="http://v3.jiathis.com/code/jia.js" charset="utf-8"></script>
+        <!-- JiaThis Button END -->
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-8 col-md-offset-2 bg-clouds col-lg-8 col-lg-offset-2 col-xs-12 content-block">
+
+      <!-- Duoshuo Comment BEGIN -->
+      <div class="ds-thread"></div>
+      <script type="text/javascript">
+      var duoshuoQuery = {short_name:"adousj"};
+        (function() {
+          var ds = document.createElement('script');
+          ds.type = 'text/javascript';ds.async = true;
+          ds.src = 'http://static.duoshuo.com/embed.js';
+          ds.charset = 'UTF-8';
+          (document.getElementsByTagName('head')[0] 
+          || document.getElementsByTagName('body')[0]).appendChild(ds);
+        })();
+        </script>
+      <!-- Duoshuo Comment END -->
+
+    </div>
+  </div>
+</div>
+
+<script type="text/javascript" src="js/jquery-1.9.1.min.js"></script>
+<script type="text/javascript" src="bootstrap3/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="js/blog.js"></script>
+
+</body>
+</html>

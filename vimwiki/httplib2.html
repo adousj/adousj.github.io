@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>httplib2</title>
+
+  <link rel="stylesheet" href="bootstrap3/css/bootstrap.min.css">
+  <link rel="stylesheet" href="bootstrap3/css/bootstrap-theme.min.css">
+  <link rel="stylesheet" href="Font-Awesome/css/font-awesome.min.css">
+  <link rel="stylesheet" href="css/style.css">
+
+</head>
+<body>
+
+<div class="navbar navbar-inverse bg-midnight-blue navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+        <span class="sr-only">Adou Wiki</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="#">Vimwiki</a>
+    </div>
+    <div class="collapse navbar-collapse">
+      <ul class="nav navbar-nav">
+        <li><a href="index.html">首页</a></li>
+        <li><a href="计划.html">计划</a></li>
+        <li><a href="学习计划.html">学习计划</a></li>
+        <li><a href="小小工具.html">小小工具</a></li>
+        <li><a href="娱乐.html">娱乐</a></li>
+        <li><a href="tips.html">tips</a></li>
+        <li><a href="about me.html">关于我</a></li>
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div>
+</div>
+
+<div class="container">
+  <div class="row">
+    <div class="col-md-8 col-md-offset-2 bg-clouds col-lg-8 col-lg-offset-2 col-xs-12 content-block" id="main-content">
+
+      
+<h1 id="toc_1">httplib2</h1>
+
+<pre>
+Simple Retrieval
+import httplib2
+h = httplib2.Http(".cache")
+resp, content = h.request("http://example.org/", "GET")
+The 'content' is the content retrieved from the URL. The content is already decompressed or unzipped if necessary. The 'resp' contains all the response headers.
+
+Authentication
+To PUT some content to a server that uses SSL and Basic authentication:
+
+import httplib2
+h = httplib2.Http(".cache")
+h.add_credentials('name', 'password')
+resp, content = h.request("https://example.org/chap/2", 
+    "PUT", body="This is text", 
+    headers={'content-type':'text/plain'} )
+Cache-Control
+Use the Cache-Control: header to control how the caching operates.
+
+import httplib2
+h = httplib2.Http(".cache")
+resp, content = h.request("http://bitworking.org/")
+ ...
+resp, content = h.request("http://bitworking.org/", 
+    headers={'cache-control':'no-cache'})
+The first request will be cached and since this is a request to bitworking.org it will be set to be cached for two hours, because that is how I have my server configured. Any subsequent GET to that URI will return the value from the on-disk cache and no request will be made to the server. You can use the Cache-Control: header to change the caches behavior and in this example the second request adds the Cache-Control: header with a value of 'no-cache' which tells the library that the cached copy must not be used when handling this request.
+
+Forms
+Below is an example of using httplib2 to submit a form. Note that we have to use the urlencode() function from urllib to encode the data before using it as the POST body.
+
+&gt;&gt;&gt; from httplib2 import Http
+&gt;&gt;&gt; from urllib import urlencode
+&gt;&gt;&gt; h = Http()
+&gt;&gt;&gt; data = dict(name="Joe", comment="A test comment")
+&gt;&gt;&gt; resp, content = h.request("http://bitworking.org/news/223/Meet-Ares", "POST", urlencode(data))
+&gt;&gt;&gt; resp
+{'status': '200', 'transfer-encoding': 'chunked', 'vary': 'Accept-Encoding,User-Agent',
+ 'server': 'Apache', 'connection': 'close', 'date': 'Tue, 31 Jul 2007 15:29:52 GMT', 
+ 'content-type': 'text/html'}
+Cookies
+When automating something, you often need to "login" to maintain some sort of session/state with the server. Sometimes this is achieved with form-based authentication and cookies. You post a form to the server, and it responds with a cookie in the incoming HTTP header. You need to pass this cookie back to the server in subsequent requests to maintain state or to keep a session alive.
+
+Here is an example of how to deal with cookies when doing your HTTP Post.
+
+First, lets import the modules we will use:
+
+import urllib
+import httplib2
+Now, lets define the data we will need. In this case, we are doing a form post with 2 fields representing a username and a password.
+
+url = 'http://www.example.com/login'   
+body = {'USERNAME': 'foo', 'PASSWORD': 'bar'}
+headers = {'Content-type': 'application/x-www-form-urlencoded'}
+Now we can send the HTTP request:
+
+http = httplib2.Http()
+response, content = http.request(url, 'POST', headers=headers, body=urllib.urlencode(body))
+At this point, our "response" variable contains a dictionary of HTTP header fields that were returned by the server. If a cookie was returned, you would see a "set-cookie" field containing the cookie value. We want to take this value and put it into the outgoing HTTP header for our subsequent requests:
+
+headers['Cookie'] = response['set-cookie']
+Now we can send a request using this header and it will contain the cookie, so the server can recognize us.
+
+So... here is the whole thing in a script. We login to a site and then make another request using the cookie we received:
+
+#!/usr/bin/env python
+
+import urllib
+import httplib2
+
+http = httplib2.Http()
+
+url = 'http://www.example.com/login'   
+body = {'USERNAME': 'foo', 'PASSWORD': 'bar'}
+headers = {'Content-type': 'application/x-www-form-urlencoded'}
+response, content = http.request(url, 'POST', headers=headers, body=urllib.urlencode(body))
+
+headers = {'Cookie': response['set-cookie']}
+
+url = 'http://www.example.com/home'   
+response, content = http.request(url, 'GET', headers=headers)
+Proxies
+httplib2 can use a SOCKS proxy if the third-party socks module is installed.
+
+Here is an example of how to use the proxy support:
+
+import httplib2
+import socks
+
+httplib2.debuglevel=4
+h = httplib2.Http(proxy_info = httplib2.ProxyInfo(socks.PROXY_TYPE_HTTP, 'localhost', 8000))
+r,c = h.request("http://bitworking.org/news/")
+</pre>
+
+      
+      <br>
+      <div class="pull-right">
+        <!-- JiaThis Button BEGIN -->
+        <div class="jiathis_style_24x24">
+          <a class="jiathis_button_qzone"></a>
+          <a class="jiathis_button_tsina"></a>
+          <a class="jiathis_button_weixin"></a>
+          <a class="jiathis_button_renren"></a>
+          <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jtico jtico_jiathis" target="_blank"></a>
+        </div>
+        <script type="text/javascript" src="http://v3.jiathis.com/code/jia.js" charset="utf-8"></script>
+        <!-- JiaThis Button END -->
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-8 col-md-offset-2 bg-clouds col-lg-8 col-lg-offset-2 col-xs-12 content-block">
+
+      <!-- Duoshuo Comment BEGIN -->
+      <div class="ds-thread"></div>
+      <script type="text/javascript">
+      var duoshuoQuery = {short_name:"adousj"};
+        (function() {
+          var ds = document.createElement('script');
+          ds.type = 'text/javascript';ds.async = true;
+          ds.src = 'http://static.duoshuo.com/embed.js';
+          ds.charset = 'UTF-8';
+          (document.getElementsByTagName('head')[0] 
+          || document.getElementsByTagName('body')[0]).appendChild(ds);
+        })();
+        </script>
+      <!-- Duoshuo Comment END -->
+
+    </div>
+  </div>
+</div>
+
+<script type="text/javascript" src="js/jquery-1.9.1.min.js"></script>
+<script type="text/javascript" src="bootstrap3/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="js/blog.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>vim</title>
+
+  <link rel="stylesheet" href="bootstrap3/css/bootstrap.min.css">
+  <link rel="stylesheet" href="bootstrap3/css/bootstrap-theme.min.css">
+  <link rel="stylesheet" href="Font-Awesome/css/font-awesome.min.css">
+  <link rel="stylesheet" href="css/style.css">
+
+</head>
+<body>
+
+<div class="navbar navbar-inverse bg-midnight-blue navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+        <span class="sr-only">Adou Wiki</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="#">Vimwiki</a>
+    </div>
+    <div class="collapse navbar-collapse">
+      <ul class="nav navbar-nav">
+        <li><a href="index.html">首页</a></li>
+        <li><a href="计划.html">计划</a></li>
+        <li><a href="学习计划.html">学习计划</a></li>
+        <li><a href="小小工具.html">小小工具</a></li>
+        <li><a href="娱乐.html">娱乐</a></li>
+        <li><a href="tips.html">tips</a></li>
+        <li><a href="about me.html">关于我</a></li>
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div>
+</div>
+
+<div class="container">
+  <div class="row">
+    <div class="col-md-8 col-md-offset-2 bg-clouds col-lg-8 col-lg-offset-2 col-xs-12 content-block" id="main-content">
+
+      
+<h1 id="toc_1">vim tips</h1>
+
+<p>
+vim 太有料了！
+</p>
+
+<p>
+<a href="vim 多文本操作.html">vim 多文本操作</a>
+</p>
+
+<p>
+<a href="VimWiki.html">VimWiki</a>
+</p>
+
+<p>
+<a href="vim 映射.html">vim 映射</a>
+</p>
+
+<p>
+<a href="大小写变化.html">大小写变化</a>
+</p>
+
+<p>
+<a href="Vim 基本命令.html">Vim 基本命令</a>
+</p>
+
+<p>
+<a href="Vim 替换总结.html">Vim 替换总结</a>
+</p>
+
+<p>
+LaTex-Suit
+</p>
+
+<p>
+<a href="Vim 脚本.html">Vim 脚本</a>
+</p>
+
+<p>
+<a href="vim vundle.html">vim vundle</a>
+</p>
+
+<p>
+<a href="vimwiki todolist.html">vimwiki todolist</a>
+</p>
+
+<p>
+同意 text 和 html  &lt;pre&gt;标签
+</p>
+
+<h3 id="toc_1.0.1">统计重复次数</h3>
+<p>
+:%s/xxx//gn
+n 表示忽略
+</p>
+
+<h3 id="toc_1.0.2">折叠</h3>
+<p>
+zfap    将选中部分折叠
+</p>
+<blockquote>
+zf 是操作符，ap是文本对象
+</blockquote>
+<p>
+zo  打开折叠
+zc  关闭折叠
+</p>
+
+<h3 id="toc_1.0.3">一些移动</h3>
+<p>
+H   屏幕开始
+M   屏幕中央
+L   屏幕下端
+</p>
+
+<p>
+Enter   移至下行行首
+Shift + Enter   移至下一页
+</p>
+
+<p>
+%   光标跳到对应符号处，{}[]()
+</p>
+
+<p>
+nG / ngg / :n 第n行
+d:n 删除当前行到n行
+</p>
+
+<p>
+D 删除到行尾，不删除换行符
+</p>
+
+<p>
+ZZ 退出
+</p>
+
+<p>
+r 替换光标所在字符 
+R 从光标所在处开始替换字符，Esc结束 
+s 替换光标所在处字符，并进入文本输入方式 
+S 替换光标所在行，Esc结束 
+u 取消上一步 
+U 取消当前行的所有操作
+</p>
+
+<h3 id="toc_1.0.4">搜索替换</h3>
+<p>
+/string ?string 搜索string
+n 向上搜索 
+N 向下搜索 
+%s/old/new/g old全部替换为new 
+%s/old//g old删除
+</p>
+
+<ol>
+<li>
+  向上搜索光标所在处单词
+
+<li>
+  向下搜索光标所在处单词
+
+</ol>
+<p>
+V   一行一行的选中
+</p>
+<blockquote>
+v 选中块
+b 前一个word
+e 后一个word
+== 调整缩进
+&gt; 左缩进
+&lt; 右缩进
+0 行首
+$ 行末
+&lt;C-N&gt;
+&lt;C-P&gt; 自动补齐
+&lt;C-Q&gt; 选中块
+</blockquote>
+
+<h3 id="toc_1.0.5">录制宏</h3>
+<p>
+qa   开始 
+q    结束
+@a   重复
+n@a  n重复
+</p>
+
+<p>
+windows 中 vim 启动快捷键
+</p>
+<blockquote>
+Ctrl + Shift + Q
+</blockquote>
+
+
+<h3 id="toc_1.0.6">ggG</h3>
+<p>
+全部删除     ggdG 
+全文调整缩进     gg=G
+全部复制     ggyG
+</p>
+
+<p>
+文本替换： :%s/textt/text/g
+末尾的 /g 表示全文替换 ， 如果没有表示替换第一个
+</p>
+
+      
+      <br>
+      <div class="pull-right">
+        <!-- JiaThis Button BEGIN -->
+        <div class="jiathis_style_24x24">
+          <a class="jiathis_button_qzone"></a>
+          <a class="jiathis_button_tsina"></a>
+          <a class="jiathis_button_weixin"></a>
+          <a class="jiathis_button_renren"></a>
+          <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jtico jtico_jiathis" target="_blank"></a>
+        </div>
+        <script type="text/javascript" src="http://v3.jiathis.com/code/jia.js" charset="utf-8"></script>
+        <!-- JiaThis Button END -->
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-8 col-md-offset-2 bg-clouds col-lg-8 col-lg-offset-2 col-xs-12 content-block">
+
+      <!-- Duoshuo Comment BEGIN -->
+      <div class="ds-thread"></div>
+      <script type="text/javascript">
+      var duoshuoQuery = {short_name:"adousj"};
+        (function() {
+          var ds = document.createElement('script');
+          ds.type = 'text/javascript';ds.async = true;
+          ds.src = 'http://static.duoshuo.com/embed.js';
+          ds.charset = 'UTF-8';
+          (document.getElementsByTagName('head')[0] 
+          || document.getElementsByTagName('body')[0]).appendChild(ds);
+        })();
+        </script>
+      <!-- Duoshuo Comment END -->
+
+    </div>
+  </div>
+</div>
+
+<script type="text/javascript" src="js/jquery-1.9.1.min.js"></script>
+<script type="text/javascript" src="bootstrap3/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="js/blog.js"></script>
+
+</body>
+</html>

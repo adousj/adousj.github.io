@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>pyMedia</title>
+
+  <link rel="stylesheet" href="bootstrap3/css/bootstrap.min.css">
+  <link rel="stylesheet" href="bootstrap3/css/bootstrap-theme.min.css">
+  <link rel="stylesheet" href="Font-Awesome/css/font-awesome.min.css">
+  <link rel="stylesheet" href="css/style.css">
+
+</head>
+<body>
+
+<div class="navbar navbar-inverse bg-midnight-blue navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+        <span class="sr-only">Adou Wiki</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="#">Vimwiki</a>
+    </div>
+    <div class="collapse navbar-collapse">
+      <ul class="nav navbar-nav">
+        <li><a href="index.html">首页</a></li>
+        <li><a href="计划.html">计划</a></li>
+        <li><a href="学习计划.html">学习计划</a></li>
+        <li><a href="小小工具.html">小小工具</a></li>
+        <li><a href="娱乐.html">娱乐</a></li>
+        <li><a href="tips.html">tips</a></li>
+        <li><a href="about me.html">关于我</a></li>
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div>
+</div>
+
+<div class="container">
+  <div class="row">
+    <div class="col-md-8 col-md-offset-2 bg-clouds col-lg-8 col-lg-offset-2 col-xs-12 content-block" id="main-content">
+
+      
+<h1 id="toc_1">pyMedia</h1>
+
+<p>
+中文例子，我试了，狗屁不通
+<a href="http://www.cnblogs.com/myqiao/archive/2011/08/07/2129777.html">http://www.cnblogs.com/myqiao/archive/2011/08/07/2129777.html</a>
+</p>
+
+<p>
+此库较老，官方版本不支持 python 2.7
+帮助
+</p>
+<pre>
+http://pymedia.org/docs/pymedia.audio.sound.html#Input-getPosition
+</pre>
+  
+<p>
+例子
+</p>
+<pre>
+#! /bin/env python
+
+import sys
+
+EMULATE=0
+
+def myplayer( name ) :
+    aplayer( name , 0 , 1 , -1 )
+
+def aplayer( name, card, rate, tt ):
+  import pymedia.muxer as muxer, pymedia.audio.acodec as acodec, pymedia.audio.sound as sound
+  import time
+  dm= muxer.Demuxer( str.split( name, '.' )[ -1 ].lower() )
+  snds= sound.getODevices()
+  if card not in range( len( snds ) ):
+    raise 'Cannot play sound to non existent device %d out of %d' % ( card+ 1, len( snds ) )
+  f= open( name, 'rb' )
+  snd= resampler= dec= None
+  s= f.read( 32000 )
+  t= 0
+  while len( s ):
+    frames= dm.parse( s )
+    if frames:
+      for fr in frames:
+        # Assume for now only audio streams
+
+        if dec== None:
+          print dm.getInfo(), dm.streams
+          dec= acodec.Decoder( dm.streams[ fr[ 0 ] ] )
+        
+        r= dec.decode( fr[ 1 ] )
+        if r and r.data:
+          if snd== None:
+            print 'Opening sound with %d channels -&gt; %s' % ( r.channels, snds[ card ][ 'name' ] )
+            snd= sound.Output( int( r.sample_rate* rate ), r.channels, sound.AFMT_S16_LE, card )
+            if rate&lt; 1 or rate&gt; 1:
+              resampler= sound.Resampler( (r.sample_rate,r.channels), (int(r.sample_rate/rate),r.channels) )
+              print 'Sound resampling %d-&gt;%d' % ( r.sample_rate, r.sample_rate/rate )
+          
+          data= r.data
+          if resampler:
+            data= resampler.resample( data )
+          if EMULATE:
+            # Calc delay we should wait to emulate snd.play()
+
+            d= len( data )/ float( r.sample_rate* r.channels* 2 )
+            time.sleep( d )
+            if int( t+d )!= int( t ):
+              print 'playing: %d sec\r' % ( t+d ),
+            t+= d
+          else:
+            snd.play( data )
+    if tt&gt; 0:
+      if snd and snd.getPosition()&gt; tt:
+        break
+    
+    s= f.read( 512 )
+
+  while snd.isPlaying():
+    time.sleep( .05 )
+
+# ----------------------------------------------------------------------------------
+
+# Play any compressed audio file with adjustable pitch
+
+# http://pymedia.org/
+
+#if len( sys.argv )&lt; 2 or len( sys.argv )&gt; 5:
+  #print "Usage: aplayer &lt;filename&gt; [ sound_card_index, rate( 0..1- slower, 1..4 faster ) ]"
+#else:
+  #i= 0
+  #r= 1
+  #t= -1
+  #if len( sys.argv )&gt; 2 :
+    #i= int( sys.argv[ 2 ] )
+  #if len( sys.argv )&gt; 3 :
+    #r= float( sys.argv[ 3 ] )
+  #if len( sys.argv )&gt; 4 :
+    #t= int( sys.argv[ 4 ] )
+  #aplayer( sys.argv[ 1 ], i, r, t )
+
+if __name__ == '__main__' :
+    ''''''
+    myplayer("he's a pirate.mp3")
+</pre>
+
+      
+      <br>
+      <div class="pull-right">
+        <!-- JiaThis Button BEGIN -->
+        <div class="jiathis_style_24x24">
+          <a class="jiathis_button_qzone"></a>
+          <a class="jiathis_button_tsina"></a>
+          <a class="jiathis_button_weixin"></a>
+          <a class="jiathis_button_renren"></a>
+          <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jtico jtico_jiathis" target="_blank"></a>
+        </div>
+        <script type="text/javascript" src="http://v3.jiathis.com/code/jia.js" charset="utf-8"></script>
+        <!-- JiaThis Button END -->
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-8 col-md-offset-2 bg-clouds col-lg-8 col-lg-offset-2 col-xs-12 content-block">
+
+      <!-- Duoshuo Comment BEGIN -->
+      <div class="ds-thread"></div>
+      <script type="text/javascript">
+      var duoshuoQuery = {short_name:"adousj"};
+        (function() {
+          var ds = document.createElement('script');
+          ds.type = 'text/javascript';ds.async = true;
+          ds.src = 'http://static.duoshuo.com/embed.js';
+          ds.charset = 'UTF-8';
+          (document.getElementsByTagName('head')[0] 
+          || document.getElementsByTagName('body')[0]).appendChild(ds);
+        })();
+        </script>
+      <!-- Duoshuo Comment END -->
+
+    </div>
+  </div>
+</div>
+
+<script type="text/javascript" src="js/jquery-1.9.1.min.js"></script>
+<script type="text/javascript" src="bootstrap3/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="js/blog.js"></script>
+
+</body>
+</html>

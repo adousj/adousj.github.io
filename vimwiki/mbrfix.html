@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>mbrfix</title>
+
+  <link rel="stylesheet" href="bootstrap3/css/bootstrap.min.css">
+  <link rel="stylesheet" href="bootstrap3/css/bootstrap-theme.min.css">
+  <link rel="stylesheet" href="Font-Awesome/css/font-awesome.min.css">
+  <link rel="stylesheet" href="css/style.css">
+
+</head>
+<body>
+
+<div class="navbar navbar-inverse bg-midnight-blue navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+        <span class="sr-only">Adou Wiki</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="#">Vimwiki</a>
+    </div>
+    <div class="collapse navbar-collapse">
+      <ul class="nav navbar-nav">
+        <li><a href="index.html">首页</a></li>
+        <li><a href="计划.html">计划</a></li>
+        <li><a href="学习计划.html">学习计划</a></li>
+        <li><a href="小小工具.html">小小工具</a></li>
+        <li><a href="娱乐.html">娱乐</a></li>
+        <li><a href="tips.html">tips</a></li>
+        <li><a href="about me.html">关于我</a></li>
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div>
+</div>
+
+<div class="container">
+  <div class="row">
+    <div class="col-md-8 col-md-offset-2 bg-clouds col-lg-8 col-lg-offset-2 col-xs-12 content-block" id="main-content">
+
+      
+<h1 id="toc_1">mbrfix</h1>
+<div class="toc">
+<ul>
+<li><a href="#toc_1">mbrfix</a>
+<ul>
+<li><a href="#toc_1.1">Usage:</a>
+<li><a href="#toc_1.2">Requirements:</a>
+<li><a href="#toc_1.3">Commands:</a>
+<li><a href="#toc_1.4">Return codes:</a>
+<li><a href="#toc_1.5">Why do I need this utility?</a>
+<li><a href="#toc_1.6">Samples:</a>
+<li><a href="#toc_1.7">Readstate and Writestate:</a>
+<li><a href="#toc_1.8">Credits:</a>
+<li><a href="#toc_1.9">User License Agreement:</a>
+<ul>
+<li><a href="#toc_1.9.0.1">If you do not accept these terms, you must delete the program, MbrFix.exe, at once!</a>
+</ul>
+</ul>
+</ul>
+</ul>
+</div>
+
+<p>
+来自于 mbrfix 的说明文档
+简要用法
+</p>
+<pre>
+C:\&gt; MbrFix /drive 0 listpartitions
+# Boot Size (MB) Type
+1  Yes     151001    6  DOS 3.31+ 16-bit FAT (over 32M)
+2          1623   12  WIN95 OSR2 32-bit FAT, LBA-mapped
+3             0    0  None
+4             0    0  None
+
+C:\&gt; MbrFix /drive 0 savembr Backup_MBR_0.bin
+
+C:\&gt; MbrFix /drive 0 restorembr Backup_MBR_0.bin
+You are about to Restore MBR,
+are you sure (Y/N)? Y
+
+C:\&gt; MbrFix /drive 0 fixmbr /yes
+</pre>
+
+
+<p>
+MbrFix.exe
+</p>
+
+<p>
+Copyright (C) 2004 Systemintegrasjon AS
+</p>
+
+<p>
+<a href="http://www.sysint.no">http://www.sysint.no</a>
+</p>
+
+<h2 id="toc_1.1">Usage:</h2>
+<blockquote>
+MbrFix /drive &lt;num&gt; &lt;command&gt; { /yes } { /byte }
+</blockquote>
+<h2 id="toc_1.2">Requirements:</h2>
+
+<p>
+The program is made for Windows NT, Windows 2000, Windows XP, Windows Server 2003 and Windows PE.
+</p>
+
+<p>
+You need administrative privileges to make it work!
+</p>
+
+<h2 id="toc_1.3">Commands:</h2>
+<blockquote>
+MbrFix /drive &lt;num&gt; driveinfo              Display drive information
+MbrFix /drive &lt;num&gt; listpartitions         Display partition information
+MbrFix /drive &lt;num&gt; savembr &lt;file&gt;         Save MBR and partitions to file
+MbrFix /drive &lt;num&gt; restorembr &lt;file&gt;      Restore MBR and partitions from file
+MbrFix /drive &lt;num&gt; fixmbr                 Update MBR code to W2K/XP/2003
+MbrFix /drive &lt;num&gt; clean                  Delete partitions in MBR
+MbrFix /drive &lt;num&gt; readsignature {/byte}  Read disk signature from MBR
+MbrFix /drive &lt;num&gt; generatesignature      Generate disk signature in MBR
+MbrFix /drive &lt;num&gt; readstate              Read state from byte 0x1b0 in MBR
+MbrFix /drive &lt;num&gt; writestate &lt;state&gt;     Write state to byte 0x1b0 in MBR
+</blockquote>
+<p>
+Drive numbering &lt;num&gt; starts on 0.
+</p>
+
+<p>
+Commands restorembr, fixmbr, generatesignature, writestate and clean will ask for confirmation unless /yes is included.
+</p>
+
+<p>
+If the /byte option is given for the readsignature command, the signature is returned as a byte array instead of as a DWORD.
+</p>
+
+<h2 id="toc_1.4">Return codes:</h2>
+
+<p>
+The program reports an errorlevel as 0 for OK and other values for errors.
+The exception to this is the ReadState command which returns the state as a return code as well as printing to stdout. Any errors for this command are returned as negative values because of this.
+</p>
+
+<h2 id="toc_1.5">Why do I need this utility?</h2>
+
+<p>
+Well, I was testing Windows Embedded XP using a virtual PC, and was booting Windows PE from a CD-ROM to partition a brand new harddisk (quite cheap, since it was virtual !). Using the diskpart.exe utility (found in Windows XP and Windows Server 2003, available as a download for Windows 2000), I created the partition, made it Active, assigned it a drive letter. I then used the format.exe utility to format it to NTFS (format C: /fs:ntfs).
+</p>
+
+<p>
+DISKPART&gt; detail part
+Partition 1
+Type: 07
+Hidden: No
+Active: Yes
+</p>
+
+<p>
+ Volume ###  Letter  Lable       Fs     Type        Size     Status     Info.
+ ----------  ---  -----------  -----  ----------  -------   ---------  --------
+</p>
+<ul>
+<li>
+Volume 1     C    WinXP        NTFS   Partition    149 MB   OK        System            
+
+</ul>
+            
+<p>
+I then mounted a network drive to my physical computer and copied the boot.ini, ntldr, ntdetect.com, windows folder, program files folder, etc. from the Windows Embedded XP image directory. Everything to make it boot.
+</p>
+
+<p>
+Well everything should be OK, so I rebooted the (virtual) computer and expected it to boot up Windows Embedded XP.
+</p>
+
+<p>
+But not so! It just sat there with a nice black screen. No error message at all.
+</p>
+
+<p>
+Some investigation later on the Internet, I found this very informative page by Daniel B. Sedory: <a href="http://www.geocities.com/thestarman3/asm/mbr/MBR_in_detail.htm,">http://www.geocities.com/thestarman3/asm/mbr/MBR_in_detail.htm,</a> containing a wealth of MBR info. The info on one of the pages states that the MBR code is installed on the drive when the Windows setup program runs and no MBR code exists already. Hmm.., seemed to be right on the mark.
+</p>
+
+<p>
+I searched further on the Internet, but the only utilities I found which could install MBR code was for other operating systems, like FDISK.exe /MBR for DOS (but I wouldn't boot to DOS...) or the fixmbr command in the Windows 2000/XP/2003 Recovery Console. Didn't want that either. Wanted something to work on a Windows 32 bit platform, to be able to fix the problem in other cases when using Win PE and just plain copying in the operating system files. So, then I was left to make the utility myself!
+</p>
+
+<p>
+Problem solved: After booting up Windows PE from CD again, the command   MBRFix /drive 0 fixmbr /yes   solved it all. Embedded XP booted like a charm.
+</p>
+
+<h2 id="toc_1.6">Samples:</h2>
+
+<p>
+C:\&gt; MbrFix /drive 0 listpartitions
+</p>
+<ol>
+<li>
+Boot Size (MB) Type
+
+</ol>
+<p>
+1  Yes     151001    6  DOS 3.31+ 16-bit FAT (over 32M)
+2          1623   12  WIN95 OSR2 32-bit FAT, LBA-mapped
+3             0    0  None
+4             0    0  None
+</p>
+
+<p>
+C:\&gt; MbrFix /drive 0 savembr Backup_MBR_0.bin
+</p>
+
+<p>
+C:\&gt; MbrFix /drive 0 restorembr Backup_MBR_0.bin
+You are about to Restore MBR,
+are you sure (Y/N)? Y
+</p>
+
+<p>
+C:\&gt; MbrFix /drive 0 fixmbr /yes
+</p>
+        
+<h2 id="toc_1.7">Readstate and Writestate:</h2>
+
+<p>
+The commands readstate and writestate use a byte at offset 0x1b0 to store state. The commands are only useful in a scenario where you use Windows PE to roll out other MS operating systems, and you have no other place to store information about where you are in the installation process. This location in the MBR is unused as far as known.
+</p>
+
+<h2 id="toc_1.8">Credits:</h2>
+
+<p>
+Daniel B. Sedory, for his compilation of information on <a href="http://www.geocities.com/thestarman3/asm/mbr/MBR_in_detail.htm">http://www.geocities.com/thestarman3/asm/mbr/MBR_in_detail.htm</a> and for his feedback on the program.
+</p>
+
+<h2 id="toc_1.9">User License Agreement:</h2>
+
+<p>
+The program is delivered AS-IS, that is without any form of guarantee. You may freely use the program for any legal purpose, and you may freely distribute it as long as this file is distributed along the program file.
+</p>
+
+<p>
+Incorrect use of this program may cause loss of all data on your disk-drives. All use of this program is at the risk of the user. Systemintegrasjon AS does not accept any liability for any damage the program might cause.
+</p>
+
+<h4 id="toc_1.9.0.1">If you do not accept these terms, you must delete the program, MbrFix.exe, at once!</h4>
+
+<p>
+Developed by K錼e Smith, 29. november 2004
+</p>
+
+      
+      <br>
+      <div class="pull-right">
+        <!-- JiaThis Button BEGIN -->
+        <div class="jiathis_style_24x24">
+          <a class="jiathis_button_qzone"></a>
+          <a class="jiathis_button_tsina"></a>
+          <a class="jiathis_button_weixin"></a>
+          <a class="jiathis_button_renren"></a>
+          <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jtico jtico_jiathis" target="_blank"></a>
+        </div>
+        <script type="text/javascript" src="http://v3.jiathis.com/code/jia.js" charset="utf-8"></script>
+        <!-- JiaThis Button END -->
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-8 col-md-offset-2 bg-clouds col-lg-8 col-lg-offset-2 col-xs-12 content-block">
+
+      <!-- Duoshuo Comment BEGIN -->
+      <div class="ds-thread"></div>
+      <script type="text/javascript">
+      var duoshuoQuery = {short_name:"adousj"};
+        (function() {
+          var ds = document.createElement('script');
+          ds.type = 'text/javascript';ds.async = true;
+          ds.src = 'http://static.duoshuo.com/embed.js';
+          ds.charset = 'UTF-8';
+          (document.getElementsByTagName('head')[0] 
+          || document.getElementsByTagName('body')[0]).appendChild(ds);
+        })();
+        </script>
+      <!-- Duoshuo Comment END -->
+
+    </div>
+  </div>
+</div>
+
+<script type="text/javascript" src="js/jquery-1.9.1.min.js"></script>
+<script type="text/javascript" src="bootstrap3/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="js/blog.js"></script>
+
+</body>
+</html>

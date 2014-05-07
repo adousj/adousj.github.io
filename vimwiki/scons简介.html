@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>scons简介</title>
+
+  <link rel="stylesheet" href="bootstrap3/css/bootstrap.min.css">
+  <link rel="stylesheet" href="bootstrap3/css/bootstrap-theme.min.css">
+  <link rel="stylesheet" href="Font-Awesome/css/font-awesome.min.css">
+  <link rel="stylesheet" href="css/style.css">
+
+</head>
+<body>
+
+<div class="navbar navbar-inverse bg-midnight-blue navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+        <span class="sr-only">Adou Wiki</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="#">Vimwiki</a>
+    </div>
+    <div class="collapse navbar-collapse">
+      <ul class="nav navbar-nav">
+        <li><a href="index.html">首页</a></li>
+        <li><a href="计划.html">计划</a></li>
+        <li><a href="学习计划.html">学习计划</a></li>
+        <li><a href="小小工具.html">小小工具</a></li>
+        <li><a href="娱乐.html">娱乐</a></li>
+        <li><a href="tips.html">tips</a></li>
+        <li><a href="about me.html">关于我</a></li>
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div>
+</div>
+
+<div class="container">
+  <div class="row">
+    <div class="col-md-8 col-md-offset-2 bg-clouds col-lg-8 col-lg-offset-2 col-xs-12 content-block" id="main-content">
+
+      
+<h1 id="toc_1">scons简介</h1>
+
+<h3 id="toc_1.0.1">一、概述</h3>
+<blockquote>
+scons是一个Python写的自动化构建工具，和GNU make相比优点明显：
+1、 移植性：python能运行的地方，就能运行scons
+2、 扩展性：理论上scons只是提供了python的类，scons使用者可以在这个类的基础上做所有python能做的事情。比如想把一个已经使用了Makefile大型工程切换到scons，就可以保留原来的Makefile，并用python解析Makefile中的编译选项、源/目标文件等，作为参数传递给scons，完成编译。
+3、 智能：Scons继承了autoconf/automake的功能，自动解析系统的include路径、typedef等；“以全局的观点来看所有的依赖关系”
+</blockquote>
+
+
+<p>
+二、scons文件
+</p>
+<blockquote>
+scons中可能出现的文件：
+SConstruct,Sconstruct,sconstruct,SConscript
+</blockquote>
+<blockquote>
+scons将在当前目录以下次序 SConstruct,Sconstruct,sconstruct 来搜索配置文件，从读取的第一个文件中读取相关配置。
+在配置文件SConstruct中可以使用函数SConscript()函数来定附属的配置文件。按惯例，这些附属配置文件被命名为”SConscript”，当然也可以使用任意其它名字。
+</blockquote>
+
+
+<p>
+三、scons的命令行参数
+</p>
+<blockquote>
+scons: 执行SConstruct中脚本
+scons -c   clean
+scons -Q  只显示编译信息，去除多余的打印信息
+scons -Q   --implicit-cache hello 保存依赖关系
+--implicit-deps-changed   强制更新依赖关系
+--implicit-deps-unchanged  强制使用原先的依赖关系，即使已经改变
+</blockquote>
+ 
+
+<p>
+四、SConstruct提供的方法
+</p>
+
+<p>
+1、Program：生成可执行文件
+</p>
+<blockquote>
+Program('hello.c')  编译hello.c可执行文件，根据系统自动生成(hello.exe on Windows; hello on POSIX)
+Program('hello','hello.c') 指定Output文件名(hello.exe on Windows; hello on POSIX)
+Program(['hello.c', 'file1.c', 'file2.c']) 编译多个文件，Output文件名以第一个文件命名
+Program(source = "hello.c",target = "hello")
+Program(target = "hello" , source = "hello.c")
+Program('hello', Split('hello.c file1.c file2.c')) 编译多个文件
+</blockquote>
+<blockquote>
+Program(Glob("*.c"))
+src = ["hello.c","foo.c"];Program(src)
+</blockquote>
+  
+<p>
+2、Object：生成目标文件
+</p>
+<blockquote>
+Object('hello.c') 编译hello.c目标文件，根据系统自动生成(hello.obj on Windows; hello.o on POSIX)
+</blockquote>
+ 
+<p>
+3、Library：生成静态/动态库文件
+</p>
+<blockquote>
+Library('foo', ['f1.c', 'f2.c', 'f3.c']) 编译library
+SharedLibrary('foo', ['f1.c', 'f2.c', 'f3.c']) 编译 shared library
+StaticLibrary('bar', ['f4.c', 'f5.c', 'f6.c']) 编译 static library
+</blockquote>
+<blockquote>
+库的使用：
+</blockquote>
+<blockquote>
+Program('prog.c', LIBS=['foo', 'bar'], LIBPATH='.') 连接库，不需加后缀或是前缀
+</blockquote>
+
+
+<p>
+4、SourceSignatures：判断源文件是否修改
+</p>
+<blockquote>
+SourceSignatures('MD5')     根据内容是否改变，默认方式
+SourceSignatures('timestamp') 根据修改时间
+</blockquote>
+
+ 
+
+<p>
+5、TargetSignatures：判断目标文件是否改变
+</p>
+<blockquote>
+TargetSignatures('build')   根据编译结果
+TargetSignatures('content')  根据文件内容，如果只是加了句注释，将不会被重新编译
+</blockquote>
+ 
+<p>
+6、Ignore：忽略依赖关系
+</p>
+<blockquote>
+Ignore(hello, 'hello.h')  忽略某个依赖关系
+</blockquote>
+
+ 
+
+<p>
+7、Depends：明确依赖关系
+</p>
+<blockquote>
+Depends(hello, 'other_file') 明确依赖关系 
+</blockquote>
+
+ 
+
+<p>
+8、SConscript：scons的配置文件。
+</p>
+<blockquote>
+源文件的目录结构如下：
+src：
+|    SConstruct
+|    test.cpp
+|    mA(目录)：
+|     SConscript
+|     func.cpp
+其中test.cpp为主文件，中调用func.cpp中定义的函数
+</blockquote>
+<blockquote>
+SConstruct内容如下：
+subobj = SConscript(['mA/SConscript'])  
+obj = subobj + Object(Glob("*.cpp"))  
+Program("test",list(obj))  
+</blockquote>
+<blockquote>
+SConscript内容 ：
+obj = Object(Glob("*.cpp"))  
+Return("obj")  
+</blockquote>
+<blockquote>
+上例中，在主目录中执行 scons就可以编译整个"工程"。SConstruct编译主目录中的test.cpp，并通过SConscript编译mA目录下的源文件，并最终生成可执行文件；SConscript用于编译mA中的func.cpp并把生成的func.o传递给主目录的SConstruct。
+</blockquote>
+
+  
+<p>
+10.env：环境变量
+</p>
+<blockquote>
+环境变量用于设置在编译过程中的各种参数，可以用下面的SConstruct打印环境变量的所有信息(实际上env就是一个python字典)
+可以使用如下的SConstruct查看环境变量的内容：
+</blockquote>
+       
+<p>
+env = Environment()  
+dict = env.Dictionary()  
+keys = dict.keys()  
+keys.sort()  
+for key in keys:  
+</p>
+<blockquote>
+print "construction variable = '%s', value = '%s'" % (key, dict[key])  
+</blockquote>
+<blockquote>
+环境变量的使用：
+env = Environment()   #创建默认的环境变量，默认scons会按编译器的默认选项来进行编译
+import os
+env = Environment(CC = 'gcc',CCFLAGS = '-O2') #创建并设置环境 变量
+env.Program('foo.c')
+</blockquote>
+<blockquote>
+环境变量的复制：
+env = Environment(CC = 'gcc')
+opt = env.Clone(CCFLAGS = '-O2')
+dbg = env.Clone(CCFLAGS = '-g')
+</blockquote>
+<blockquote>
+环境变量的替换：
+env = Environment(CCFLAGS = '-DDEFINE1')
+env.Replace(CCFLAGS = '-DDEFINE2')
+env.Program('foo.c') 
+环境变量的输入输出：用于统一多目录源文件的编译选项，如：
+src：
+|    SConstruct
+|    libstlport.a
+|    test.cpp
+|    include(目录)：
+|    foo.h
+|    mA(目录)：
+|    SConscript
+|    func.cpp
+</blockquote>
+<blockquote>
+test.cpp和mA/func.cpp都引用了include/foo.h,test.cpp调用了mA/func.cpp的功能函数,其中include/foo.h中定义了一个包含string类型的类。
+</blockquote>
+<pre>
+     SConstruct如下：
+env = Environment()  
+flags = env.ParseFlags(['-pthread -I/usr/include/stlport ',' -L .'])  
+env.MergeFlags(class_flags)  
+subobj = SConscript(['mA/SConscript'])  
+obj = subobj + env.Object(Glob("*.cpp"))  
+env.Program("test",list(obj),LIBS = ['libstlport.a'])  
+
+    mA/SConscrip如下:
+obj = Object(Glob("*.cpp"))  
+Return("obj")  
+</pre>
+<blockquote>
+不出意外的话上边的工程编译可以通过，但是运行的时候会Aborted。因为test.cpp,mA/func.cpp都使用了包含string类型的那个类，但是由于编译环境的不同，test.cpp认为string变量的大小是24字节, mA/func.cpp认为string变量的大小是4个字节(libstlport.a捣的鬼)。
+</blockquote>
+<blockquote>
+解决问题的办法就是环境变量输出，修改SConstruct和mA/SConscript如下：
+</blockquote>
+<pre>
+    SConstruct：
+env = Environment()  
+flags = env.ParseFlags(['-pthread -I/usr/include/stlport ',' -L .'])  
+env.MergeFlags(class_flags)  
+Export('env')  
+subobj = SConscript(['mA/SConscript'],exports = 'env')  
+obj = subobj + env.Object(Glob("*.cpp"))  
+env.Program("test",list(obj),LIBS = ['libstlport.a'])  
+ 
+    mA/SConscript:
+Import('env')  
+obj = env.Object(Glob("*.cpp"))  
+Return("obj")  
+</pre>
+
+      
+      <br>
+      <div class="pull-right">
+        <!-- JiaThis Button BEGIN -->
+        <div class="jiathis_style_24x24">
+          <a class="jiathis_button_qzone"></a>
+          <a class="jiathis_button_tsina"></a>
+          <a class="jiathis_button_weixin"></a>
+          <a class="jiathis_button_renren"></a>
+          <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jtico jtico_jiathis" target="_blank"></a>
+        </div>
+        <script type="text/javascript" src="http://v3.jiathis.com/code/jia.js" charset="utf-8"></script>
+        <!-- JiaThis Button END -->
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-8 col-md-offset-2 bg-clouds col-lg-8 col-lg-offset-2 col-xs-12 content-block">
+
+      <!-- Duoshuo Comment BEGIN -->
+      <div class="ds-thread"></div>
+      <script type="text/javascript">
+      var duoshuoQuery = {short_name:"adousj"};
+        (function() {
+          var ds = document.createElement('script');
+          ds.type = 'text/javascript';ds.async = true;
+          ds.src = 'http://static.duoshuo.com/embed.js';
+          ds.charset = 'UTF-8';
+          (document.getElementsByTagName('head')[0] 
+          || document.getElementsByTagName('body')[0]).appendChild(ds);
+        })();
+        </script>
+      <!-- Duoshuo Comment END -->
+
+    </div>
+  </div>
+</div>
+
+<script type="text/javascript" src="js/jquery-1.9.1.min.js"></script>
+<script type="text/javascript" src="bootstrap3/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="js/blog.js"></script>
+
+</body>
+</html>

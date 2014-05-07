@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>curl 登陆 renren</title>
+
+  <link rel="stylesheet" href="bootstrap3/css/bootstrap.min.css">
+  <link rel="stylesheet" href="bootstrap3/css/bootstrap-theme.min.css">
+  <link rel="stylesheet" href="Font-Awesome/css/font-awesome.min.css">
+  <link rel="stylesheet" href="css/style.css">
+
+</head>
+<body>
+
+<div class="navbar navbar-inverse bg-midnight-blue navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+        <span class="sr-only">Adou Wiki</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="#">Vimwiki</a>
+    </div>
+    <div class="collapse navbar-collapse">
+      <ul class="nav navbar-nav">
+        <li><a href="index.html">首页</a></li>
+        <li><a href="计划.html">计划</a></li>
+        <li><a href="学习计划.html">学习计划</a></li>
+        <li><a href="小小工具.html">小小工具</a></li>
+        <li><a href="娱乐.html">娱乐</a></li>
+        <li><a href="tips.html">tips</a></li>
+        <li><a href="about me.html">关于我</a></li>
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div>
+</div>
+
+<div class="container">
+  <div class="row">
+    <div class="col-md-8 col-md-offset-2 bg-clouds col-lg-8 col-lg-offset-2 col-xs-12 content-block" id="main-content">
+
+      
+<h1 id="toc_1">curl 登陆 renren</h1>
+
+
+<p>
+不能用啊~
+</p>
+<pre>
+#!/usr/bin/python
+# coding:UTF-8
+# CopyRight 2011 Adou XD ,All Rights Reserved
+
+'''
+maybe curl is a better choice
+'''
+
+import os
+
+class renren():
+    ''''''
+
+    def login(self ,email ,psd ):
+        logincmd = 'curl -d "email=%s&amp;password=%s&amp;icode=" -D cookie00.txt -b cookie00.txt http://www.renren.com/PLogin.do -o a.html'
+        cmd = logincmd % ( email , psd )
+        print cmd
+        os.system(cmd)
+        return True
+
+    def mainpage(self):
+        poststatuscmd = 'curl -o mapg.html -D cookie00.txt -b cookie00.txt http://www.renren.com/261753537'
+        cmd = poststatuscmd 
+        os.system(cmd)
+
+    def poststatus(self,msg):
+        poststatuscmd = 'curl -d "content=%s" -D cookie00.txt -b cookie00.txt http://status.renren.com/doing/updateNew.do'
+        cmd = poststatuscmd % msg 
+        os.system(cmd)
+
+    def postmainstatus(self,msg) :
+        postsmaincmd = 'curl -d "content=%s&amp;isAtHome=1" -D cookie00.txt -b cookie00.txt http://shell.renren.com/601122810/status'
+        cmd = postsmaincmd % msg 
+        os.system(cmd)
+
+if __name__ == "__main__":
+    me = renren()
+    me.login('username','passworld') 
+        #print 'Login Failed!'
+        #sys.exit()
+    me.mainpage()
+    #me.postmainstatus("Hello,Pyton!")
+</pre>
+  
+<p>
+cookie00.txt
+</p>
+<pre>
+HTTP/1.1 302 Found
+Server: nginx/1.0.10
+Date: Sun, 06 May 2012 12:07:20 GMT
+Connection: keep-alive
+Location: http://www.renren.com/Login.do?rf=r&amp;domain=renren.com&amp;origURL=http%3A%2F%2Fwww.renren.com%2F261753537
+Set-Cookie: anonymid=h1w24479-5atp0b; domain=.renren.com; path=/; expires=Fri, 05-May-2017 12:07:20 GMT
+Content-Length: 139
+</pre>
+
+      
+      <br>
+      <div class="pull-right">
+        <!-- JiaThis Button BEGIN -->
+        <div class="jiathis_style_24x24">
+          <a class="jiathis_button_qzone"></a>
+          <a class="jiathis_button_tsina"></a>
+          <a class="jiathis_button_weixin"></a>
+          <a class="jiathis_button_renren"></a>
+          <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jtico jtico_jiathis" target="_blank"></a>
+        </div>
+        <script type="text/javascript" src="http://v3.jiathis.com/code/jia.js" charset="utf-8"></script>
+        <!-- JiaThis Button END -->
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-8 col-md-offset-2 bg-clouds col-lg-8 col-lg-offset-2 col-xs-12 content-block">
+
+      <!-- Duoshuo Comment BEGIN -->
+      <div class="ds-thread"></div>
+      <script type="text/javascript">
+      var duoshuoQuery = {short_name:"adousj"};
+        (function() {
+          var ds = document.createElement('script');
+          ds.type = 'text/javascript';ds.async = true;
+          ds.src = 'http://static.duoshuo.com/embed.js';
+          ds.charset = 'UTF-8';
+          (document.getElementsByTagName('head')[0] 
+          || document.getElementsByTagName('body')[0]).appendChild(ds);
+        })();
+        </script>
+      <!-- Duoshuo Comment END -->
+
+    </div>
+  </div>
+</div>
+
+<script type="text/javascript" src="js/jquery-1.9.1.min.js"></script>
+<script type="text/javascript" src="bootstrap3/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="js/blog.js"></script>
+
+</body>
+</html>

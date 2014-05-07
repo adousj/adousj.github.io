@@ -1,0 +1,459 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>python time</title>
+
+  <link rel="stylesheet" href="bootstrap3/css/bootstrap.min.css">
+  <link rel="stylesheet" href="bootstrap3/css/bootstrap-theme.min.css">
+  <link rel="stylesheet" href="Font-Awesome/css/font-awesome.min.css">
+  <link rel="stylesheet" href="css/style.css">
+
+</head>
+<body>
+
+<div class="navbar navbar-inverse bg-midnight-blue navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+        <span class="sr-only">Adou Wiki</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="#">Vimwiki</a>
+    </div>
+    <div class="collapse navbar-collapse">
+      <ul class="nav navbar-nav">
+        <li><a href="index.html">首页</a></li>
+        <li><a href="计划.html">计划</a></li>
+        <li><a href="学习计划.html">学习计划</a></li>
+        <li><a href="小小工具.html">小小工具</a></li>
+        <li><a href="娱乐.html">娱乐</a></li>
+        <li><a href="tips.html">tips</a></li>
+        <li><a href="about me.html">关于我</a></li>
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div>
+</div>
+
+<div class="container">
+  <div class="row">
+    <div class="col-md-8 col-md-offset-2 bg-clouds col-lg-8 col-lg-offset-2 col-xs-12 content-block" id="main-content">
+
+      
+<h1 id="toc_1">python time</h1>
+<div class="toc">
+<ul>
+<li><a href="#toc_1">python time</a>
+<ul>
+<li><a href="#toc_1.1">4</a>
+<li><a href="#toc_1.2">3</a>
+<li><a href="#toc_1.3">2</a>
+<li><a href="#toc_1.4">1</a>
+</ul>
+</ul>
+</div>
+
+<h2 id="toc_1.1">4</h2>
+<pre>
+#把datetime转成字符串
+def datetime_toString(dt):
+    return dt.strftime("%Y-%m-%d-%H")
+
+#把字符串转成datetime
+def string_toDatetime(string):
+    return datetime.strptime(string, "%Y-%m-%d-%H")
+
+#把字符串转成时间戳形式
+def string_toTimestamp(strTime):
+    return time.mktime(string_toDatetime(strTime).timetuple())
+
+#把时间戳转成字符串形式
+def timestamp_toString(stamp):
+    return time.strftime("%Y-%m-%d-%H", tiem.localtime(stamp))
+
+#把datetime类型转外时间戳形式
+def datetime_toTimestamp(dateTim):
+    return time.mktime(dateTim.timetuple())
+</pre>
+
+
+<h2 id="toc_1.2">3</h2>
+<p>
+python 的内嵌time模板翻译及说明
+</p>
+  
+<p>
+一、简介
+</p>
+
+<p>
+  time模块提供各种操作时间的函数
+  说明：一般有两种表示时间的方式:
+</p>
+<blockquote>
+第一种是时间戳的方式(相对于1970.1.1 00:00:00以秒计算的偏移量),时间戳是惟一的
+第二种以数组的形式表示即(struct_time),共有九个元素，分别表示，同一个时间戳的struct_time会因为时区不同而不同
+year (four digits, e.g. 1998)
+month (1-12)
+day (1-31)
+hours (0-23)
+minutes (0-59)
+seconds (0-59)
+weekday (0-6, Monday is 0)
+Julian day (day in the year, 1-366)
+DST (Daylight Savings Time) flag (-1, 0 or 1) 是否是夏令时
+If the DST flag is 0, the time is given in the regular time zone;
+if it is 1, the time is given in the DST time zone;
+if it is -1, mktime() should guess based on the date and time.
+夏令时介绍：<a href="http://baike.baidu.com/view/100246.htm">http://baike.baidu.com/view/100246.htm</a>
+UTC介绍：<a href="http://wenda.tianya.cn/wenda/thread?tid=283921a9da7c5aef&amp;clk=wttpcts">http://wenda.tianya.cn/wenda/thread?tid=283921a9da7c5aef&amp;clk=wttpcts</a>
+</blockquote>
+    
+<p>
+二、函数介绍
+1.asctime()
+  asctime([tuple]) -&gt; string
+  将一个struct_time(默认为当时时间)，转换成字符串
+</p>
+<blockquote>
+Convert a time tuple to a string, e.g. 'Sat Jun 06 16:26:11 1998'.
+When the time tuple is not present, current time as returned by localtime()
+is used.
+</blockquote>
+        
+<p>
+2.clock()
+  clock() -&gt; floating point number
+  该函数有两个功能，
+  在第一次调用的时候，返回的是程序运行的实际时间；
+  以第二次之后的调用，返回的是自第一次调用后,到这次调用的时间间隔
+</p>
+  
+<p>
+  示例：
+</p>
+  
+
+
+<p>
+[python] view plaincopy
+01.import time  
+02.if _<em>name</em>_ == '_<em>main</em>_':  
+03.    time.sleep(1)  
+04.    print "clock1:%s" % time.clock()  
+05.    time.sleep(1)  
+06.    print "clock2:%s" % time.clock()  
+07.    time.sleep(1)  
+08.    print "clock3:%s" % time.clock()  
+</p>
+ 
+<p>
+  输出：
+  clock1:3.35238137808e-006
+  clock2:1.00004944763
+  clock3:2.00012040636
+  其中第一个clock输出的是程序运行时间
+  第二、三个clock输出的都是与第一个clock的时间间隔
+</p>
+  
+<p>
+3.sleep(...)
+  sleep(seconds)
+  线程推迟指定的时间运行，经过测试，单位为秒，但是在帮助文档中有以下这样一句话，这关是看不懂
+  “The argument may be a floating point number for subsecond precision.”
+</p>
+
+<p>
+4.ctime(...)
+  ctime(seconds) -&gt; string
+  将一个时间戳(默认为当前时间)转换成一个时间字符串
+  例如：
+  time.ctime()
+  输出为：'Sat Mar 28 22:24:24 2009'
+</p>
+        
+<p>
+5.gmtime(...)
+  gmtime([seconds]) -&gt; (tm_year, tm_mon, tm_day, tm_hour, tm_min,tm_sec, tm_wday, tm_yday, tm_isdst)
+  将一个时间戳转换成一个UTC时区(0时区)的struct_time，如果seconds参数未输入，则以当前时间为转换标准
+</p>
+  
+    
+<p>
+6.localtime(...)
+  localtime([seconds]) -&gt; (tm_year,tm_mon,tm_day,tm_hour,tm_min,tm_sec,tm_wday,tm_yday,tm_isdst)
+  将一个时间戳转换成一个当前时区的struct_time，如果seconds参数未输入，则以当前时间为转换标准
+</p>
+  
+        
+<p>
+7.mktime(...)
+  mktime(tuple) -&gt; floating point number
+  将一个以struct_time转换为时间戳
+</p>
+        
+<p>
+8.strftime(...)
+  strftime(format[, tuple]) -&gt; string
+  将指定的struct_time(默认为当前时间)，根据指定的格式化字符串输出
+  python中时间日期格式化符号：
+  %y 两位数的年份表示（00-99）
+  %Y 四位数的年份表示（000-9999）
+  %m 月份（01-12）
+  %d 月内中的一天（0-31）
+  %H 24小时制小时数（0-23）
+  %I 12小时制小时数（01-12） 
+  %M 分钟数（00=59）
+  %S 秒（00-59）
+</p>
+  
+<p>
+  %a 本地简化星期名称
+  %A 本地完整星期名称
+  %b 本地简化的月份名称
+  %B 本地完整的月份名称
+  %c 本地相应的日期表示和时间表示
+  %j 年内的一天（001-366）
+  %p 本地A.M.或P.M.的等价符
+  %U 一年中的星期数（00-53）星期天为星期的开始
+  %w 星期（0-6），星期天为星期的开始
+  %W 一年中的星期数（00-53）星期一为星期的开始
+  %x 本地相应的日期表示
+  %X 本地相应的时间表示
+  %Z 当前时区的名称
+</p>
+    
+<p>
+9.strptime(...)
+  strptime(string, format) -&gt; struct_time
+  将时间字符串根据指定的格式化符转换成数组形式的时间
+  例如：
+  2009-03-20 11:45:39  对应的格式化字符串为：%Y-%m-%d %H:%M:%S
+  Sat Mar 28 22:24:24 2009 对应的格式化字符串为：%a %b %d %H:%M:%S %Y
+</p>
+    
+<p>
+10.time(...)
+   time() -&gt; floating point number
+   返回当前时间的时间戳
+</p>
+
+<p>
+三、疑点
+1.夏令时
+  在struct_time中，夏令时好像没有用，例如
+  a = (2009, 6, 28, 23, 8, 34, 5, 87, 1)
+  b = (2009, 6, 28, 23, 8, 34, 5, 87, 0)
+  a和b分别表示的是夏令时和标准时间，它们之间转换为时间戳应该相关3600，但是转换后输出都为646585714.0
+</p>
+  
+<p>
+四、小应用
+1.python获取当前时间
+   time.time() 获取当前时间戳
+   time.localtime() 当前时间的struct_time形式
+   time.ctime() 当前时间的字符串形式
+</p>
+   
+<p>
+2.python格式化字符串  
+  格式化成2009-03-20 11:45:39形式
+  time.strftime("%Y-%m-%d %H:%M:%S", time.localtime()) 
+</p>
+  
+<p>
+  格式化成Sat Mar 28 22:24:24 2009形式
+  time.strftime("%a %b %d %H:%M:%S %Y", time.localtime()) 
+</p>
+  
+<p>
+3.将格式字符串转换为时间戳
+  a = "Sat Mar 28 22:24:24 2009"
+  b = time.mktime(time.strptime(a,"%a %b %d %H:%M:%S %Y"))
+</p>
+
+
+
+<h2 id="toc_1.3">2</h2>
+<p>
+0. 模块:
+import os, sys
+import time, datetime
+1. 得到当前时间
+(1) Based on time module:
+import os, sys, time, datetime
+startTime = time.localtime()
+注意这里: startTime
+&lt;type 'time.struct_time'&gt;
+(2) Based on datetime module:
+import os, sys, time, datetime
+nowTime = datetime.datetime.now()
+type(nowTime)
+&lt;type 'datetime.datetime'&gt;
+2. 日期转字符串:
+(1) str(xx)
+(2) time提供的函数:
+time.strftime([format], time)
+strStartTime = time.strftime('%Y-%m-%d %H:%M:%S', startTime)
+'2009-06-03 13:44:51'
+3. 字符串转日期:
+(1) 字符串转time:
+d = time.strptime(strStartTime, '%Y-%m-%d %H:%M:%S')
+(2009, 6, 3, 13, 44, 51, 2, 154, -1)
+type(d)
+&lt;type 'time.struct_time'&gt;
+(2) 字符串转datetime
+datetime的好处是可以实现方便的时间运算,比如 endTime - starTime,这在时间duration计算时非常方便.
+</p>
+<ol>
+<li>
+Convert string start time and end time to datetime.datetime 
+    startTime = datetime.datetime(tmpStartTime[0], tmpStartTime[1], tmpStartTime[2], tmpStartTime[3],  tmpStartTime[4], tmpStartTime[5] );
+
+</ol>
+<p>
+基于上面的转换.
+</p>
+
+
+<h2 id="toc_1.4">1</h2>
+<p>
+time.time()
+</p>
+
+<p>
+python常用的时间方法
+2007年六月2日 by 贝贝爸 Leave a reply ?
+我们先导入必须用到的一个module
+&gt;&gt;&gt; import time
+设置一个时间的格式，下面会用到
+&gt;&gt;&gt;ISOTIMEFORMAT=’%Y-%m-%d %X’
+看一下当前的时间，和其他很多语言相似这是从epoch（1970 年 1 月 1 日 00:00:00）开始到当前的秒数。
+&gt;&gt;&gt; time.time()
+1180759620.859
+上面的看不懂，换个格式来看看
+&gt;&gt;&gt; time.localtime()
+(2007, 6, 2, 12, 47, 7, 5, 153, 0)
+localtime返回tuple格式的时间，有一个和它类似的函数叫gmtime(),2个函数的差别是时区，gmtime()返回的是0时区的值，localtime返回的是当前时区的值。
+&gt;&gt;&gt; time.strftime( ISOTIMEFORMAT, time.localtime() )
+’2007-06-02 12:54:29′
+用上我们的时间格式定义了，使用strftime对时间做一个转换，如果取现在的时间，time.localtime() 可以不用。
+</p>
+
+<p>
+&gt;&gt;&gt; time.strftime( ISOTIMEFORMAT, time.localtime( time.time() ) )
+’2007-06-02 12:54:31′
+&gt;&gt;&gt; time.strftime( ISOTIMEFORMAT, time.gmtime( time.time() ) )
+’2007-06-02 04:55:02′
+上面展示了gmtime和localtime的区别。
+查看时区用
+&gt;&gt;&gt; time.timezone
+-28800
+上面的值是一个秒值，是当前时区和0时区相差的描述，-28800=-8*3600，即为东八区。
+</p>
+
+<p>
+帖几个简单的函数
+</p>
+
+<p>
+def ISOString2Time( s ):
+</p>
+<blockquote>
+'''
+convert a ISO format time to second
+from:2006-04-12 16:46:40 to:23123123
+把一个时间转化为秒
+'''
+return time.strptime( s, ISOTIMEFORMAT )
+</blockquote>
+<p>
+def Time2ISOString( s ):
+</p>
+<blockquote>
+'''
+convert second to a ISO format time
+from: 23123123 to: 2006-04-12 16:46:40
+把给定的秒转化为定义的格式
+'''
+return time.strftime( ISOTIMEFORMAT, time.localtime( float( s ) ) )
+</blockquote>
+<p>
+def dateplustime( d, t ):
+</p>
+<blockquote>
+'''
+d=2006-04-12 16:46:40
+t=2小时
+</blockquote>
+<p>
+   return  2006-04-12 18:46:40
+   计算一个日期相差多少秒的日期,time2sec是另外一个函数，可以处理，3天，13分钟，10小时等字符串，回头再来写这个，需要结合正则表达式。
+</p>
+<blockquote>
+'''
+return Time2ISOString( time.mktime( ISOString2Time( d ) )+time2sec( t ) )
+</blockquote>
+<p>
+def dateMinDate( d1, d2 ):
+</p>
+<blockquote>
+'''
+minus to iso format date,return seconds
+计算2个时间相差多少秒
+'''
+d1=ISOString2Time( d1 )
+d2=ISOString2Time( d2 )
+return time.mktime( d1 )-time.mktime( d2 )
+</blockquote>
+
+      
+      <br>
+      <div class="pull-right">
+        <!-- JiaThis Button BEGIN -->
+        <div class="jiathis_style_24x24">
+          <a class="jiathis_button_qzone"></a>
+          <a class="jiathis_button_tsina"></a>
+          <a class="jiathis_button_weixin"></a>
+          <a class="jiathis_button_renren"></a>
+          <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jtico jtico_jiathis" target="_blank"></a>
+        </div>
+        <script type="text/javascript" src="http://v3.jiathis.com/code/jia.js" charset="utf-8"></script>
+        <!-- JiaThis Button END -->
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-8 col-md-offset-2 bg-clouds col-lg-8 col-lg-offset-2 col-xs-12 content-block">
+
+      <!-- Duoshuo Comment BEGIN -->
+      <div class="ds-thread"></div>
+      <script type="text/javascript">
+      var duoshuoQuery = {short_name:"adousj"};
+        (function() {
+          var ds = document.createElement('script');
+          ds.type = 'text/javascript';ds.async = true;
+          ds.src = 'http://static.duoshuo.com/embed.js';
+          ds.charset = 'UTF-8';
+          (document.getElementsByTagName('head')[0] 
+          || document.getElementsByTagName('body')[0]).appendChild(ds);
+        })();
+        </script>
+      <!-- Duoshuo Comment END -->
+
+    </div>
+  </div>
+</div>
+
+<script type="text/javascript" src="js/jquery-1.9.1.min.js"></script>
+<script type="text/javascript" src="bootstrap3/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="js/blog.js"></script>
+
+</body>
+</html>

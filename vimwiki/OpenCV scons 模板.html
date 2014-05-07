@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>OpenCV scons 模板</title>
+
+  <link rel="stylesheet" href="bootstrap3/css/bootstrap.min.css">
+  <link rel="stylesheet" href="bootstrap3/css/bootstrap-theme.min.css">
+  <link rel="stylesheet" href="Font-Awesome/css/font-awesome.min.css">
+  <link rel="stylesheet" href="css/style.css">
+
+</head>
+<body>
+
+<div class="navbar navbar-inverse bg-midnight-blue navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+        <span class="sr-only">Adou Wiki</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="#">Vimwiki</a>
+    </div>
+    <div class="collapse navbar-collapse">
+      <ul class="nav navbar-nav">
+        <li><a href="index.html">首页</a></li>
+        <li><a href="计划.html">计划</a></li>
+        <li><a href="学习计划.html">学习计划</a></li>
+        <li><a href="小小工具.html">小小工具</a></li>
+        <li><a href="娱乐.html">娱乐</a></li>
+        <li><a href="tips.html">tips</a></li>
+        <li><a href="about me.html">关于我</a></li>
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div>
+</div>
+
+<div class="container">
+  <div class="row">
+    <div class="col-md-8 col-md-offset-2 bg-clouds col-lg-8 col-lg-offset-2 col-xs-12 content-block" id="main-content">
+
+      
+<h1 id="toc_1">OpenCV scons 模板</h1>
+
+<pre>
+env = Environment()
+env.Program(target='te',
+            source=['te.cpp'],
+            LIBS=['opencv_calib3d240','opencv_contrib240','opencv_core240',
+            'opencv_features2d240','opencv_flann240',
+            'opencv_gpu240','opencv_haartraining_engine',
+            'opencv_highgui240','opencv_imgproc240',
+            'opencv_legacy240','opencv_ml240',
+            'opencv_nonfree240','opencv_objdetect240',
+            'opencv_photo240','opencv_stitching240',
+            'opencv_ts240','opencv_video240',
+            'opencv_videostab240'],
+            LIBPATH=[r'D:\OpenCV24\opencv\build\x86\vc10\lib'],
+            CPPPATH=[r'D:\OpenCV24\opencv\build\include',r'D:\OpenCV24\opencv\build\include\opencv',r'D:\OpenCV24\opencv\build\include\opencv2']
+            )
+</pre>
+
+
+<p>
+浠婂ぉ鍙堟敼杩涗簡涓€鐐癸紝鍏跺疄涔熻涓嶄笂鏄笉鏄敼杩涳紝鍙槸鏀逛簡涓€涓嬪啓娉曘€?
+</p>
+
+<pre>
+import os
+import glob
+
+cvinclude = [r'D:\OpenCV24\opencv\build\include',r'D:\OpenCV24\opencv\build\include\opencv',r'D:\OpenCV24\opencv\build\include\opencv2']
+
+#dlibpath = r'D:\OpenCV24\opencv\build\x86\vc10\bin'
+#slibpath  = r'D:\OpenCV24\opencv\build\x86\vc10\staticlib'
+libpath = r'D:\OpenCV24\opencv\build\x86\vc10\lib'
+cvlibs = glob.glob(libpath+os.sep+'*.lib')
+cvlibs = [ os.path.splitext( os.path.basename(cvlib) )[0] for cvlib in cvlibs ]
+
+env = Environment()
+env.Program(target='main',
+            source=['main.c'],
+            LIBS=cvlibs,
+            LIBPATH=[libpath],
+            CPPPATH=cvinclude,
+            )
+  [[}}}]]
+</pre>
+
+      
+      <br>
+      <div class="pull-right">
+        <!-- JiaThis Button BEGIN -->
+        <div class="jiathis_style_24x24">
+          <a class="jiathis_button_qzone"></a>
+          <a class="jiathis_button_tsina"></a>
+          <a class="jiathis_button_weixin"></a>
+          <a class="jiathis_button_renren"></a>
+          <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jtico jtico_jiathis" target="_blank"></a>
+        </div>
+        <script type="text/javascript" src="http://v3.jiathis.com/code/jia.js" charset="utf-8"></script>
+        <!-- JiaThis Button END -->
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-8 col-md-offset-2 bg-clouds col-lg-8 col-lg-offset-2 col-xs-12 content-block">
+
+      <!-- Duoshuo Comment BEGIN -->
+      <div class="ds-thread"></div>
+      <script type="text/javascript">
+      var duoshuoQuery = {short_name:"adousj"};
+        (function() {
+          var ds = document.createElement('script');
+          ds.type = 'text/javascript';ds.async = true;
+          ds.src = 'http://static.duoshuo.com/embed.js';
+          ds.charset = 'UTF-8';
+          (document.getElementsByTagName('head')[0] 
+          || document.getElementsByTagName('body')[0]).appendChild(ds);
+        })();
+        </script>
+      <!-- Duoshuo Comment END -->
+
+    </div>
+  </div>
+</div>
+
+<script type="text/javascript" src="js/jquery-1.9.1.min.js"></script>
+<script type="text/javascript" src="bootstrap3/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="js/blog.js"></script>
+
+</body>
+</html>

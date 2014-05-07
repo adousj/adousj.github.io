@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Matlab 读写文本</title>
+
+  <link rel="stylesheet" href="bootstrap3/css/bootstrap.min.css">
+  <link rel="stylesheet" href="bootstrap3/css/bootstrap-theme.min.css">
+  <link rel="stylesheet" href="Font-Awesome/css/font-awesome.min.css">
+  <link rel="stylesheet" href="css/style.css">
+
+</head>
+<body>
+
+<div class="navbar navbar-inverse bg-midnight-blue navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+        <span class="sr-only">Adou Wiki</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="#">Vimwiki</a>
+    </div>
+    <div class="collapse navbar-collapse">
+      <ul class="nav navbar-nav">
+        <li><a href="index.html">首页</a></li>
+        <li><a href="计划.html">计划</a></li>
+        <li><a href="学习计划.html">学习计划</a></li>
+        <li><a href="小小工具.html">小小工具</a></li>
+        <li><a href="娱乐.html">娱乐</a></li>
+        <li><a href="tips.html">tips</a></li>
+        <li><a href="about me.html">关于我</a></li>
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div>
+</div>
+
+<div class="container">
+  <div class="row">
+    <div class="col-md-8 col-md-offset-2 bg-clouds col-lg-8 col-lg-offset-2 col-xs-12 content-block" id="main-content">
+
+      
+<h1 id="toc_1">Matlab 读写文本</h1>
+
+<p>
+例子
+</p>
+<pre>
+MAX_NUM = 600 ;
+
+fid = fopen('ooo3','r') ;
+imudata = zeros(MAX_NUM,6) ;
+i = 1 ;
+while 1
+    tline = fgetl(fid);
+    if ~ischar(tline)
+        break
+    end
+    nums = str2num(tline) ;
+    imudata(i,:) = nums ;
+    
+    i = i+1;
+    if i&gt;MAX_NUM
+        break
+    end
+end
+</pre>
+
+
+<p>
+在MATLAB中，来读取和写入文本文件是很简单的事。下面，就来简单介绍下。如果有其他问题，请留言。
+一、读取文本文件
+思路：
+1、用fopen来打开一个文件句柄
+2、用fgetl来获得文件中的一行，如果文件已经结束，fgetl会返回-1
+3、用fclose来关闭文件句柄
+比如，TIM_Grid_Data.txt的内容如下：
+0.1 0.1 151.031 -12.3144 -29.0245 3.11285
+0.1 0.2 120.232 -2.53284 -8.40095 3.3348
+0.1 0.3 136.481 -0.33173 -22.4462 3.598
+0.1 0.4 184.16 -18.2706 -54.0658 2.51696
+0.1 0.5 140.445 -6.99704 -21.2255 2.4202
+0.1 0.6 127.981 0.319132 -29.8315 3.11317
+0.1 0.7 106.174 -0.398859 -39.5156 3.97438
+0.1 0.8 105.867 -20.1589 -13.4927 11.6488
+0.1 0.9 117.294 -11.8907 -25.5828 4.97191
+0.1 1 79.457 -1.42722 -140.482 0.726493
+0.1 1.1 94.2203 -2.31433 -11.9207 4.71119
+那么可以用下面的代码来读取该文本文件：
+fid=fopen('TIM_Grid_Data.txt','r');
+best_data=[];
+while 1
+</p>
+<blockquote>
+tline=fgetl(fid);
+if ~ischar(tline),break;end
+tline=str2num(tline);
+best_data=[best_data;tline];
+</blockquote>
+<p>
+end
+fclose(fid);
+这样文本文件中的内容就读入到了best_data中了。
+二、写入文本文件
+思路：
+1、用fopen打开一个文件句柄，但要用“w+”或“r+”等修饰符，具体参看help fopen
+2、用fprintf写入数据
+3、用fclose来关闭文件句柄
+比如下面的程序：
+fid=fopen('Data.txt','a+');
+fprintf(fid,'Hello,Tim\r\n');
+fprintf(fid,'<a href="http://blog.sina.com.cn/pengtim');">http://blog.sina.com.cn/pengtim');</a>
+a=rand(1,10);
+fprintf(fid,'%g\r\n',a);
+fclose(fid);
+打开Data.txt文件，可以看到：
+Hello,Tim
+<a href="http://blog.sina.com.cn/pengtim0.655741">http://blog.sina.com.cn/pengtim0.655741</a>
+0.0357117
+0.849129
+0.933993
+0.678735
+0.75774
+0.743132
+0.392227
+0.655478
+0.171187
+所以，用MATLAB来进行操作文本文件是不是很简单啊。
+</p>
+
+      
+      <br>
+      <div class="pull-right">
+        <!-- JiaThis Button BEGIN -->
+        <div class="jiathis_style_24x24">
+          <a class="jiathis_button_qzone"></a>
+          <a class="jiathis_button_tsina"></a>
+          <a class="jiathis_button_weixin"></a>
+          <a class="jiathis_button_renren"></a>
+          <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jtico jtico_jiathis" target="_blank"></a>
+        </div>
+        <script type="text/javascript" src="http://v3.jiathis.com/code/jia.js" charset="utf-8"></script>
+        <!-- JiaThis Button END -->
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-8 col-md-offset-2 bg-clouds col-lg-8 col-lg-offset-2 col-xs-12 content-block">
+
+      <!-- Duoshuo Comment BEGIN -->
+      <div class="ds-thread"></div>
+      <script type="text/javascript">
+      var duoshuoQuery = {short_name:"adousj"};
+        (function() {
+          var ds = document.createElement('script');
+          ds.type = 'text/javascript';ds.async = true;
+          ds.src = 'http://static.duoshuo.com/embed.js';
+          ds.charset = 'UTF-8';
+          (document.getElementsByTagName('head')[0] 
+          || document.getElementsByTagName('body')[0]).appendChild(ds);
+        })();
+        </script>
+      <!-- Duoshuo Comment END -->
+
+    </div>
+  </div>
+</div>
+
+<script type="text/javascript" src="js/jquery-1.9.1.min.js"></script>
+<script type="text/javascript" src="bootstrap3/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="js/blog.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>web.py 十分钟简易博客</title>
+
+  <link rel="stylesheet" href="bootstrap3/css/bootstrap.min.css">
+  <link rel="stylesheet" href="bootstrap3/css/bootstrap-theme.min.css">
+  <link rel="stylesheet" href="Font-Awesome/css/font-awesome.min.css">
+  <link rel="stylesheet" href="css/style.css">
+
+</head>
+<body>
+
+<div class="navbar navbar-inverse bg-midnight-blue navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+        <span class="sr-only">Adou Wiki</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="#">Vimwiki</a>
+    </div>
+    <div class="collapse navbar-collapse">
+      <ul class="nav navbar-nav">
+        <li><a href="index.html">首页</a></li>
+        <li><a href="计划.html">计划</a></li>
+        <li><a href="学习计划.html">学习计划</a></li>
+        <li><a href="小小工具.html">小小工具</a></li>
+        <li><a href="娱乐.html">娱乐</a></li>
+        <li><a href="tips.html">tips</a></li>
+        <li><a href="about me.html">关于我</a></li>
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div>
+</div>
+
+<div class="container">
+  <div class="row">
+    <div class="col-md-8 col-md-offset-2 bg-clouds col-lg-8 col-lg-offset-2 col-xs-12 content-block" id="main-content">
+
+      
+<h1 id="toc_1">web.py 十分钟简易博客</h1>
+
+
+<p>
+<a href="http://blog.csdn.net/caleng/article/details/5712850">http://blog.csdn.net/caleng/article/details/5712850</a>
+</p>
+
+<h2 id="toc_1.1">一、web.py简介</h2>
+
+<p>
+web.py是一款轻量级的python web开发框架，简单、高效、学习成本低，特别适合作为python web开发的入门框架。官方站点：<a href="http://webpy.org/">http://webpy.org/</a>
+</p>
+
+
+<h2 id="toc_1.2">二、web.py安装</h2>
+
+<p>
+1、下载：<a href="http://webpy.org/static/web.py-0.33.tar.gz">http://webpy.org/static/web.py-0.33.tar.gz</a>
+</p>
+
+<p>
+2、解压并进入web.py-0.33目录，安装：python setup.py install
+</p>
+
+<h2 id="toc_1.3">三、创建简易博客</h2>
+
+<p>
+1、目录说明：主目录blog/，模板目录blog/templates
+</p>
+
+<p>
+2、在数据库“test”中创建表“entries”
+</p>
+
+<pre>
+CREATE TABLE entries (  
+    id INT AUTO_INCREMENT,  
+    title TEXT,  
+    content TEXT,  
+    posted_on DATETIME,  
+    primary key (id)  
+); 
+</pre>
+
+<p>
+3、在主目录创建blog.py，blog/blog.py
+</p>
+
+<pre>
+#载入框架
+import web
+#载入数据库操作model（稍后创建）
+import model
+#URL映射
+urls = (
+        '/', 'Index',
+        '/view/(/d+)', 'View',
+        '/new', 'New',
+        '/delete/(/d+)', 'Delete',
+        '/edit/(/d+)', 'Edit',
+        '/login', 'Login',
+        '/logout', 'Logout',
+        )
+app = web.application(urls, globals())
+#模板公共变量
+t_globals = {
+    'datestr': web.datestr,
+    'cookie': web.cookies,
+}
+#指定模板目录，并设定公共模板
+render = web.template.render('templates', base='base', globals=t_globals)
+#创建登录表单
+login = web.form.Form(
+                      web.form.Textbox('username'),
+                      web.form.Password('password'),
+                      web.form.Button('login')
+                      )
+#首页类
+class Index:
+    def GET(self):
+        login_form = login()
+        posts = model.get_posts()
+        return render.index(posts, login_form)
+    def POST(self):
+        login_form = login()
+        if login_form.validates():
+            if login_form.d.username == 'admin' /
+                and login_form.d.password == 'admin':
+                web.setcookie('username', login_form.d.username)
+        raise web.seeother('/')
+#查看文章类
+class View:
+    def GET(self, id):
+        post = model.get_post(int(id))
+        return render.view(post)
+#新建文章类
+class New:
+    form = web.form.Form(
+                         web.form.Textbox('title',
+                         web.form.notnull,
+                         size=30,
+                         description='Post title: '),
+                         web.form.Textarea('content',
+                         web.form.notnull,
+                         rows=30,
+                         cols=80,
+                         description='Post content: '),
+                         web.form.Button('Post entry'),
+                         )
+    def GET(self):
+        form = self.form()
+        return render.new(form)
+    def POST(self):
+        form = self.form()
+        if not form.validates():
+            return render.new(form)
+        model.new_post(form.d.title, form.d.content)
+        raise web.seeother('/')
+#删除文章类
+class Delete:
+    def POST(self, id):
+        model.del_post(int(id))
+        raise web.seeother('/')
+#编辑文章类
+class Edit:
+    def GET(self, id):
+        post = model.get_post(int(id))
+        form = New.form()
+        form.fill(post)
+        return render.edit(post, form)
+    def POST(self, id):
+        form = New.form()
+        post = model.get_post(int(id))
+        if not form.validates():
+            return render.edit(post, form)
+        model.update_post(int(id), form.d.title, form.d.content)
+        raise web.seeother('/')
+#退出登录
+class Logout:
+    def GET(self):
+        web.setcookie('username', '', expires=-1)
+        raise web.seeother('/')
+#定义404错误显示内容
+def notfound():
+    return web.notfound("Sorry, the page you were looking for was not found.")
+    
+app.notfound = notfound
+#运行
+if __name__ == '__main__':
+    app.run()
+</pre>
+  
+<p>
+4、在主目录创建model.py，blog/model.py
+</p>
+
+<pre>
+import web
+import datetime
+#数据库连接
+db = web.database(dbn = 'mysql', db = 'test', user = 'root', pw = '123456')
+#获取所有文章
+def get_posts():
+    return db.select('entries', order = 'id DESC')
+    
+#获取文章内容
+def get_post(id):
+    try:
+        return db.select('entries', where = 'id=$id', vars = locals())[0]
+    except IndexError:
+        return None
+#新建文章
+def new_post(title, text):
+    db.insert('entries',
+        title = title,
+        content = text,
+        posted_on = datetime.datetime.utcnow())
+#删除文章
+def del_post(id):
+    db.delete('entries', where = 'id = $id', vars = locals())
+    
+#修改文章
+def update_post(id, title, text):
+    db.update('entries',
+        where = 'id = $id',
+        vars = locals(),
+        title = title,
+        content = text)
+</pre>
+  
+<p>
+5、在模板目录依次创建：base.html、edit.html、index.html、new.html、view.html
+</p>
+
+<pre>
+&lt;!-- base.html --&gt;
+$def with (page)
+&lt;html&gt;
+    &lt;head&gt;
+        &lt;title&gt;My Blog&lt;/title&gt;
+        &lt;mce:style&gt;&lt;!--
+            #menu {
+                width: 200px;
+                float: right;
+            }
+        
+--&gt;&lt;/mce:style&gt;&lt;style mce_bogus="1"&gt;            #menu {
+                width: 200px;
+                float: right;
+            }
+        &lt;/style&gt;
+    &lt;/head&gt;
+    
+    &lt;body&gt;
+        &lt;ul id="menu"&gt;
+            &lt;li&gt;&lt;a href="/" mce_href=""&gt;Home&lt;/a&gt;&lt;/li&gt;
+            $if cookie().get('username'):
+                &lt;li&gt;&lt;a href="/new" mce_href="new"&gt;New Post&lt;/a&gt;&lt;/li&gt;
+        &lt;/ul&gt;
+        
+        $:page
+    &lt;/body&gt;
+&lt;/html&gt;
+
+&lt;!-- edit.html --&gt;
+$def with (post, form)
+&lt;h1&gt;Edit $form.d.title&lt;/h1&gt;
+&lt;form action="" method="post"&gt;
+    $:form.render()
+&lt;/form&gt;
+&lt;h2&gt;Delete post&lt;/h2&gt;
+&lt;form action="/delete/$post.id" method="post"&gt;
+    &lt;input type="submit" value="Delete post" /&gt;
+&lt;/form&gt;
+
+&lt;!-- index.html --&gt;
+$def with (posts, login_form)
+&lt;h1&gt;Blog posts&lt;/h1&gt;
+$if not cookie().get('username'):
+    &lt;form action="" method="post"&gt;
+    $:login_form.render()
+    &lt;/form&gt;
+$else:
+    Welcome $cookie().get('username')!&lt;a href="/logout" mce_href="logout"&gt;Logout&lt;/a&gt;
+&lt;ul&gt;
+    $for post in posts:
+        &lt;li&gt;
+            &lt;a href="/view/$post.id" mce_href="view/$post.id"&gt;$post.title&lt;/a&gt;
+            on $post.posted_on
+            $if cookie().get('username'):
+                &lt;a href="/edit/$post.id" mce_href="edit/$post.id"&gt;Edit&lt;/a&gt;
+                &lt;a href="/delete/$post.id" mce_href="delete/$post.id"&gt;Del&lt;/a&gt;
+        &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;!-- new.html --&gt;
+$def with (form)
+&lt;h1&gt;New Blog Post&lt;/h1&gt;
+&lt;form action="" method="post"&gt;
+$:form.render()
+&lt;/form&gt;
+
+&lt;!-- view.html --&gt;
+$def with (post)
+&lt;h1&gt;$post.title&lt;/h1&gt;
+$post.posted_on&lt;br /&gt;
+$post.content
+</pre>
+  
+<p>
+6、进入主目录在命令行下运行：python blog.py，将启动web服务，在浏览器输入：<a href="http://localhost:8080/">http://localhost:8080/</a>
+简易博客即已完成。
+</p>
+
+      
+      <br>
+      <div class="pull-right">
+        <!-- JiaThis Button BEGIN -->
+        <div class="jiathis_style_24x24">
+          <a class="jiathis_button_qzone"></a>
+          <a class="jiathis_button_tsina"></a>
+          <a class="jiathis_button_weixin"></a>
+          <a class="jiathis_button_renren"></a>
+          <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jtico jtico_jiathis" target="_blank"></a>
+        </div>
+        <script type="text/javascript" src="http://v3.jiathis.com/code/jia.js" charset="utf-8"></script>
+        <!-- JiaThis Button END -->
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-8 col-md-offset-2 bg-clouds col-lg-8 col-lg-offset-2 col-xs-12 content-block">
+
+      <!-- Duoshuo Comment BEGIN -->
+      <div class="ds-thread"></div>
+      <script type="text/javascript">
+      var duoshuoQuery = {short_name:"adousj"};
+        (function() {
+          var ds = document.createElement('script');
+          ds.type = 'text/javascript';ds.async = true;
+          ds.src = 'http://static.duoshuo.com/embed.js';
+          ds.charset = 'UTF-8';
+          (document.getElementsByTagName('head')[0] 
+          || document.getElementsByTagName('body')[0]).appendChild(ds);
+        })();
+        </script>
+      <!-- Duoshuo Comment END -->
+
+    </div>
+  </div>
+</div>
+
+<script type="text/javascript" src="js/jquery-1.9.1.min.js"></script>
+<script type="text/javascript" src="bootstrap3/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="js/blog.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>分类器训练翻译</title>
+
+  <link rel="stylesheet" href="bootstrap3/css/bootstrap.min.css">
+  <link rel="stylesheet" href="bootstrap3/css/bootstrap-theme.min.css">
+  <link rel="stylesheet" href="Font-Awesome/css/font-awesome.min.css">
+  <link rel="stylesheet" href="css/style.css">
+
+</head>
+<body>
+
+<div class="navbar navbar-inverse bg-midnight-blue navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+        <span class="sr-only">Adou Wiki</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="#">Vimwiki</a>
+    </div>
+    <div class="collapse navbar-collapse">
+      <ul class="nav navbar-nav">
+        <li><a href="index.html">首页</a></li>
+        <li><a href="计划.html">计划</a></li>
+        <li><a href="学习计划.html">学习计划</a></li>
+        <li><a href="小小工具.html">小小工具</a></li>
+        <li><a href="娱乐.html">娱乐</a></li>
+        <li><a href="tips.html">tips</a></li>
+        <li><a href="about me.html">关于我</a></li>
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div>
+</div>
+
+<div class="container">
+  <div class="row">
+    <div class="col-md-8 col-md-offset-2 bg-clouds col-lg-8 col-lg-offset-2 col-xs-12 content-block" id="main-content">
+
+      
+<h1 id="toc_1">分类器训练翻译</h1>
+<div class="toc">
+<ul>
+<li><a href="#toc_1">分类器训练翻译</a>
+<ul>
+<li><a href="#toc_1.1">介绍</a>
+<li><a href="#toc_1.2">产生样本</a>
+<li><a href="#toc_1.3">负样本</a>
+<li><a href="#toc_1.4">正样本</a>
+<li><a href="#toc_1.5">训练</a>
+<li><a href="#toc_1.6">应用</a>
+<ul>
+<li><a href="#toc_1.6.1">测试例子</a>
+</ul>
+<li><a href="#toc_1.7">性能评估</a>
+<li><a href="#toc_1.8">参考文献</a>
+</ul>
+</ul>
+</div>
+
+<h2 id="toc_1.1">介绍</h2>
+<p>
+本文介绍了怎样使用和训练 adaboost 分类器，以快速检测物体。一组过完备的
+haar-like 特征提供了简单分类器基础。典型的物体检测任务是人脸、眼睛和鼻子检测，同样还有
+logo 检测。
+本文例子是 logo 检测，因为 logo
+检测不需要大量的标记物体样本，相反，从一个原始样本模型可以导出许多派生物体（见下面
+createsamples 工具）。
+详细的训练/评估算法描述见文献[1][2]。
+</p>
+
+<h2 id="toc_1.2">产生样本</h2>
+<p>
+必须先收集训练样本，有两种样本模型：正样本和负样本。负样本不包含物体，正样本包含待检测的物体。
+</p>
+
+<h2 id="toc_1.3">负样本</h2>
+<p>
+负样本取自任意图片，不能包含待检测物体。负样本由背景描述文件记录，这是一个文本文件，每行包含负样本文件（包含相对描述文件的路径）。这个文件需要手工制作。注意：负样本、负样本图、背景样本或背景样本图，在本文中通用）。
+负样本描述文件例子：
+</p>
+<pre>
+#目录结构
+/img
+    img1.jpg
+    img2.jpg
+    
+bg.txt
+
+File bg.txt
+  img/img1.jpg
+  img/img2.jpg
+</pre>
+  
+<h2 id="toc_1.4">正样本</h2>
+<p>
+正样本使用 createsamples 工具创建。可创建于单个待检物体图像或之前标记图像集
+，单个物体图像可包含诸如公司 logo
+等，可通过改变检测物体的任意旋转、变色或变换背景等创制大量正样本。
+可以通过命令行参数设置数量和范围。
+命令参数：
+</p>
+<pre>
+-vec    &lt;vec-file-name&gt;     输出文件名，包含代训正样本
+-img    &lt;image-file-name&gt;   源物体图像，如公司 logo
+-bg     &lt;back-ground-file-name&gt; 背景描述文件，包含任意变换的待检测正样本
+-num    &lt;number-of-sample&gt;  产生的样本数
+-bgcolor    &lt;background-color&gt;
+ 背景颜色(默认灰色);即透明颜色，因为可能有压缩文件，颜色容差可通过
+ _bgthresh 指定，bgcolor-bgthresh 和 bgcolor + bgthresh
+ 中的所有像素认为是透明的。
+-bgthresh   &lt;background-color-threshold&gt;
+-inv    若指定，颜色将转置（倒置）
+-randinv    若指定，颜色将随意翻转
+-maxindev   &lt;max-intensity-deviation&gt;   样本前景像素最大灰度偏差
+-maxxangle  &lt;max-x-rotation-angle&gt;  最大旋转角度  用randians
+-maxyangle  &lt;max-y-rotation-angle&gt;
+-maxzangle  &lt;max-z-rotation-angle&gt;
+-show   若指定，显示每个样本，按 esc 将不再显示，很有用的 debug 选项
+-w      &lt;sample-width&gt;  输出样本宽度
+-h      &lt;sample-height&gt; 输出样本高度
+</pre>
+  
+<p>
+通过以下步骤产生样本：源图像三轴任意旋转，角度通过 max?angle 指定，然后
+[bg-color - bg-color-threashold] [bg-color- + bg-color-threshold]
+间的灰度认为透明，前景加入白噪声。如果 -inv 指定，翻转前景像素值；如果指定
+-randinv
+ ,可以任意选择是否翻转。最后，获得的图像将放在背景描述文件的背景中。若指定了
+ -w -h，将变为指定大小。存储在 -vec
+  参数文件中，正样本也可以从标记图像集获得，于背景描述文件类似，每行包含标记图像。第一行是目录名，然后是物体数量，然后是边界矩形坐标。
+  例如：
+</p>
+<pre>
+/img
+    img1.jpg
+    img2.jpg
+    
+info.txt
+file info.txt
+  img/img1.jpg 1 140 100 45 45
+  img/img2.jpg 2 100 200 50 50 50 30 25 25
+</pre>
+<p>
+图像 img1.jpg 含有一个物体边界矩形(140,100,45,45)。图像 img2.jpg
+包含两个物体。
+为从中创建正样本，需指定 -info 参数，而不是 -img
+</p>
+<pre>
+-info   &lt;collection-file-name&gt;  标记图像集的描述文件
+</pre>
+<p>
+这种情况创建样本方法如下。检测实体取自图片，归一化到样本大小，保存在输出文件中。如果没有失真，所以仅有的相关参数是 -w -h -show
+createsamples 工具可用于检测正样本文件中的样本。若用于此用途，只有 -vec -w -h
+参数指定。
+注：对于训练来说，正样本文件怎样产生无所谓，因为 createsamples
+工具仅是一种收集/穿件正样本响亮文件(.vec)的方式。
+</p>
+
+<h2 id="toc_1.5">训练</h2>
+<p>
+样本创建之后下一步是训练分类器，由 haartrainning 工具完成
+命令行参数：
+</p>
+<pre>
+-data   &lt;dir-name&gt;  分类器文件目录
+-vec    &lt;vec-file-name&gt;     正样本文件名(createsamples或其他创建)
+-bg     &lt;background-file-name&gt;  背景描述文件
+-npos   &lt;number-of-positive-samples&gt;
+-nneg   &lt;number-of-negative-samples&gt;
+    训练每一级分类器所用的正负样本数，推荐 npos=7000 nneg=3000
+-nstages    &lt;number-of-stages&gt;  训练的分类器级数
+-nsplits    &lt;number-of-stages&gt;
+ 决定分类器的弱分类器，如果是1，用简单的阈值分类器，如果&gt;=2，CART分类器（分
+ number-ofsplites 节点）
+-mem    &lt;memory-in-MB&gt;  可用的内存，越多训练越快
+-sym    (defaule)
+-nonsym     指定物体是否垂直对称，垂直对称加快训练过程，例如脸
+-minhitrate &lt;min-hit-rate&gt;  每级分类器最小正确率，总体正确率估计为
+         min-hit-rate^number-of-stage
+-maxfalsealarm  &lt;max-false-alarm-rate&gt;  每层最大错误率，总错误率估计为
+         max-false-alarm-rate^number-of-stages
+-weighttrimming &lt;weight-trimming&gt;   指定是否和多重修建比例，0.9很好
+-eqw
+-mode &lt;BASIC (default) | CORE | ALL &gt;   选择 haar-like 特征集，BASIC
+ 只有上下特征，ALL 使用搜有上下和45度旋转特征
+-w  &lt;sample-width&gt;
+-h  &lt;sample-heigth&gt;
+    训练样本大小(像素)，必须和创建的训练样本的大小一致(trainningsamples)
+</pre>
+<p>
+注：为使用多核处理器，需使用支持 openmp 标准的编译器
+</p>
+  
+<h2 id="toc_1.6">应用</h2>
+<p>
+可使用 opencv cvHaarDeteObject()函数，特别是 haarFaceDetect demo
+</p>
+<h3 id="toc_1.6.1">测试例子</h3>
+<p>
+为检测训练出的分类器性能，需要一组标记图像。若没有测试图像，可通过
+cveatesamples
+工具操作单个图像检测图。创建测试图步骤与创建训练样本过程相似，因为每个测试图像都是任意扭曲、比例缩放的任意变换位置的物体放在背景图中。
+如果 -img 和 -info 参数被指定，那么 createsamples
+将创建测试样本。测试样本将如描述文件的那样任意扭曲，放在任意位置。相应的描述行加到
+-info 参数文件中。
+-w 和 -h 命令指定纺织物体最小图片
+测试图像文件格式为：
+imageOrderNumber_x_y_width_height.jpg
+x y width height 是物体坐标，需与训练时背景图不同
+</p>
+
+<h2 id="toc_1.7">性能评估</h2>
+<p>
+可以通过 performance
+工具评估分类器性能，需要一组标记图像，应用分类输出性能，如检测到的物体、漏检物体、错误个数和其他信息
+命令行参数：
+</p>
+<pre>
+-data   &lt;dia-name&gt;  训练的分类器存储目录
+-info   &lt;collection-file-name&gt;  测试样本描述文件
+-maxSizeDiff    &lt;max-size-diff&gt;
+-maxPosDiff     &lt;max-pos-diff&gt;
+        指定参考和检测到的矩形一致评判标准，默认分别为1.5和0.3
+-sf &lt;scale-factor&gt;  指定参数，默认是1.2
+-w  &lt;sample-width&gt;  训练图像大小，必须与训练时一致，使用 haartraining
+-h  &lt;sample-height&gt;
+</pre>
+  
+<h2 id="toc_1.8">参考文献</h2>
+<p>
+[1] an exended set of haar-like feature for rapid object detection.
+[2] an empircal analysis of boosting alogrithms for rapid object with an
+extend set of haar-like features.
+</p>
+
+      
+      <br>
+      <div class="pull-right">
+        <!-- JiaThis Button BEGIN -->
+        <div class="jiathis_style_24x24">
+          <a class="jiathis_button_qzone"></a>
+          <a class="jiathis_button_tsina"></a>
+          <a class="jiathis_button_weixin"></a>
+          <a class="jiathis_button_renren"></a>
+          <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jtico jtico_jiathis" target="_blank"></a>
+        </div>
+        <script type="text/javascript" src="http://v3.jiathis.com/code/jia.js" charset="utf-8"></script>
+        <!-- JiaThis Button END -->
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-8 col-md-offset-2 bg-clouds col-lg-8 col-lg-offset-2 col-xs-12 content-block">
+
+      <!-- Duoshuo Comment BEGIN -->
+      <div class="ds-thread"></div>
+      <script type="text/javascript">
+      var duoshuoQuery = {short_name:"adousj"};
+        (function() {
+          var ds = document.createElement('script');
+          ds.type = 'text/javascript';ds.async = true;
+          ds.src = 'http://static.duoshuo.com/embed.js';
+          ds.charset = 'UTF-8';
+          (document.getElementsByTagName('head')[0] 
+          || document.getElementsByTagName('body')[0]).appendChild(ds);
+        })();
+        </script>
+      <!-- Duoshuo Comment END -->
+
+    </div>
+  </div>
+</div>
+
+<script type="text/javascript" src="js/jquery-1.9.1.min.js"></script>
+<script type="text/javascript" src="bootstrap3/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="js/blog.js"></script>
+
+</body>
+</html>

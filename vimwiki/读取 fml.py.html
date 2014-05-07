@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>读取 fml.py</title>
+
+  <link rel="stylesheet" href="bootstrap3/css/bootstrap.min.css">
+  <link rel="stylesheet" href="bootstrap3/css/bootstrap-theme.min.css">
+  <link rel="stylesheet" href="Font-Awesome/css/font-awesome.min.css">
+  <link rel="stylesheet" href="css/style.css">
+
+</head>
+<body>
+
+<div class="navbar navbar-inverse bg-midnight-blue navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+        <span class="sr-only">Adou Wiki</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="#">Vimwiki</a>
+    </div>
+    <div class="collapse navbar-collapse">
+      <ul class="nav navbar-nav">
+        <li><a href="index.html">首页</a></li>
+        <li><a href="计划.html">计划</a></li>
+        <li><a href="学习计划.html">学习计划</a></li>
+        <li><a href="小小工具.html">小小工具</a></li>
+        <li><a href="娱乐.html">娱乐</a></li>
+        <li><a href="tips.html">tips</a></li>
+        <li><a href="about me.html">关于我</a></li>
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div>
+</div>
+
+<div class="container">
+  <div class="row">
+    <div class="col-md-8 col-md-offset-2 bg-clouds col-lg-8 col-lg-offset-2 col-xs-12 content-block" id="main-content">
+
+      
+<h1 id="toc_1">FML 读取</h1>
+
+
+<p>
+读取时有点儿问题，后来发现每条最后都是以 "FML" 结尾。
+</p>
+<pre>
+#! /usr/bin/python
+# coding:cp936
+# CopyRight 2011 Adou XD , All Rights Reserved
+
+import os
+import sys
+import urllib
+import urllib2
+import re
+
+
+class fml() :
+    '''FMyLife
+    '''
+
+    sites = ("http://www.fmylife.com/%s?page=%d",    # home
+             "http://www.fmylife.com/tops/%s/day?page=%d", # day
+             "http://www.fmylife.com/tops/%s/week?page=%d", # week
+             "http://www.fmylife.com/tops/%s/month?page=%d", # month
+             "http://www.fmylife.com/tops/%s?page=%d" # all time
+             )
+    sorts = ( 'top' ,
+              'flop' ,
+              'comment',
+              'favorite'
+            )
+    
+    def __init__(self):
+        self.page = 0
+        self.site = fml.sites[0]
+        self.sortt = ''
+
+
+    def chose(self) :
+        print 'Time Period:'
+        print '---1-- Home'
+        print '---2-- Top of the day'
+        print '---3-- Top of the week'
+        print '---4-- Top of the month'
+        print '---5-- All time'
+        
+        num = -1
+        while num&lt;0 or num&gt;=len(fml.sites) :
+            num = input("&gt;&gt;") - 1
+        self.site = fml.sites[num]
+
+        if num != 0 :
+            self.chosesort()
+    
+    def chosesort(self) :
+        print 'Sorted by :'
+        print '---1-- Agreed'
+        print '---2-- Deserved'
+        print '---3-- Comment'
+        print '---4-- Favorite'
+
+        num = -1
+        while num&lt;0 or num&gt;=len(fml.sorts) :
+            num = input("&gt;&gt;") - 1
+        self.sortt = fml.sorts[num]
+
+    def read(self) :
+        '''read one page
+        '''
+        url = self.site % (self.sortt,self.page)
+        self.page += 1
+        sdata = urllib2.urlopen(url).read()
+        content = re.findall(r'(?&lt;=class="fmllink"&gt;).*?(?=&lt;/a&gt;)',sdata)
+
+        msg = []
+        story = ''
+        for line in content :
+            story += line
+            if 'FML' in line:
+                msg.append(story)
+                story = ''
+            
+        return msg
+
+
+if __name__ == "__main__":
+    fm = fml()
+    fm.chose()
+    msg = fm.read()
+
+    for ms in msg :
+        print
+        print ms
+</pre>
+
+      
+      <br>
+      <div class="pull-right">
+        <!-- JiaThis Button BEGIN -->
+        <div class="jiathis_style_24x24">
+          <a class="jiathis_button_qzone"></a>
+          <a class="jiathis_button_tsina"></a>
+          <a class="jiathis_button_weixin"></a>
+          <a class="jiathis_button_renren"></a>
+          <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jtico jtico_jiathis" target="_blank"></a>
+        </div>
+        <script type="text/javascript" src="http://v3.jiathis.com/code/jia.js" charset="utf-8"></script>
+        <!-- JiaThis Button END -->
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-8 col-md-offset-2 bg-clouds col-lg-8 col-lg-offset-2 col-xs-12 content-block">
+
+      <!-- Duoshuo Comment BEGIN -->
+      <div class="ds-thread"></div>
+      <script type="text/javascript">
+      var duoshuoQuery = {short_name:"adousj"};
+        (function() {
+          var ds = document.createElement('script');
+          ds.type = 'text/javascript';ds.async = true;
+          ds.src = 'http://static.duoshuo.com/embed.js';
+          ds.charset = 'UTF-8';
+          (document.getElementsByTagName('head')[0] 
+          || document.getElementsByTagName('body')[0]).appendChild(ds);
+        })();
+        </script>
+      <!-- Duoshuo Comment END -->
+
+    </div>
+  </div>
+</div>
+
+<script type="text/javascript" src="js/jquery-1.9.1.min.js"></script>
+<script type="text/javascript" src="bootstrap3/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="js/blog.js"></script>
+
+</body>
+</html>

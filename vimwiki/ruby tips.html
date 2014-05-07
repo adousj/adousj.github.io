@@ -1,0 +1,958 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>ruby tips</title>
+
+  <link rel="stylesheet" href="bootstrap3/css/bootstrap.min.css">
+  <link rel="stylesheet" href="bootstrap3/css/bootstrap-theme.min.css">
+  <link rel="stylesheet" href="Font-Awesome/css/font-awesome.min.css">
+  <link rel="stylesheet" href="css/style.css">
+
+</head>
+<body>
+
+<div class="navbar navbar-inverse bg-midnight-blue navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+        <span class="sr-only">Adou Wiki</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="#">Vimwiki</a>
+    </div>
+    <div class="collapse navbar-collapse">
+      <ul class="nav navbar-nav">
+        <li><a href="index.html">首页</a></li>
+        <li><a href="计划.html">计划</a></li>
+        <li><a href="学习计划.html">学习计划</a></li>
+        <li><a href="小小工具.html">小小工具</a></li>
+        <li><a href="娱乐.html">娱乐</a></li>
+        <li><a href="tips.html">tips</a></li>
+        <li><a href="about me.html">关于我</a></li>
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div>
+</div>
+
+<div class="container">
+  <div class="row">
+    <div class="col-md-8 col-md-offset-2 bg-clouds col-lg-8 col-lg-offset-2 col-xs-12 content-block" id="main-content">
+
+      
+<h1 id="toc_1">ruby tips</h1>
+
+<h2 id="toc_1.1">变量名</h2>
+<blockquote>
+$   全局变量
+@   实例变量
+@@  类变量
+^A  类名首字母大写
+</blockquote>
+
+<p>
+'a'.ord
+97.chr
+</p>
+
+<h3 id="toc_1.1.1">比较 = equal?</h3>
+<p>
+str1 = 'string'
+str2 = 'string'
+str1.object_id      #=&gt;84640
+str2.object_id      #=&gt;84620
+str1 == str2        #=&gt;true
+str1.equal?(str2)   #=&gt;false
+1 == 1.0            #=&gt;true
+</p>
+
+<h3 id="toc_1.1.2">class</h3>
+<p>
+'string'.class
+1.class
+1.object_id
+1.methods
+Fixnum.ancestors
+Fixnum.instance_methods
+1.kind_od? Fixnum
+Fixnum.kind_of? Class
+</p>
+
+<h2 id="toc_1.2">each</h2>
+<p>
+(1..100).each do |i|
+</p>
+<blockquote>
+puts i
+</blockquote>
+<p>
+end
+(1...100).each do |i|
+</p>
+<blockquote>
+puts i
+</blockquote>
+<p>
+end
+3.times do
+</p>
+<blockquote>
+put 'hello'
+</blockquote>
+<p>
+end
+1.upto(100) do |i|
+</p>
+<blockquote>
+puts i
+</blockquote>
+<p>
+end
+1.upto 100 do |i|
+</p>
+<blockquote>
+puts i
+</blockquote>
+<p>
+end
+</p>
+
+<p>
+%w[ days months minutes seconds ].each do |name|
+</p>
+<blockquote>
+puts name
+</blockquote>
+<p>
+end
+</p>
+
+<p>
+hash = { 'baxter'=&gt;'stephen','benford'=&gt;'charles'}
+hash.each do |key,values|
+</p>
+<blockquote>
+puts "#{values} #{key}"
+</blockquote>
+<p>
+end
+</p>
+
+<p>
+'hello world'.each_byte do |i|
+</p>
+<blockquote>
+puts i
+</blockquote>
+<p>
+end
+#=&gt; ascii 数字
+</p>
+
+<p>
+'hello world'.each_char do |i|
+</p>
+<blockquote>
+puts i
+</blockquote>
+<p>
+end
+#=&gt; char
+</p>
+
+<p>
+strs.each_line do |i|
+</p>
+<blockquote>
+puts i
+</blockquote>
+<p>
+end
+</p>
+
+<h2 id="toc_1.3">&lt;&lt;</h2>
+<p>
+1 &lt;&lt; 2      #=&gt;4
+['a', 'b'] &lt;&lt; 'c'   #=&gt;['a', 'b', 'c']
+a, b = 'hello', 'world'
+</p>
+
+<h2 id="toc_1.4">类</h2>
+<p>
+class Foo &lt; Object
+end
+class Fuc &lt; (user_input == "1" ? bar : baz )
+end
+</p>
+
+<h2 id="toc_1.5">debug</h2>
+<p>
+ruby -rdebug hello.rb
+</p>
+
+<h2 id="toc_1.6">time</h2>
+<p>
+Time.now
+Time::now
+</p>
+
+<h2 id="toc_1.7">array</h2>
+<p>
+a = [ 'ruby' , 'python' , 'prel' ]
+a[0..2]
+a[0...2]
+a[0,2]
+a[4,2]
+a.include? 'ruby'
+a *= 2
+a.sort
+a.uniq
+a.uniq!
+a.each_with_index do |item,index|
+</p>
+<blockquote>
+puts [ item , index ]
+</blockquote>
+<p>
+end
+a,b,*c,d = 1,2,3,4,5
+#=&gt;a=1 b=2 c=[3,4] d=5
+</p>
+
+<h3 id="toc_1.7.1">函数式</h3>
+<p>
+a.map{|item| item[1]}
+a.sort { |x,y| x.to_i &lt;=&gt; y.to_i }
+a.select { |i| i.include? 'a' }
+a.reject { |i| i.include? 'a' }
+a.inject(0) {|sum,i| sum+i}
+</p>
+
+<h2 id="toc_1.8">哈希表</h2>
+<p>
+month = {
+</p>
+<blockquote>
+'Jan'=&gt;1 , 'Feb'=&gt;2 , 'Mar'=&gt;3 , 'Apr'=&gt;4 , 'May'=&gt;5
+</blockquote>
+<p>
+}
+month['Feb']
+month = { Jan:1 , Feb:2 , Mar:3 , Apr:4 , May:5 }
+month.fetch :Jan    #=&gt;不在范围内的访问出错
+month.key? :Jan
+</p>
+
+<p>
+month.each do |en,num|
+</p>
+<blockquote>
+puts "#{en}  #{num}"
+</blockquote>
+<p>
+end
+</p>
+
+<p>
+month.map { |en,num| "#{en} is #{num}" }
+</p>
+
+<p>
+month.map.with_index { |(en,num),i| "#{i}. #{en} is #{num}" }
+</p>
+
+<h2 id="toc_1.9">数字</h2>
+<p>
+100000000000000000000000000000000000000000000000
+100_000_000
+2.11e10
+</p>
+
+<p>
+0x92E   #16
+0127    #8
+0b10011 #2
+</p>
+
+<table class='center'>
+<tr>
+<td>
+0x 0X
+</td>
+<td>
+16
+</td>
+</tr>
+<tr>
+<td>
+0o 0O 0
+</td>
+<td>
+10
+</td>
+</tr>
+<tr>
+<td>
+0d 0D 无
+</td>
+<td>
+8
+</td>
+</tr>
+<tr>
+<td>
+0b 0B
+</td>
+<td>
+2
+</td>
+</tr>
+</table>
+
+<p>
+1.infinite?
+1.finite?
+1.nan?
+</p>
+
+<p>
+-1.divmod(2)    #=&gt;[-4,1]
+-3.14.abs
+0.5772.ceil     @=&gt;1 大于等于的最小整数
+a ||= 0
+</p>
+
+<p>
+1.odd?
+</p>
+
+<h2 id="toc_1.10">输入输出</h2>
+<p>
+puts 'ddd'
+printf("%.2d\n",23.1023)
+$stderr     STDERR
+$stdout     STDOUT
+$stdin      STDIN
+$1
+$:      读入文件库时的搜索路径
+RUBY_VERSION
+gets.chop
+ARGV.join('+')
+ARGF
+</p>
+
+<p>
+File.open('filename') { |f|
+</p>
+<blockquote>
+puts f.read
+</blockquote>
+<p>
+}
+File.open('filename') do |f|
+</p>
+<blockquote>
+puts f.read
+</blockquote>
+<p>
+end
+File.open('filename','r:URF-16BE') { |f|
+</p>
+<blockquote>
+puts f.read.encoding
+</blockquote>
+<p>
+}
+<table class='center'>
+<tr>
+<td>
+r
+</td>
+<td>
+只读
+</td>
+<td>
+不存在则错误
+</td>
+</tr>
+<tr>
+<td>
+W
+</td>
+<td>
+只写
+</td>
+<td>
+总是新建
+</td>
+</tr>
+<tr>
+<td>
+I+
+</td>
+<td>
+读写
+</td>
+<td>
+不存在则错误
+</td>
+</tr>
+<tr>
+<td>
+a
+</td>
+<td>
+追加
+</td>
+<td>
+末尾 不存在则新建
+</td>
+</tr>
+<tr>
+<td>
+a+
+</td>
+<td>
+读写
+</td>
+<td>
+末尾 不存在则新建
+</td>
+</tr>
+<tr>
+<td>
+b
+</td>
+<td>
+二进制
+</td>
+<td>
+&nbsp;
+</td>
+</tr>
+</table>
+</p>
+
+<table class='center'>
+<tr>
+<td>
+RDONLY
+</td>
+<td>
+只读
+</td>
+</tr>
+<tr>
+<td>
+WRONLY
+</td>
+<td>
+&nbsp;
+</td>
+</tr>
+<tr>
+<td>
+rDWR
+</td>
+<td>
+&nbsp;
+</td>
+</tr>
+<tr>
+<td>
+APPEND
+</td>
+<td>
+&nbsp;
+</td>
+</tr>
+<tr>
+<td>
+CREAT
+</td>
+<td>
+&nbsp;
+</td>
+</tr>
+<tr>
+<td>
+EXCL
+</td>
+<td>
+&nbsp;
+</td>
+</tr>
+<tr>
+<td>
+NONBLOCK
+</td>
+<td>
+&nbsp;
+</td>
+</tr>
+<tr>
+<td>
+TRUNC
+</td>
+<td>
+&nbsp;
+</td>
+</tr>
+<tr>
+<td>
+NONCTTY
+</td>
+<td>
+&nbsp;
+</td>
+</tr>
+<tr>
+<td>
+BINARY
+</td>
+<td>
+&nbsp;
+</td>
+</tr>
+<tr>
+<td>
+SYNC
+</td>
+<td>
+&nbsp;
+</td>
+</tr>
+</table>
+
+<p>
+File.open('a.txt','r+b') { |f|
+</p>
+<blockquote>
+f.pos
+f.read(3)
+f.pos
+f.gets
+f.seek(-1,File::SEEK_END)
+f.getc
+f.readchar      #与getc相同，只是不存在时会发生错误
+</blockquote>
+<p>
+}
+<table class='center'>
+<tr>
+<td>
+SEEK_SET
+</td>
+<td>
+开头
+</td>
+</tr>
+<tr>
+<td>
+SEEK_CUR
+</td>
+<td>
+当前
+</td>
+</tr>
+<tr>
+<td>
+SEEK_END
+</td>
+<td>
+结尾
+</td>
+</tr>
+</table>
+</p>
+
+<p>
+require 'stringio'
+buf = String.new
+sio = StringIO.new(buf)
+$stderr = #stdout = sio
+warn 'wrong'
+$stdout = STDOUT
+puts buf
+</p>
+
+<h2 id="toc_1.11">类型转化</h2>
+<p>
+.to_i
+.to_s
+.to_f
+</p>
+
+<h2 id="toc_1.12">Math</h2>
+<p>
+Math.acos(x)
+Math.log(x)
+Math::sqrt(x)
+Math::E
+Math::PI
+</p>
+
+<h2 id="toc_1.13">String</h2>
+<p>
+str = String.new
+str &lt;&lt; "hello" &lt;&lt; ' ' &lt;&lt; "world" &lt;&lt; 75
+str.upcase
+str.encoding
+str.bytesize
+</p>
+
+<p>
+'string'.size
+'string'.length
+相同 语法糖
+</p>
+
+<h2 id="toc_1.14">shell `</h2>
+<p>
+ls = <code>ls</code>
+dat = <code>date</code>
+</p>
+
+<h1 id="toc_2">Encoding</h1>
+<p>
+Encoding.name_list
+Encoding.find('CP1258')
+</p>
+<ol>
+<li>
+-<strong>- coding:utf-8 -</strong>-
+
+</ol>
+<p>
+str.force_encoding('CP1258')
+</p>
+
+<h2 id="toc_2.1">百分号记法</h2>
+<table class='center'>
+<tr>
+<td>
+%!hoge!
+</td>
+<td>
+字符串 转义符 公式有效
+</td>
+</tr>
+<tr>
+<td>
+%q!hoge!
+</td>
+<td>
+字符串 转义符 公式无效
+</td>
+</tr>
+<tr>
+<td>
+%Q!hoge!
+</td>
+<td>
+字符串 转义符 公式有效
+</td>
+</tr>
+<tr>
+<td>
+%x!hoge!
+</td>
+<td>
+与反引号相同 公式有效
+</td>
+</tr>
+<tr>
+<td>
+%r!hoge!
+</td>
+<td>
+正则表达式
+</td>
+</tr>
+<tr>
+<td>
+%w!hoge!
+</td>
+<td>
+字符串数组 用空格隔开
+</td>
+</tr>
+<tr>
+<td>
+%W!hoge!
+</td>
+<td>
+同上 转义符 公式有效
+</td>
+</tr>
+<tr>
+<td>
+%s!hoge!
+</td>
+<td>
+Symbol 字面量
+</td>
+</tr>
+</table>
+
+<p>
+[ ]   <sup><small> </small></sup>   ( )
+count = database_connector.get_int(&lt;&lt;"EOS" % author.id)
+</p>
+<blockquote>
+SELECT COUNT(*)
+FROM BOOK
+WHERE BOOK.AUTHOR_ID = %D
+</blockquote>
+<p>
+EOS
+if something?
+</p>
+<blockquote>
+database_connector.search &lt;&lt;-"SQL"
+Select *
+FROM BOOK
+WHERE expired_at &lt;= CURRENT_DATA
+SQL
+</blockquote>
+<p>
+end
+</p>
+
+<h2 id="toc_2.2">注释</h2>
+<p>
+=begin
+...
+end
+</p>
+
+<p>
+#
+</p>
+
+<h2 id="toc_2.3">正则表达式</h2>
+<p>
+if /&lt;a href="(.*?)"[&gt;]&gt;/ =~ str
+</p>
+<blockquote>
+puts 'find' + $1
+</blockquote>
+<p>
+end
+str = str.gsub(/solomon grundy/,'hippopotamus')
+str = str.gsub(/solomon grundy/) {"#{$1}."}
+</p>
+
+<p>
+str.scan
+</p>
+
+<h2 id="toc_2.4">内置变量</h2>
+<p>
+$stderr     STDERR
+$stdout     STDOUT
+$stdin      STDIN
+$1
+$:      读入文件库时的搜索路径
+RUBY_VERSION
+_<em>FILE</em>_        当前执行的源文件名称
+_<em>LINE</em>_       当前指定的
+_<em>ENCODING</em>_    当前文件编码
+</p>
+
+<p>
+gets.chop
+ARGV.join('+')
+ARGF
+</p>
+
+<h2 id="toc_2.5">条件</h2>
+<p>
+var = a ? b : c
+</p>
+
+<p>
+if condition1 then
+</p>
+<blockquote>
+do_something1
+</blockquote>
+<p>
+elsif condition2 then
+</p>
+<blockquote>
+do_something2
+</blockquote>
+<p>
+else
+</p>
+<blockquote>
+do_something3
+</blockquote>
+<p>
+end
+do_something if condition
+</p>
+
+<p>
+unless condition
+</p>
+<blockquote>
+puts 'condition is false'
+</blockquote>
+<p>
+end
+do_something unless condition
+</p>
+
+<p>
+case value
+when 1 then
+</p>
+<blockquote>
+do_something1
+</blockquote>
+<p>
+when 2,3 then
+</p>
+<blockquote>
+do_something2
+</blockquote>
+<p>
+when [4,5]
+</p>
+<blockquote>
+do_something3
+</blockquote>
+<p>
+when 6..10
+</p>
+<blockquote>
+not_execute
+</blockquote>
+<p>
+else
+</p>
+<blockquote>
+do_something4
+</blockquote>
+<p>
+end
+</p>
+
+<p>
+puts (1..9) === 2
+</p>
+
+<p>
+begin
+</p>
+<blockquote>
+do_something
+</blockquote>
+<p>
+rescue ArgumentError =&gt; error then
+</p>
+<blockquote>
+puts error.message
+</blockquote>
+<p>
+rescue TypeError
+</p>
+<blockquote>
+do_something2
+</blockquote>
+<p>
+ensure
+</p>
+<blockquote>
+puts 'ensure part'
+</blockquote>
+<p>
+end
+</p>
+
+<p>
+catch(:exit) {
+</p>
+<blockquote>
+loop do
+loop do
+throw :exit
+end
+end
+</blockquote>
+<p>
+}
+</p>
+
+<p>
+def some_method(a=0)
+</p>
+<blockquote>
+return a,1,2,3
+</blockquote>
+<p>
+end
+</p>
+
+<p>
+proc = Proc.new { puts 'ddd' }
+</p>
+
+<p>
+attr_reader
+attr_writer
+attr_accessor
+</p>
+
+      
+      <br>
+      <div class="pull-right">
+        <!-- JiaThis Button BEGIN -->
+        <div class="jiathis_style_24x24">
+          <a class="jiathis_button_qzone"></a>
+          <a class="jiathis_button_tsina"></a>
+          <a class="jiathis_button_weixin"></a>
+          <a class="jiathis_button_renren"></a>
+          <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jtico jtico_jiathis" target="_blank"></a>
+        </div>
+        <script type="text/javascript" src="http://v3.jiathis.com/code/jia.js" charset="utf-8"></script>
+        <!-- JiaThis Button END -->
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-8 col-md-offset-2 bg-clouds col-lg-8 col-lg-offset-2 col-xs-12 content-block">
+
+      <!-- Duoshuo Comment BEGIN -->
+      <div class="ds-thread"></div>
+      <script type="text/javascript">
+      var duoshuoQuery = {short_name:"adousj"};
+        (function() {
+          var ds = document.createElement('script');
+          ds.type = 'text/javascript';ds.async = true;
+          ds.src = 'http://static.duoshuo.com/embed.js';
+          ds.charset = 'UTF-8';
+          (document.getElementsByTagName('head')[0] 
+          || document.getElementsByTagName('body')[0]).appendChild(ds);
+        })();
+        </script>
+      <!-- Duoshuo Comment END -->
+
+    </div>
+  </div>
+</div>
+
+<script type="text/javascript" src="js/jquery-1.9.1.min.js"></script>
+<script type="text/javascript" src="bootstrap3/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="js/blog.js"></script>
+
+</body>
+</html>

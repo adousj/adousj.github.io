@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>毕设程序</title>
+
+  <link rel="stylesheet" href="bootstrap3/css/bootstrap.min.css">
+  <link rel="stylesheet" href="bootstrap3/css/bootstrap-theme.min.css">
+  <link rel="stylesheet" href="Font-Awesome/css/font-awesome.min.css">
+  <link rel="stylesheet" href="css/style.css">
+
+</head>
+<body>
+
+<div class="navbar navbar-inverse bg-midnight-blue navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+        <span class="sr-only">Adou Wiki</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="#">Vimwiki</a>
+    </div>
+    <div class="collapse navbar-collapse">
+      <ul class="nav navbar-nav">
+        <li><a href="index.html">首页</a></li>
+        <li><a href="计划.html">计划</a></li>
+        <li><a href="学习计划.html">学习计划</a></li>
+        <li><a href="小小工具.html">小小工具</a></li>
+        <li><a href="娱乐.html">娱乐</a></li>
+        <li><a href="tips.html">tips</a></li>
+        <li><a href="about me.html">关于我</a></li>
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div>
+</div>
+
+<div class="container">
+  <div class="row">
+    <div class="col-md-8 col-md-offset-2 bg-clouds col-lg-8 col-lg-offset-2 col-xs-12 content-block" id="main-content">
+
+      
+<h1 id="toc_1">毕设程序</h1>
+
+
+<h2 id="toc_1.1">PWM 测试成功</h2>
+
+<p>
+<a href="L3G4200D 各种设置.html">L3G4200D 各种设置</a>
+</p>
+
+<p>
+<a href="ADXL345 各种设置.html">ADXL345 各种设置</a>
+</p>
+
+
+<h2 id="toc_1.2">adxl345 通信速度</h2>
+<p>
+由于通信速度限制，使用400 kHz I2C时，最大输出数据速
+率为800 Hz，与I2C通信速度按比例呈线性变化。例如，使
+用100 kHz I2C时，ODR最大限值为200 Hz。以高于推荐的
+最大值和最小值范围的输出数据速率运行，可能会对加速
+度数据产生不良影响，包括采样丢失或额外噪声。
+</p>
+
+
+<h2 id="toc_1.3">adxl345 校准</h2>
+<p>
+X_CALIB = –(OUTPUT (X) ÷ 4)
+Y_CALIB = –(OUTPUT (Y) ÷ 4)
+Z_CALIB = –((OUTPUT (Z) – 256) ÷ 4)
+</p>
+
+
+<h2 id="toc_1.4">读出了 imu 数据</h2>
+<p>
+我把数据放到了文本中 ， 用 c 语言竟然不能逐行读取 。
+</p>
+
+<h2 id="toc_1.5">/100 和 *0.01 还是有区别的</h2>
+
+<h2 id="toc_1.6">中断函数</h2>
+<p>
+又看见了系统时钟 systick ， 用它做中断简单易行 。 比 time1 好 。
+</p>
+
+
+<h2 id="toc_1.7">逐行调试</h2>
+<p>
+逐行调试是个好东西
+&lt;F5&gt;    运行
+&lt;F7&gt;    编译
+&lt;F9&gt;    断点
+&lt;F10&gt;   step out
+&lt;F11&gt;   step in
+</p>
+
+<h2 id="toc_1.8">iumInit函数</h2>
+<p>
+应该先是一个测试 ， 读两个芯片 id ， 然后初始化 ， 之后延时200ms
+</p>
+
+<h2 id="toc_1.9">版本控制啊</h2>
+<p>
+本来想好了是管理好版本的 ， 但是写写还是乱了 ， 到处改来改去 ，
+都忘记哪个是改过的了 。
+</p>
+
+<h2 id="toc_1.10">ADXL地址</h2>
+<p>
+刚刚看了 I2CMasterSlaveAddrSet() 函数 ， 需要的是 7 位地址 ，
+所以应该是0x53 , 而不是 0xA6 。
+然后初始化就成功了 。
+</p>
+
+<h2 id="toc_1.11">电池电压低</h2>
+<p>
+今天刚刚上电 ， 芯片总是连接不上 ， 或者下载到最后就失败了，看了一下电压 ，
+2.17v？ 应该没这么低 ， 但是确实是电压太低了 ， 换了一个电池就好了。
+</p>
+
+<h2 id="toc_1.12">调试ADXL345</h2>
+<p>
+l3g4200读取温度寄存器值T，计算公式：温度=（256-T)/10
+</p>
+
+<h2 id="toc_1.13">锁死 (续)</h2>
+<p>
+已经确定不是锁死的问题 ， 但是为了保险起见 ， 还是保留3秒延时为好 。
+</p>
+<h2 id="toc_1.14">锁死</h2>
+<p>
+为了防止jtag锁死 ， 虽然我之前很自信 ， 可是现在没办法 ， 有 bug 就疑神疑鬼
+，在每个主程序中加入类似 jtag_wait() 的函数 ， 复位后等待 jtag 。
+看了网上评论 ， 延时似乎可以解决问题 ， 所以：
+</p>
+<h5 id="toc_1.14.0.0.1">在每个主程序开头加入 delayms(3000) ;</h5>
+
+<h2 id="toc_1.15">I2C</h2>
+<p>
+lm3s811 的 i2c 确实不是很明晰 ， 我的主要疑点是单字节的读取 。
+</p>
+
+
+<h2 id="toc_1.16">延时 delayms</h2>
+<pre>
+#define delayms(x) SysCtlDelay(SysCtlClockGet()/3000*x)
+</pre>
+<p>
+开始时，没注意数据大小 ， 写成了：
+</p>
+<pre>
+#define delayms(x) SysCtlDelay(x*SysCtlClockGet()/3000)
+</pre>
+<p>
+从左向右计算 , 当时钟为50MHz时 ， x*SysCtlClockGet() = x*5e7 , 容易超过
+long int 的范围 。
+</p>
+
+      
+      <br>
+      <div class="pull-right">
+        <!-- JiaThis Button BEGIN -->
+        <div class="jiathis_style_24x24">
+          <a class="jiathis_button_qzone"></a>
+          <a class="jiathis_button_tsina"></a>
+          <a class="jiathis_button_weixin"></a>
+          <a class="jiathis_button_renren"></a>
+          <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jtico jtico_jiathis" target="_blank"></a>
+        </div>
+        <script type="text/javascript" src="http://v3.jiathis.com/code/jia.js" charset="utf-8"></script>
+        <!-- JiaThis Button END -->
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-8 col-md-offset-2 bg-clouds col-lg-8 col-lg-offset-2 col-xs-12 content-block">
+
+      <!-- Duoshuo Comment BEGIN -->
+      <div class="ds-thread"></div>
+      <script type="text/javascript">
+      var duoshuoQuery = {short_name:"adousj"};
+        (function() {
+          var ds = document.createElement('script');
+          ds.type = 'text/javascript';ds.async = true;
+          ds.src = 'http://static.duoshuo.com/embed.js';
+          ds.charset = 'UTF-8';
+          (document.getElementsByTagName('head')[0] 
+          || document.getElementsByTagName('body')[0]).appendChild(ds);
+        })();
+        </script>
+      <!-- Duoshuo Comment END -->
+
+    </div>
+  </div>
+</div>
+
+<script type="text/javascript" src="js/jquery-1.9.1.min.js"></script>
+<script type="text/javascript" src="bootstrap3/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="js/blog.js"></script>
+
+</body>
+</html>

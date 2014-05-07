@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>uC OS</title>
+
+  <link rel="stylesheet" href="bootstrap3/css/bootstrap.min.css">
+  <link rel="stylesheet" href="bootstrap3/css/bootstrap-theme.min.css">
+  <link rel="stylesheet" href="Font-Awesome/css/font-awesome.min.css">
+  <link rel="stylesheet" href="css/style.css">
+
+</head>
+<body>
+
+<div class="navbar navbar-inverse bg-midnight-blue navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+        <span class="sr-only">Adou Wiki</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="#">Vimwiki</a>
+    </div>
+    <div class="collapse navbar-collapse">
+      <ul class="nav navbar-nav">
+        <li><a href="index.html">首页</a></li>
+        <li><a href="计划.html">计划</a></li>
+        <li><a href="学习计划.html">学习计划</a></li>
+        <li><a href="小小工具.html">小小工具</a></li>
+        <li><a href="娱乐.html">娱乐</a></li>
+        <li><a href="tips.html">tips</a></li>
+        <li><a href="about me.html">关于我</a></li>
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div>
+</div>
+
+<div class="container">
+  <div class="row">
+    <div class="col-md-8 col-md-offset-2 bg-clouds col-lg-8 col-lg-offset-2 col-xs-12 content-block" id="main-content">
+
+      
+<h1 id="toc_1">uC/OS</h1>
+
+<p>
+ucos 确实不难，应该好好利用
+</p>
+
+<p>
+D:\code\ucos
+E:\硬件\操作系统\uCOS
+</p>
+
+<h3 id="toc_1.0.1">ucos 函数</h3>
+<p>
+void OSTimeDLY(INT16U ticks)
+void OSTimeDlyHMSM(INT8U hours,INT8U minutes,INT8U seconds,INT16U milli)
+</p>
+
+<h3 id="toc_1.0.2">创建任务</h3>
+<p>
+INT8U OSTaskCreate(
+</p>
+<blockquote>
+void (*task)(void *pd), //任务代码指针
+void *pdata,  //任务参数指针
+OS_STK *ptos, //任务栈的栈顶指针
+INT8U prio    //任务的优先级
+);
+</blockquote>
+<p>
+例如：
+OSTaskCreate(MyApp,
+</p>
+<blockquote>
+(void *)0,
+(OS_STK *)&amp;MyAppStk[TASK_STK_SIZE-1],
+TASK_START_PRI0+2,
+) ;
+</blockquote>
+
+<p>
+一个任务通常是一个无限循环（返回值类型void）
+void MyApp(void *pdata)
+{
+</p>
+<blockquote>
+pdata = pdata ;
+while (1) 
+{
+do something;
+waiting;
+do something;
+</blockquote>
+<p>
+   }
+}
+</p>
+
+<p>
+任务也可以自我删除（并非真的删除，只是内核不再知道该任务）
+void MyTask (void *pdata)
+{
+</p>
+<blockquote>
+/* 用户代码 */
+...... 
+OSTaskDel(OS_PRIO_SELF);
+</blockquote>
+<p>
+}
+</p>
+
+<p>
+任务优先级数值越小，优先级越高。
+系统保留了优先级为0、1、2、3、OS_LOWEST_PRIO-3、OS_LOWEST_PRI0-2，
+OS_LOWEST_PRI0-1 以及OS_LOWEST_PRI0这8个任务以被将来使用，
+用户可以有56个应用任务；
+任务的优先级同样也是它的标识号ID
+</p>
+            
+<h3 id="toc_1.0.3">基本数据类型</h3>
+<p>
+typedef unsigned char BOOLEAN;
+typedef unsigned char INT8U;
+typedef signed char INT8S;
+typedef unsigned int INT16U;
+typedef signed int INT16S;
+typedef unsigned long INT32U;
+typedef signed long INT32S;
+typedef float FP32;
+typedef double FP64;
+</p>
+
+      
+      <br>
+      <div class="pull-right">
+        <!-- JiaThis Button BEGIN -->
+        <div class="jiathis_style_24x24">
+          <a class="jiathis_button_qzone"></a>
+          <a class="jiathis_button_tsina"></a>
+          <a class="jiathis_button_weixin"></a>
+          <a class="jiathis_button_renren"></a>
+          <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jtico jtico_jiathis" target="_blank"></a>
+        </div>
+        <script type="text/javascript" src="http://v3.jiathis.com/code/jia.js" charset="utf-8"></script>
+        <!-- JiaThis Button END -->
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-8 col-md-offset-2 bg-clouds col-lg-8 col-lg-offset-2 col-xs-12 content-block">
+
+      <!-- Duoshuo Comment BEGIN -->
+      <div class="ds-thread"></div>
+      <script type="text/javascript">
+      var duoshuoQuery = {short_name:"adousj"};
+        (function() {
+          var ds = document.createElement('script');
+          ds.type = 'text/javascript';ds.async = true;
+          ds.src = 'http://static.duoshuo.com/embed.js';
+          ds.charset = 'UTF-8';
+          (document.getElementsByTagName('head')[0] 
+          || document.getElementsByTagName('body')[0]).appendChild(ds);
+        })();
+        </script>
+      <!-- Duoshuo Comment END -->
+
+    </div>
+  </div>
+</div>
+
+<script type="text/javascript" src="js/jquery-1.9.1.min.js"></script>
+<script type="text/javascript" src="bootstrap3/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="js/blog.js"></script>
+
+</body>
+</html>

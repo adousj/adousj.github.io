@@ -1,0 +1,437 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>88行俄罗斯方块</title>
+
+  <link rel="stylesheet" href="bootstrap3/css/bootstrap.min.css">
+  <link rel="stylesheet" href="bootstrap3/css/bootstrap-theme.min.css">
+  <link rel="stylesheet" href="Font-Awesome/css/font-awesome.min.css">
+  <link rel="stylesheet" href="css/style.css">
+
+</head>
+<body>
+
+<div class="navbar navbar-inverse bg-midnight-blue navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+        <span class="sr-only">Adou Wiki</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="#">Vimwiki</a>
+    </div>
+    <div class="collapse navbar-collapse">
+      <ul class="nav navbar-nav">
+        <li><a href="index.html">首页</a></li>
+        <li><a href="计划.html">计划</a></li>
+        <li><a href="学习计划.html">学习计划</a></li>
+        <li><a href="小小工具.html">小小工具</a></li>
+        <li><a href="娱乐.html">娱乐</a></li>
+        <li><a href="tips.html">tips</a></li>
+        <li><a href="about me.html">关于我</a></li>
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div>
+</div>
+
+<div class="container">
+  <div class="row">
+    <div class="col-md-8 col-md-offset-2 bg-clouds col-lg-8 col-lg-offset-2 col-xs-12 content-block" id="main-content">
+
+      
+<h1 id="toc_1">88行俄罗斯方块</h1>
+<div class="toc">
+<ul>
+<li><a href="#toc_1">88行俄罗斯方块</a>
+<ul>
+<li><a href="#toc_1.1">C语言88行代码实现俄罗斯方块游戏（含讲解）</a>
+<li><a href="#toc_1.2">代码分析</a>
+<li><a href="#toc_1.3">Win-TC 版本</a>
+</ul>
+</ul>
+</div>
+
+<h2 id="toc_1.1">C语言88行代码实现俄罗斯方块游戏（含讲解）</h2>
+<p>
+2012年03月15日 18:26:37
+来源：<a href="http://misaka.blog.com/p/8">http://misaka.blog.com/p/8</a> 
+</p>
+
+<p>
+在正式阅读本文之前，请你记得你应该用娱乐的心态来看， 
+本代码所使用到的技巧，在工作了的人眼里会觉得很纠结，很蛋疼，很不可理喻，很丑， 
+注意，是你蛋疼，不关我的事 
+</p>
+
+<p>
+通常，写一个俄罗斯方块，往往动不动就几百行，甚至上千行，而这里只有88行 
+正所谓头脑风暴，打破常规。这里将使用很多不平常的手段来减少代码
+</p>
+
+<p>
+但为了能更通用，一份控制台版本的代码，同样是88行，直接复制到VC即可编译：
+</p>
+<pre>
+#include &lt;windows.h&gt; 
+#include &lt;stdio.h&gt; 
+#include &lt;time.h&gt; 
+#include &lt;conio.h&gt; 
+#include &lt;stdlib.h&gt; 
+
+char gcText[] = " 1LJTSZ#"; 
+struct tetris { 
+    int _pool[16][32], (*pool)[32], tmap[8][4][16]; 
+    int x, y, s, st, t; 
+}gt; 
+
+void trsInit() { 
+    int sp[8][4] = {{15,4369},{23,785,116,547},{71,275,113,802}, 
+        {39,305,114,562},{54,561},{99,306},{51,51},{-1}}; 
+    int *p, i, j, b; 
+    for (p = sp[0]; *p &gt;= 0; ++p) if ( *p == 0 ) *p = p[-2]; 
+    gt.pool = &amp;gt._pool[4]; 
+    for (j = 0; j &lt; 7; ++j) 
+      for (i = 0; i &lt; 4; ++i) 
+        for (b = 0; b &lt; 16; ++b) 
+          gt.tmap[j+1][i][b] = (sp[j][i] &amp; 1) * (j + 1), 
+              sp[j][i] &gt;&gt;= 1; 
+    memset(gt._pool, -1, sizeof(gt._pool)); 
+    for (i = 0; i &lt; 10; ++i) 
+      memset(&amp;gt.pool[i], 0, sizeof(int[21])); 
+    return ; 
+} 
+
+int trsCopy(int sp[], int x, int y, int c) { 
+    int i, cx, cy; 
+    for (i = 0; i &lt; 16; ++i) if (sp[i]) { 
+        cx = x + (i &amp; 3), cy = y + (i &gt;&gt; 2); 
+        if (gt.pool[cx][cy]) 
+          if (c == 2) gt.pool[cx][cy] = 0; else return 0; 
+        if (c==1) gt.pool[cx][cy] = sp[i]; 
+    } 
+    return 1; 
+} 
+
+int trsScene() { 
+    int x, y = 0; 
+    COORD pos = {0}; 
+    gt.s = rand() % 7 + 1, gt.st = gt.t = 0; 
+    gt.x = 3, gt.y = 0; 
+    for (--gt.t; ; Sleep(1), --gt.t) { 
+        int k = 0; 
+        while (kbhit()) { 
+            k = getch(); 
+            if (k == 27) return 0; 
+            if (k == 'A' || k == 'a') { 
+                if (trsCopy(gt.tmap[gt.s][gt.st], gt.x-1, gt.y, 0)) --gt.x; 
+            } else if (k == 'D' || k == 'd') { 
+                if (trsCopy(gt.tmap[gt.s][gt.st], gt.x+1, gt.y, 0)) ++gt.x; 
+            } else if (k == 'W' || k == 'w') { 
+                if (trsCopy(gt.tmap[gt.s][(gt.st+1) % 4], gt.x, gt.y, 0)) 
+                  gt.st = (gt.st+1) % 4; 
+            } 
+        } 
+        if (k == 'S' || k == 's' || gt.t &lt; 0) { 
+            if (trsCopy(gt.tmap[gt.s][gt.st], gt.x, gt.y+1, 0))++gt.y,gt.t=50; 
+            else { 
+                trsCopy(gt.tmap[gt.s][gt.st], gt.x, gt.y, 1); 
+                for (--y; y &gt; 0; --y) { 
+                    for (x = 0; gt.pool[x][y] &gt; 0; ++x); 
+                    if (gt.pool[x][y] &lt; 0) 
+                      for (k = y++; k &gt; 0; --k) 
+                        for (x = 0; gt.pool[x][0] &gt;= 0; ++x) 
+                          gt.pool[x][k] = gt.pool[x][k-1]; 
+                } 
+                return 1; 
+            } 
+        } 
+        trsCopy(gt.tmap[gt.s][gt.st], gt.x, gt.y, 1); 
+        SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), pos); 
+        for (y = 1; gt.pool[0][y] &gt;= 0; ++y,putchar(10)) { 
+            for (x = 0; gt.pool[x][0] &gt;= 0; ++x) { 
+                putchar(gcText[gt.pool[x][y]]); 
+            } 
+        } 
+        trsCopy(gt.tmap[gt.s][gt.st], gt.x, gt.y, 2); 
+    } 
+} 
+
+int main() { 
+    srand((unsigned)time(NULL)); 
+    for (trsInit(); trsScene(); ); 
+    return 0; 
+}
+</pre>
+
+<hr />
+<h2 id="toc_1.2">代码分析</h2>
+<p>
+以下是对代码的压缩方法进行分析 
+</p>
+
+<p>
+首先，通常我们需要准备7种方块，4个方向的形状表，相当多的俄罗斯方块程序就是在开头写了这样一个很长的数组定义， 
+有的光这个定义就直接超100行了，这个程序是怎么实现的呢？ 
+</p>
+
+<p>
+其实这个程序，同样是使用一个7*4*16的数组来保存这个形状表，但是，它没有直接初始化，见这个数组的定义： 
+int sp[8][4] = {{15,4369},{23,785,116,547},{71,275,113,802}, 
+{39,305,114,562},{54,561},{99,306},{51,51},{-1}}; 
+这个莫名其妙的数组的值是什么意思呢？其实很好猜的，我们尝试把这些数化为二进制： 
+15 = 1111 
+4369 = 1000100010001 
+</p>
+
+<p>
+合理地四位四位拆开，从低位到高位，从左到右，从上到下排列一下： 
+1111 
+0000 
+0000 
+0000 
+</p>
+
+<p>
+1000 
+1000 
+1000 
+1000 
+</p>
+
+<p>
+你终于发现，这就是长条方块的两个形状 
+后面类似 
+</p>
+
+<p>
+然后你会发现，这个数组并不完整，有的只定义了两个形状，有的是四个形状，没定义的数会默认置0的，这个怎么解释？ 
+看这个数组定义的下面第二行： 
+for (p = sp[0]; *p &gt;= 0; ++p) if ( *p == 0 ) *p = p[-2]; 
+意思是找出这个数组为0的元素，用它前面的元素值填上即*p = p[-2] 
+而数组中最后一个元素值-1起监督头的作用，用于让这个循环跳出 
+虽然可以把这些常数全直接写在数组里，但常数太多显得不太好，就这样写了 
+</p>
+
+<p>
+之后你看到这行代码： 
+gt.pool = &amp;gt._pool[4]; 
+为什么定义两个pool呢？因为我们需要在原来的pool的界外用-1值填充，以便后面做碰撞检测减少不必要的代码 
+但如果直接用原来的_pool，那每次访问都要加上一个偏移常数，不美观且显得代码长，就用另一个指针直接指向开始的位置 
+</p>
+
+<p>
+然后，后面的三重循环就是解开那个位压缩数组以初始化gt.tmap数组，这个数组就是记录7*4种形状的数组 
+再下面三行，就是初始化pool，游戏区为0，界外为-1 
+而其中，i &lt; 10决定了游戏池的宽度为10，sizeof(int[21])决定了游戏池的高度是20 （0我们不使用，这一行有特殊作用，后文会讲） 
+用memset也是为了免写二重循环而已。整个初始化流程就到这里了 
+</p>
+
+<p>
+然后，是一个trsCopy函数，这个函数综合了碰撞检测，复制到游戏池和反复制，行为由参数c （是control缩写字母）控制 
+c为0就单纯的碰撞检测，c为1是复制，c为2就是反复制，细心分析一下，这个函数功能就清楚了，这里不详细展开 
+</p>
+
+<p>
+好了，到了trsScene函数，整个游戏的主逻辑流程就在这里了 
+我们先看第75行的那个二重循环，只有那个地方是根据pool保存的值来输出 
+所以，这个时候，你应该明白为什么trsCopy函数还要复制和反复制了， 
+它把你正在控制的方块，复制到pool里，统一输出，这样就不需要另加一个函数来绘画你的控制块了 
+</p>
+
+<p>
+而绘图之前，就是键盘处理等的逻辑控制，这里就没有什么复杂难懂的代码了， 
+唯一要讲讲的是，if (k == 'S' || k == 's' || gt.t &lt; 0) 
+这一段是判断下落键的按下，和是否到时间强制下落 
+里面for (--y; y &gt; 0; --y)开始是消行计算 
+你可能会奇怪这个y没有明显的初始值，直接就来一个 --y，初始从哪里来？ 
+其实就在之前讲的输出绘画那个循环里，循环结束后，y的值一定是最后一行+1 
+所以我们只要--y就得到最底下一行，因为消行计算，从下往上，只要一次就解决了，代码较少
+</p>
+
+<p>
+好了，现在解释之前说的，为什么不是从0，而是从1开始 
+消行计算这里，每消除一行，最顶的一行就应该用0填充，但如果你因为这个多写一个for循环就不值得了 
+我们改成从1开始，那么把第0行的内容复制到第一行，就完成0填充了，就可以少写一个for 
+</p>
+
+<p>
+好了，差不多接近尾声了，最后说说trsScene的返回值 
+trsScene返回值的意思很简单，如果是1就继续循环，如果是0就退出 
+所以你可以在代码里看到，当按下ESC(值为27)的时候才返回0 
+而方块落下一个的时候，返回1，让主函数重新调用它，就能再次初始化当前控制块的位置和形状了， 
+达到免除状态管理的代码的作用 
+</p>
+
+<p>
+最后，在主循环除了初始化，只要华丽的一行for (trsInit(); trsScene(); ); 就可以玩这个游戏了 
+</p>
+
+
+<p>
+看不懂？说明你也是个正常人 
+看得懂？说明你已经脑殘了。。。
+</p>
+
+<p>
+PS: 成年人不要乱学未成年人的东西。。。
+</p>
+
+<h2 id="toc_1.3">Win-TC 版本</h2>
+<p>
+以下是Win-TC可以成功编译并执行的代码（代码保证单行长度不超过80字符，如果你是Win7系统，那请看后文）：
+</p>
+<pre>
+#include "graphics.h" 
+#include &lt;conio.h&gt; 
+#include &lt;stdlib.h&gt; 
+
+int gcW = 20, gcColor[] = {DARKGRAY, LIGHTBLUE, LIGHTGREEN, LIGHTCYAN, 
+    LIGHTRED, LIGHTMAGENTA,MAGENTA, YELLOW}; 
+struct tetris { 
+    int _pool[16][32], (*pool)[32], tmap[8][4][16]; 
+    int x, y, s, st, t; 
+}gt; 
+
+void trsInit() { 
+    int sp[8][4] = {{15,4369},{23,785,116,547},{71,275,113,802}, 
+        {39,305,114,562},{54,561},{99,306},{51,51},{-1}}; 
+    int *p, i, j, b; 
+    for (p = sp[0]; *p &gt;= 0; ++p) if ( *p == 0 ) *p = p[-2]; 
+    gt.pool = &amp;gt._pool[4]; 
+    for (j = 0; j &lt; 7; ++j) 
+      for (i = 0; i &lt; 4; ++i) 
+        for (b = 0; b &lt; 16; ++b) 
+          gt.tmap[j+1][i][b] = (sp[j][i] &amp; 1) * (j + 1), 
+              sp[j][i] &gt;&gt;= 1; 
+    memset(gt._pool, -1, sizeof(gt._pool)); 
+    for (i = 0; i &lt; 10; ++i) 
+      memset(&amp;gt.pool[i], 0, sizeof(int[21])); 
+    return ; 
+} 
+
+int trsCopy(int sp[], int x, int y, int c) { 
+    int m[] = {0,32,64,96,1,33,65,97,2,34,66,98,3,35,67,99}, i, cx, cy; 
+    for (i = 0; i &lt; 16; ++i) if (sp[i]) { 
+        cx = x + (m[i] &gt;&gt; 5), cy = y + (m[i] &amp; 31); 
+        if (gt.pool[cx][cy]) if (c == 2) gt.pool[cx][cy] = 0; else return 0; 
+        if (c==1) gt.pool[cx][cy] = sp[i]; 
+    } 
+    return 1; 
+} 
+
+int trsScene() { 
+    int x, y = 0; 
+    gt.s = random(7) + 1, gt.st = gt.t = 0; 
+    gt.x = 4, gt.y = 0; 
+    for (--gt.t ; ; delay(10), --gt.t) { 
+        int k = 0; 
+        while (kbhit()) { 
+            k = getch(); 
+            if (k == 27) return 0; 
+            if (k == 'A' || k == 'a') { 
+                if (trsCopy(gt.tmap[gt.s][gt.st], gt.x-1, gt.y, 0)) --gt.x; 
+            } else if (k == 'D' || k == 'd') { 
+                if (trsCopy(gt.tmap[gt.s][gt.st], gt.x+1, gt.y, 0)) ++gt.x; 
+            } else if (k == 'W' || k == 'w') { 
+                if (trsCopy(gt.tmap[gt.s][(gt.st+1) % 4], gt.x, gt.y, 0)) 
+                  gt.st = (gt.st+1) % 4; 
+            } 
+        } 
+        if (k == 'S' || k == 's' || gt.t &lt; 0) { 
+            if (trsCopy(gt.tmap[gt.s][gt.st], gt.x, gt.y+1, 0))++gt.y,gt.t=50; 
+            else { 
+                trsCopy(gt.tmap[gt.s][gt.st], gt.x, gt.y, 1); 
+                for (--y; y &gt; 0; --y) { 
+                    for (x = 0; gt.pool[x][y] &gt; 0; ++x); 
+                    if (gt.pool[x][y] &lt; 0) 
+                      for (k = y++; k &gt; 0; --k) 
+                        for (x = 0; gt.pool[x][0] &gt;= 0; ++x) 
+                          gt.pool[x][k] = gt.pool[x][k-1]; 
+                } 
+                return 1; 
+            } 
+        } 
+        trsCopy(gt.tmap[gt.s][gt.st], gt.x, gt.y, 1); 
+        for (x = 0; gt.pool[x][0] &gt;= 0; ++x) { 
+            for (y = 1; gt.pool[x][y] &gt;= 0; ++y) { 
+                setfillstyle(1, gcColor[gt.pool[x][y]]); 
+                bar(201 + x*gcW, 1 + y*gcW, 200 + gcW + x*gcW, gcW + y*gcW); 
+            } 
+        } 
+        trsCopy(gt.tmap[gt.s][gt.st], gt.x, gt.y, 2); 
+    } 
+} 
+
+int main() { 
+    int g = DETECT, m = 0; 
+    initgraph(&amp;g, &amp;m, ""); 
+    randomize(); 
+    trsInit(); 
+    while (trsScene()); 
+    return 0; 
+}
+</pre>
+
+<p>
+如果你没有Win-TC，或者你是Win7系统，可以用这个能用VC6编译的工程包： 
+</p>
+
+<p>
+以上是图形界面版本，显示看起来好看一些
+</p>
+
+<p>
+一样都是88行
+</p>
+
+      
+      <br>
+      <div class="pull-right">
+        <!-- JiaThis Button BEGIN -->
+        <div class="jiathis_style_24x24">
+          <a class="jiathis_button_qzone"></a>
+          <a class="jiathis_button_tsina"></a>
+          <a class="jiathis_button_weixin"></a>
+          <a class="jiathis_button_renren"></a>
+          <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jtico jtico_jiathis" target="_blank"></a>
+        </div>
+        <script type="text/javascript" src="http://v3.jiathis.com/code/jia.js" charset="utf-8"></script>
+        <!-- JiaThis Button END -->
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-8 col-md-offset-2 bg-clouds col-lg-8 col-lg-offset-2 col-xs-12 content-block">
+
+      <!-- Duoshuo Comment BEGIN -->
+      <div class="ds-thread"></div>
+      <script type="text/javascript">
+      var duoshuoQuery = {short_name:"adousj"};
+        (function() {
+          var ds = document.createElement('script');
+          ds.type = 'text/javascript';ds.async = true;
+          ds.src = 'http://static.duoshuo.com/embed.js';
+          ds.charset = 'UTF-8';
+          (document.getElementsByTagName('head')[0] 
+          || document.getElementsByTagName('body')[0]).appendChild(ds);
+        })();
+        </script>
+      <!-- Duoshuo Comment END -->
+
+    </div>
+  </div>
+</div>
+
+<script type="text/javascript" src="js/jquery-1.9.1.min.js"></script>
+<script type="text/javascript" src="bootstrap3/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="js/blog.js"></script>
+
+</body>
+</html>

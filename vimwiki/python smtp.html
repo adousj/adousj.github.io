@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>python smtp</title>
+
+  <link rel="stylesheet" href="bootstrap3/css/bootstrap.min.css">
+  <link rel="stylesheet" href="bootstrap3/css/bootstrap-theme.min.css">
+  <link rel="stylesheet" href="Font-Awesome/css/font-awesome.min.css">
+  <link rel="stylesheet" href="css/style.css">
+
+</head>
+<body>
+
+<div class="navbar navbar-inverse bg-midnight-blue navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+        <span class="sr-only">Adou Wiki</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="#">Vimwiki</a>
+    </div>
+    <div class="collapse navbar-collapse">
+      <ul class="nav navbar-nav">
+        <li><a href="index.html">首页</a></li>
+        <li><a href="计划.html">计划</a></li>
+        <li><a href="学习计划.html">学习计划</a></li>
+        <li><a href="小小工具.html">小小工具</a></li>
+        <li><a href="娱乐.html">娱乐</a></li>
+        <li><a href="tips.html">tips</a></li>
+        <li><a href="about me.html">关于我</a></li>
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div>
+</div>
+
+<div class="container">
+  <div class="row">
+    <div class="col-md-8 col-md-offset-2 bg-clouds col-lg-8 col-lg-offset-2 col-xs-12 content-block" id="main-content">
+
+      
+<h1 id="toc_1">python smtp</h1>
+<div class="toc">
+<ul>
+<li><a href="#toc_1">python smtp</a>
+<ul>
+<li><a href="#toc_1.1">gmail 例子</a>
+<ul>
+<li><a href="#toc_1.1.1">Send Mail Through Gmail with Python</a>
+<li><a href="#toc_1.1.2">The Code</a>
+<li><a href="#toc_1.1.3">What Now?</a>
+</ul>
+</ul>
+</ul>
+</div>
+
+<h2 id="toc_1.1">gmail 例子</h2>
+<pre>
+# coding:cp936
+
+import sys , os
+import glob
+import time
+import smtplib  
+import mimetypes
+from email.MIMEMultipart import MIMEMultipart  
+from email.MIMEBase import MIMEBase  
+from email.MIMEText import MIMEText  
+from email.MIMEAudio import MIMEAudio  
+from email.MIMEImage import MIMEImage  
+from email.Encoders import encode_base64  
+
+usr = 'username'
+psw = 'password'
+
+class Gmail :
+    ''''''
+    def __init__(self,usr,psw) :
+        # Credentials (if needed)
+        self.usr= usr
+        self.psw = psw
+        self.fromaddr = self.usr+'@gmail.com'
+        self.g = smtplib.SMTP('smtp.gmail.com:587')
+        self.g.starttls()
+
+    def send(self,files) :
+        msg = MIMEMultipart()
+        #msg = MIMEText('gmail cloud')
+        msg["Subject"] = 'Gloud ' + files
+        msg['From'] = self.fromaddr
+        msg['To'] = self.fromaddr
+        msg.attach(MIMEText('gmail cloud'))  
+        filenames = filter(os.path.isfile, glob.glob(files))
+        for filename in filenames:  
+            msg.attach(self.getAttachment(filename)) 
+            print 'add' , filename
+        self.g.login(self.usr,self.psw)
+        print 'login gmail as' , self.usr
+        self.g.sendmail(self.fromaddr, self.fromaddr, msg.as_string())
+        self.g.quit()
+        print 'logout gmail'
+
+    def getAttachment(self,attachmentFilePath):  
+        contentType, encoding = mimetypes.guess_type(attachmentFilePath)  
+      
+        if contentType is None or encoding is not None:  
+            contentType = 'application/octet-stream'  
+      
+        mainType, subType = contentType.split('/', 1)  
+        fp = open(attachmentFilePath, 'rb')
+        content = fp.read()
+      
+        #if mainType == 'text':
+            #attachment = MIMEText(fp.read())  
+        #elif mainType == 'message':
+            #attachment = email.message_from_file(fp)  
+        #elif mainType == 'image':
+            #attachment = MIMEImage(fp.read(),_subType=subType)  
+        #elif mainType == 'audio':
+            #attachment = MIMEAudio(fp.read(),_subType=subType)  
+        #else:  
+            #attachment = MIMEBase(mainType, subType)  
+        attachment = MIMEBase(mainType, subType)  
+        attachment.set_payload(content)  
+        encode_base64(attachment)
+        fp.close()
+        attachment.add_header('Content-Disposition', 'attachment',   filename=os.path.basename(attachmentFilePath))  
+        return attachment
+
+
+if __name__ == "__main__" :
+    ''''''
+    ts = time.time()
+
+    if len(sys.argv) != 2 :
+        sys.exit(0)
+    files = sys.argv[1]
+
+    gmail = Gmail(usr,psw)
+    gmail.send(files)
+
+    te = time.time()
+    print 'Total Time:' , te-ts , 's'
+</pre>
+
+<h3 id="toc_1.1.1">Send Mail Through Gmail with Python</h3>
+
+<p>
+Python is a great scripting language for Linux and it is often used to automate tasks or check on overall system health. Discover how to send emails through Gmail with Python.
+</p>
+
+<p>
+Good system admins get to know scripting languages well and sometimes use them for all kinds of purposes, from scripts that do backups to complex automated tasks. Often times it would be nice to get an email notification when the script finished or completed OK. Cron does a good job of sending emails when scripts run into errors or problems, but sometimes it is necessary to get custom email messages sent from the script itself. Python makes sending email alerts a breeze.
+</p>
+
+<h3 id="toc_1.1.2">The Code</h3>
+<pre>
+import smtplib  
+  
+fromaddr = 'fromuser@gmail.com'  
+toaddrs  = 'touser@gmail.com'  
+msg = 'There was a terrible error that occured and I wanted you to know!'  
+  
+# Credentials (if needed)  
+username = 'username'  
+password = 'password'  
+  
+# The actual mail send  
+server = smtplib.SMTP('smtp.gmail.com:587')  
+server.starttls()  
+server.login(username,password)  
+server.sendmail(fromaddr, toaddrs, msg)  
+server.quit()  
+</pre>
+  
+<h3 id="toc_1.1.3">What Now?</h3>
+<p>
+You will want to use this with an already existing script or a script where you want to add email alerts. For example:
+</p>
+
+<pre>
+# A big task  
+...  
+if task.completedOk():  
+     # Insert email code here, explaining that   
+     # the task is done and some details about it  
+</pre>
+<p>
+Or perhaps you wanted Python to send you an email if the server room gets too hot:
+</p>
+<pre>
+# Get temp  
+...  
+if temperature &gt; 70:  
+     # Insert email code here  
+</pre>
+
+      
+      <br>
+      <div class="pull-right">
+        <!-- JiaThis Button BEGIN -->
+        <div class="jiathis_style_24x24">
+          <a class="jiathis_button_qzone"></a>
+          <a class="jiathis_button_tsina"></a>
+          <a class="jiathis_button_weixin"></a>
+          <a class="jiathis_button_renren"></a>
+          <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jtico jtico_jiathis" target="_blank"></a>
+        </div>
+        <script type="text/javascript" src="http://v3.jiathis.com/code/jia.js" charset="utf-8"></script>
+        <!-- JiaThis Button END -->
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-8 col-md-offset-2 bg-clouds col-lg-8 col-lg-offset-2 col-xs-12 content-block">
+
+      <!-- Duoshuo Comment BEGIN -->
+      <div class="ds-thread"></div>
+      <script type="text/javascript">
+      var duoshuoQuery = {short_name:"adousj"};
+        (function() {
+          var ds = document.createElement('script');
+          ds.type = 'text/javascript';ds.async = true;
+          ds.src = 'http://static.duoshuo.com/embed.js';
+          ds.charset = 'UTF-8';
+          (document.getElementsByTagName('head')[0] 
+          || document.getElementsByTagName('body')[0]).appendChild(ds);
+        })();
+        </script>
+      <!-- Duoshuo Comment END -->
+
+    </div>
+  </div>
+</div>
+
+<script type="text/javascript" src="js/jquery-1.9.1.min.js"></script>
+<script type="text/javascript" src="bootstrap3/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="js/blog.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>GAE todo</title>
+
+  <link rel="stylesheet" href="bootstrap3/css/bootstrap.min.css">
+  <link rel="stylesheet" href="bootstrap3/css/bootstrap-theme.min.css">
+  <link rel="stylesheet" href="Font-Awesome/css/font-awesome.min.css">
+  <link rel="stylesheet" href="css/style.css">
+
+</head>
+<body>
+
+<div class="navbar navbar-inverse bg-midnight-blue navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+        <span class="sr-only">Adou Wiki</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="#">Vimwiki</a>
+    </div>
+    <div class="collapse navbar-collapse">
+      <ul class="nav navbar-nav">
+        <li><a href="index.html">首页</a></li>
+        <li><a href="计划.html">计划</a></li>
+        <li><a href="学习计划.html">学习计划</a></li>
+        <li><a href="小小工具.html">小小工具</a></li>
+        <li><a href="娱乐.html">娱乐</a></li>
+        <li><a href="tips.html">tips</a></li>
+        <li><a href="about me.html">关于我</a></li>
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div>
+</div>
+
+<div class="container">
+  <div class="row">
+    <div class="col-md-8 col-md-offset-2 bg-clouds col-lg-8 col-lg-offset-2 col-xs-12 content-block" id="main-content">
+
+      
+<h1 id="toc_1">GAE wiki</h1>
+
+<h2 id="toc_1.1">1</h2>
+<p>
+todo list 已经实现，但是gae竟然不能用，只能放弃了
+不过gae上显示曾经有过流量，谁的？google的？
+</p>
+
+<p>
+{{
+</p>
+<ol>
+<li>
+!/usr/bin/python
+
+<li>
+coding : utf-8
+
+<li>
+CopyRight 2012 Adou , All Rights Reserved .
+
+</ol>
+
+<p>
+import webapp2
+from google.appengine.api import users
+from google.appengine.ext import db
+import urllib
+import os
+import datetime
+import jinja2
+</p>
+
+<p>
+jinja_environment = jinja2.Environment(
+</p>
+<blockquote>
+loader=jinja2.FileSystemLoader(os.path.dirname(_<em>file</em>_)))
+</blockquote>
+
+<p>
+class TodoList(db.Model):
+</p>
+<blockquote>
+pid  = db.IntegerProperty()
+todo = db.StringProperty(multiline=True)
+date = db.DateTimeProperty(auto_now_add=True)
+datestr = db.StringProperty()
+done = db.BooleanProperty()
+</blockquote>
+
+<p>
+def login(func) :
+</p>
+<blockquote>
+def wrapper(<strong>args,</strong>*kw):
+user = users.get_current_user()
+if not user:
+args[0].redirect(users.create_login_url('/todo/'))
+else :
+return func(<strong>args,</strong>*kw)
+return wrapper
+</blockquote>
+
+<p>
+def getpid():
+</p>
+<blockquote>
+posts = db.GqlQuery('SELECT * FROM TodoList ORDER BY pid DESC LIMIT 1')
+return 0 if posts.count() == 0 else posts[0].pid + 1
+</blockquote>
+
+
+<p>
+class Todo(webapp2.RequestHandler):
+</p>
+<blockquote>
+@login
+def get(self):
+#user = users.get_current_user()
+#if not user:
+#self.redirect(users.create_login_url('/'))
+todos = db.GqlQuery("SELECT * FROM TodoList WHERE done=False ORDER BY date DESC")
+todolist = {
+'todos':todos,
+}
+template = jinja_environment.get_template('todo.html')
+self.response.out.write(template.render(todolist))
+</blockquote>
+<blockquote>
+@login
+def post(self) :
+#user = users.get_current_user()
+#if not user:
+#self.redirect(users.create_login_url('/'))
+todo = self.request.get('todo')
+if not todo :
+self.redirect(users.create_logout_url('/todo/'))
+tl = TodoList()
+tl.pid = getpid()
+tl.todo = todo
+tl.date = datetime.datetime.now()
+tl.datestr = tl.date.strftime('%H:%M %a %Y-%m-%d')
+tl.done = False
+tl.put()
+self.redirect('/todo/')
+</blockquote>
+
+
+<p>
+class TodoDel(webapp2.RequestHandler):
+</p>
+<blockquote>
+#pid = urllib.unquote(pid)
+pid = int(pid)
+#user = users.get_current_user()
+#if not user:
+#self.redirect(users.create_logout_url('/'))
+todos = db.GqlQuery("SELECT * FROM TodoList WHERE pid=:1",pid)
+db.delete(todos)
+self.redirect('/todo/')
+</blockquote>
+
+
+<p>
+class TodoEdit(webapp2.RequestHandler):
+</p>
+<blockquote>
+@login
+def get(self,filename):
+#user = users.get_current_user()
+#if not user:
+#self.redirect(users.create_logout_url('/'))
+pass
+</blockquote>
+
+
+<p>
+app = webapp2.WSGIApplication( 
+</p>
+<blockquote>
+[
+#('/',MainPage),
+#('/vimwiki/(.*)',VimWiki),
+#('/vimwiki/diary/(.*)',Diary),
+('/todo/',Todo),
+('/todo/del/(.*)',TodoDel),
+('/todo/edit/(.*)',TodoEdit),
+#('/login/',Login),
+#('/logout/',Logout),
+],
+debug=True )
+</blockquote>
+<p>
+ }}
+</p>
+
+      
+      <br>
+      <div class="pull-right">
+        <!-- JiaThis Button BEGIN -->
+        <div class="jiathis_style_24x24">
+          <a class="jiathis_button_qzone"></a>
+          <a class="jiathis_button_tsina"></a>
+          <a class="jiathis_button_weixin"></a>
+          <a class="jiathis_button_renren"></a>
+          <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jtico jtico_jiathis" target="_blank"></a>
+        </div>
+        <script type="text/javascript" src="http://v3.jiathis.com/code/jia.js" charset="utf-8"></script>
+        <!-- JiaThis Button END -->
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-8 col-md-offset-2 bg-clouds col-lg-8 col-lg-offset-2 col-xs-12 content-block">
+
+      <!-- Duoshuo Comment BEGIN -->
+      <div class="ds-thread"></div>
+      <script type="text/javascript">
+      var duoshuoQuery = {short_name:"adousj"};
+        (function() {
+          var ds = document.createElement('script');
+          ds.type = 'text/javascript';ds.async = true;
+          ds.src = 'http://static.duoshuo.com/embed.js';
+          ds.charset = 'UTF-8';
+          (document.getElementsByTagName('head')[0] 
+          || document.getElementsByTagName('body')[0]).appendChild(ds);
+        })();
+        </script>
+      <!-- Duoshuo Comment END -->
+
+    </div>
+  </div>
+</div>
+
+<script type="text/javascript" src="js/jquery-1.9.1.min.js"></script>
+<script type="text/javascript" src="bootstrap3/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="js/blog.js"></script>
+
+</body>
+</html>

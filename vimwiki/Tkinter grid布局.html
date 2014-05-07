@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Tkinter grid布局</title>
+
+  <link rel="stylesheet" href="bootstrap3/css/bootstrap.min.css">
+  <link rel="stylesheet" href="bootstrap3/css/bootstrap-theme.min.css">
+  <link rel="stylesheet" href="Font-Awesome/css/font-awesome.min.css">
+  <link rel="stylesheet" href="css/style.css">
+
+</head>
+<body>
+
+<div class="navbar navbar-inverse bg-midnight-blue navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+        <span class="sr-only">Adou Wiki</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="#">Vimwiki</a>
+    </div>
+    <div class="collapse navbar-collapse">
+      <ul class="nav navbar-nav">
+        <li><a href="index.html">首页</a></li>
+        <li><a href="计划.html">计划</a></li>
+        <li><a href="学习计划.html">学习计划</a></li>
+        <li><a href="小小工具.html">小小工具</a></li>
+        <li><a href="娱乐.html">娱乐</a></li>
+        <li><a href="tips.html">tips</a></li>
+        <li><a href="about me.html">关于我</a></li>
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div>
+</div>
+
+<div class="container">
+  <div class="row">
+    <div class="col-md-8 col-md-offset-2 bg-clouds col-lg-8 col-lg-offset-2 col-xs-12 content-block" id="main-content">
+
+      
+<h1 id="toc_1">Tkinter grid布局</h1>
+
+<pre>
+# !/usr/bin/python
+# coding : cp936
+# CopyRight 2012 Adou , All Rights Reserved .
+
+import sys
+from Tkinter import *
+
+def exit() :
+    sys.exit()
+    #pass
+
+def begin() :
+    if btn1['text'] ==  'Begin' :
+        btn1['text'] = 'End'
+    else :
+        btn1['text'] = 'Begin'
+
+if __name__ == '__main__' :
+    ''''''
+    root = Tk()
+
+    label1 = Label(root,text='Hello,World!')
+    label1.grid(row=0,column=0,columnspan=2,padx=20,pady=10)
+
+    btn1 = Button(root,text='Begin',command=begin,width=10)
+    btn1.grid(row=2,column=0,padx=20,pady=10)
+
+    btn2 = Button(root,text='Exit',command=exit,width=10)
+    btn2.grid(row=2,column=1,padx=20,pady=10)
+
+    root.mainloop()
+</pre>
+<blockquote>
+Tkinter参考中最推荐使用的一个布局器。实现机制是将Widget逻辑上分割成表格，在指定的位置放置想要的Widget就可以了。
+</blockquote>
+
+<p>
+使用grid显示窗体的主要流程：
+</p>
+
+<p>
+  self.thing = constructor（parent，……）#constructor可以为Button，Frame等
+  self.thing.grid(……)
+</p>
+<blockquote>
+grid方法介绍：
+w.grid(option=value,……)
+向窗体注册并显示控件
+</blockquote>
+<blockquote>
+主要参数：
+</blockquote>
+<blockquote>
+column： 控件放置位置的列数，从0开始算起，默认为0；
+</blockquote>
+<blockquote>
+clomnspan： 设置单元格横向跨越的列数，例如：w.grid(row=0, column = 2， columnspan=3）；
+</blockquote>
+<blockquote>
+in_：重新设置w为窗体w2的子窗体，方法：in_=w2.w2必须是w的父窗体子类；
+</blockquote>
+<blockquote>
+ipadx：设置控件里面x方向空白区域大小；
+</blockquote>
+<blockquote>
+ipady：设置控件里面y方向空白区域大小；
+</blockquote>
+<blockquote>
+padx：设置控件周围x方向空白区域保留大小；
+</blockquote>
+<blockquote>
+pady：设置控件周围y方向空白区域保留大小；
+</blockquote>
+<blockquote>
+row：控制放置的行数，从0开始算起，默认为上一个位占领的行数
+</blockquote>
+<blockquote>
+rowspan：设置单元格纵向跨越的列数，例如：w.grid(row=0, column = 2，rowspan=4, columnspan=5)；
+</blockquote>
+<blockquote>
+sticky:设置对齐方式
+</blockquote>
+
+ 
+
+<p>
+如果未设置对齐方式，默认为将控件放置在窗体中间。对齐方式主要有如下几种：
+</p>
+
+<p>
+1） 通过使用sticky=NE(右上角)，SE（右下角），SW（左下角），NW（左上角）来设置控件位置
+</p>
+
+<p>
+2） 通过使用sticky=N（上中）,E（右中），S（底中）,W（左中）来设置控件放置中间位置
+</p>
+
+<p>
+3） sticky=N+S，向垂直方向拉升而保持水平中间对齐
+</p>
+
+<p>
+4） sticky=E+W，向水平方向拉升而保持垂直中间对齐
+</p>
+
+<p>
+5)   sticky=N+E+S+W，以水平方向和垂直方向拉升的方式填充单元格
+</p>
+
+ 
+
+<p>
+实例代码：
+</p>
+<pre>
+#!/usr/bin/python     
+#Filename: button.py     
+# -*- coding: utf-8 -*-  
+  
+from Tkinter import *     
+    
+class Application(Frame):     
+    def say_hi(self):     
+        print "hi there, everyone!"    
+    def say_bitmap(self):     
+        print "bitmap show"    
+             
+    def createWidgets(self):     
+        self.hi_there = Button(self)  
+        self.hi_there["text"] = "Hello",  #设置按钮上的显示字符     
+        self.hi_there["command"] = self.say_hi  #设置按钮按下时的回调函数     
+        self.hi_there["bg"] = "red"           #设置背景颜色     
+        self.hi_there["fg"] = "yellow"        #设置显示的字体颜色     
+        self.hi_there["activebackground"] = "green"   #设置按钮被按下时的背景颜色     
+        self.hi_there["activeforeground"] = "black"   #设置按钮被按下时的字体颜色     
+        self.hi_there["bd"] = "5"              #设置按钮边框像素，默认为2个像素     
+        self.hi_there["cursor"] = "hand1"      #设置鼠标放置在按钮上的形状     
+        self.hi_there["padx"] = 100;           #设置按钮横向的空白长度     
+        self.hi_there["pady"] = 100;           #设置按钮纵向的空白长度     
+        self.hi_there["underline"] = 1;        #设置显示字体的下划线在哪个字符下面     
+             
+        self.hi_there.grid(row = 0, column = 0)     
+    
+        self.Bitmap = Button(self)     
+        self.Bitmap["text"] = "Bitmap"    
+        self.Bitmap["command"] =  self.say_bitmap     
+        self.Bitmap["bitmap"] = "question"             
+        self.Bitmap.grid(row=1, column=0)     
+             
+        self.QUIT = Button(self)     
+        self.QUIT["text"] = "QUIT"    
+        self.QUIT["fg"]   = "red"    
+        self.QUIT["command"] =  self.quit     
+        self.QUIT.grid(row=2, column=0)     
+    
+    def __init__(self, master=None):     
+        Frame.__init__(self, master)     
+        self.pack()     
+        self.createWidgets()     
+    
+root = Tk()     
+app = Application(master=root)     
+app.mainloop()     
+root.destroy()
+</pre>
+
+      
+      <br>
+      <div class="pull-right">
+        <!-- JiaThis Button BEGIN -->
+        <div class="jiathis_style_24x24">
+          <a class="jiathis_button_qzone"></a>
+          <a class="jiathis_button_tsina"></a>
+          <a class="jiathis_button_weixin"></a>
+          <a class="jiathis_button_renren"></a>
+          <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jtico jtico_jiathis" target="_blank"></a>
+        </div>
+        <script type="text/javascript" src="http://v3.jiathis.com/code/jia.js" charset="utf-8"></script>
+        <!-- JiaThis Button END -->
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-8 col-md-offset-2 bg-clouds col-lg-8 col-lg-offset-2 col-xs-12 content-block">
+
+      <!-- Duoshuo Comment BEGIN -->
+      <div class="ds-thread"></div>
+      <script type="text/javascript">
+      var duoshuoQuery = {short_name:"adousj"};
+        (function() {
+          var ds = document.createElement('script');
+          ds.type = 'text/javascript';ds.async = true;
+          ds.src = 'http://static.duoshuo.com/embed.js';
+          ds.charset = 'UTF-8';
+          (document.getElementsByTagName('head')[0] 
+          || document.getElementsByTagName('body')[0]).appendChild(ds);
+        })();
+        </script>
+      <!-- Duoshuo Comment END -->
+
+    </div>
+  </div>
+</div>
+
+<script type="text/javascript" src="js/jquery-1.9.1.min.js"></script>
+<script type="text/javascript" src="bootstrap3/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="js/blog.js"></script>
+
+</body>
+</html>

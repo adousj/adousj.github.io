@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Vim 替换总结</title>
+
+  <link rel="stylesheet" href="bootstrap3/css/bootstrap.min.css">
+  <link rel="stylesheet" href="bootstrap3/css/bootstrap-theme.min.css">
+  <link rel="stylesheet" href="Font-Awesome/css/font-awesome.min.css">
+  <link rel="stylesheet" href="css/style.css">
+
+</head>
+<body>
+
+<div class="navbar navbar-inverse bg-midnight-blue navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+        <span class="sr-only">Adou Wiki</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="#">Vimwiki</a>
+    </div>
+    <div class="collapse navbar-collapse">
+      <ul class="nav navbar-nav">
+        <li><a href="index.html">首页</a></li>
+        <li><a href="计划.html">计划</a></li>
+        <li><a href="学习计划.html">学习计划</a></li>
+        <li><a href="小小工具.html">小小工具</a></li>
+        <li><a href="娱乐.html">娱乐</a></li>
+        <li><a href="tips.html">tips</a></li>
+        <li><a href="about me.html">关于我</a></li>
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div>
+</div>
+
+<div class="container">
+  <div class="row">
+    <div class="col-md-8 col-md-offset-2 bg-clouds col-lg-8 col-lg-offset-2 col-xs-12 content-block" id="main-content">
+
+      
+<h1 id="toc_1">Vim 替换总结</h1>
+
+
+<h2 id="toc_1.1">1，简单替换表达式</h2>
+<p>
+替换命令可以在全文中用一个单词替换另一个单词：
+:%s/four/4/g
+</p>
+
+<p>
+“%” 范围前缀表示在所有行中执行替换。最后的 “g” 标记表示替换行中的所有匹配点。如果仅仅对当前行进行操作，那么只要去掉%即可
+  如果你有一个象 “thirtyfour” 这样的单词，上面的命令会出错。这种情况下，这个单词会被替换成”thirty4″。要解决这个问题，用 “\&lt;” 来指定匹配单词开头：
+</p>
+<blockquote>
+:%s/\&lt;four/4/g
+</blockquote>
+<p>
+显然，这样在处理 “fourty” 的时候还是会出错。用 “\&gt;” 来解决这个问题：
+</p>
+<blockquote>
+:%s/\&lt;four\&gt;/4/g
+</blockquote>
+<p>
+如果你在编码，你可能只想替换注释中的 “four”，而保留代码中的。由于这很难指定，可以在替换命令中加一个 “c” 标记，这样，Vim 会在每次替换前提示你：
+</p>
+<blockquote>
+:%s/\&lt;four\&gt;/4/gc
+</blockquote>
+
+<h2 id="toc_1.2">2，删除多余的空格</h2>
+<p>
+要删除这些每行后面多余的空格，可以执行如下命令：
+</p>
+<blockquote>
+:%s/\s\+$//
+</blockquote>
+<p>
+命令前面指明范围是 “%”，所以这会作用于整个文件。”substitute” 命令的匹配模式是
+“\s\+\(”。这表示行末（\)）前的一个或者多个（\+）空格（\s）。替换命令的 “to” 部分是空的：”//”。这样就会删除那些匹配的空白字符。
+</p>
+
+<h2 id="toc_1.3">3，匹配重复性模式</h2>
+<p>
+星号项 “*” 规定在它前面的项可以重复任意次。因此:
+</p>
+<blockquote>
+/a*
+</blockquote>
+<p>
+匹配 “a”，”aa”，”aaa”，等等。但也匹配 “” (空字串)，因为零次也包含在内。星号 “*” 仅仅应用于那个紧邻在它前面的项。因此 “ab*” 匹配 “a”，”ab”，”abb”,”abbb”，等等。如要多次重复整个字符串，那么该字符串必须被组成一个项。组成一项的方法就是在它前面加 “\(“，后面加 “\)”。因此这个命令:
+</p>
+<blockquote>
+/\(ab\)*
+</blockquote>
+<p>
+匹配: “ab”，”abab”，”ababab”，等等。而且也匹配 “”。
+要避免匹配空字串，使用 “\+”。这表示前面一项可以被匹配一次或多次。
+</p>
+<blockquote>
+/ab\+
+</blockquote>
+<p>
+匹配 “ab”，”abb”，”abbb”，等等。它不匹配 后面没有跟随 “b” 的 “a”。
+要匹配一个可选项，用 “\=”。 例如:
+</p>
+<blockquote>
+/folders\=
+</blockquote>
+<p>
+匹配 “folder” 和 “folders”。
+</p>
+
+<h2 id="toc_1.4">4，指定重复次数</h2>
+<p>
+要匹配某一项的特定次数重复，使用 “\{n,m}” 这样的形式。其中 “n” 和 “m” 都是数字。在它前面的那个项将被重复 “n” 到 “m” 次 (|inclusive| 包含 “n” 和 “m”)。例如:
+</p>
+<blockquote>
+/ab\{3,5}
+</blockquote>
+<p>
+匹配 “abbb”，”abbbb” 以及 “abbbbb”。
+  当 “n” 省略时，被默认为零。当 “m” 省略时，被默认为无限大。当 “,m” 省略时，就表示重复正好 “n” 次。例如:
+</p>
+<blockquote>
+模式          匹配次数
+\{,4}           0，1，2，3 或 4
+\{3,}           3，4，5，等等
+\{0,1}          0 或 1，同 \=
+\{0,}           0 或 更多，同 *
+\{1,}           1 或 更多，同 \+
+\{3}            3
+</blockquote>
+
+<h2 id="toc_1.5">5，多选一匹配</h2>
+<p>
+在一个查找模式中，”或” 运算符是 “\|”。例如:
+</p>
+<blockquote>
+/foo\|bar
+</blockquote>
+<p>
+这个命令匹配了 “foo” 或 “bar”。更多的抉择可以连在后面:
+</p>
+<blockquote>
+/one\|two\|three
+</blockquote>
+<p>
+匹配 “one”，”two” 或 “three”。
+  如要匹配其多次重复，那么整个抉择结构须置于 “\(” 和 “\)” 之间:
+</p>
+<blockquote>
+/\(foo\|bar\)\+
+</blockquote>
+<p>
+这个命令匹配 “foo”，”foobar”，”foofoo”，”barfoobar”，等等。
+  再举个例子:
+</p>
+<blockquote>
+/end\(if\|while\|for\)
+</blockquote>
+<p>
+这个命令匹配 “endif”，”endwhile” 和 “endfor”。
+</p>
+
+      
+      <br>
+      <div class="pull-right">
+        <!-- JiaThis Button BEGIN -->
+        <div class="jiathis_style_24x24">
+          <a class="jiathis_button_qzone"></a>
+          <a class="jiathis_button_tsina"></a>
+          <a class="jiathis_button_weixin"></a>
+          <a class="jiathis_button_renren"></a>
+          <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jtico jtico_jiathis" target="_blank"></a>
+        </div>
+        <script type="text/javascript" src="http://v3.jiathis.com/code/jia.js" charset="utf-8"></script>
+        <!-- JiaThis Button END -->
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-8 col-md-offset-2 bg-clouds col-lg-8 col-lg-offset-2 col-xs-12 content-block">
+
+      <!-- Duoshuo Comment BEGIN -->
+      <div class="ds-thread"></div>
+      <script type="text/javascript">
+      var duoshuoQuery = {short_name:"adousj"};
+        (function() {
+          var ds = document.createElement('script');
+          ds.type = 'text/javascript';ds.async = true;
+          ds.src = 'http://static.duoshuo.com/embed.js';
+          ds.charset = 'UTF-8';
+          (document.getElementsByTagName('head')[0] 
+          || document.getElementsByTagName('body')[0]).appendChild(ds);
+        })();
+        </script>
+      <!-- Duoshuo Comment END -->
+
+    </div>
+  </div>
+</div>
+
+<script type="text/javascript" src="js/jquery-1.9.1.min.js"></script>
+<script type="text/javascript" src="bootstrap3/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="js/blog.js"></script>
+
+</body>
+</html>

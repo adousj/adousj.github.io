@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>gitcafe 实习</title>
+
+  <link rel="stylesheet" href="bootstrap3/css/bootstrap.min.css">
+  <link rel="stylesheet" href="bootstrap3/css/bootstrap-theme.min.css">
+  <link rel="stylesheet" href="Font-Awesome/css/font-awesome.min.css">
+  <link rel="stylesheet" href="css/style.css">
+
+</head>
+<body>
+
+<div class="navbar navbar-inverse bg-midnight-blue navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+        <span class="sr-only">Adou Wiki</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="#">Vimwiki</a>
+    </div>
+    <div class="collapse navbar-collapse">
+      <ul class="nav navbar-nav">
+        <li><a href="index.html">首页</a></li>
+        <li><a href="计划.html">计划</a></li>
+        <li><a href="学习计划.html">学习计划</a></li>
+        <li><a href="小小工具.html">小小工具</a></li>
+        <li><a href="娱乐.html">娱乐</a></li>
+        <li><a href="tips.html">tips</a></li>
+        <li><a href="about me.html">关于我</a></li>
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div>
+</div>
+
+<div class="container">
+  <div class="row">
+    <div class="col-md-8 col-md-offset-2 bg-clouds col-lg-8 col-lg-offset-2 col-xs-12 content-block" id="main-content">
+
+      
+<h1 id="toc_1">gitcafe 实习</h1>
+
+<p>
+2014-03-07 13:12:18
+## 2
+models/group.rb
+add_member
+remove_member
+not safe
+</p>
+
+<p>
+有可能出现性能瓶颈, redis
+</p>
+
+<p>
+## 1
+</p>
+
+<p>
+这么多 sql
+</p>
+
+<p>
+每一个外键都要加入索引
+</p>
+
+<p>
+尽快看看 join include
+</p>
+
+<p>
+index 的 view 为什么是 list，而不是 index
+</p>
+
+<p>
+paper_controller 68  render json: json
+</p>
+
+<p>
+129 or true
+</p>
+
+<p>
+marker_controller --&gt; func mark v.s. show
+</p>
+
+<p>
+current_user 怎么来的？
+</p>
+
+<p>
+mark_category 在admin中没有链接,在route中有
+</p>
+
+<p>
+profile 表不见
+</p>
+
+<p>
+class_rooms
++ id:integer
+</p>
+
+<p>
+courses:
++ name: string
+</p>
+
+<p>
+join table courses_examine_projects
+join table courses_users
+</p>
+
+
+<p>
+table groups:
++ id: integer
++ name: string
++ comment: string
+</p>
+
+<p>
+join_table users_groups
++ user_id: integer
++ group_id: integer
+</p>
+
+<p>
+join table examine_projects_groups
++ examine_project_id: integer
++ group_id: integer
+</p>
+
+
+<p>
+notificatins
++ id: integer
++ sender_id: integer
++ receiver_id: integer
++ content: text
++ is_read: boolean
+</p>
+
+
+<ol>
+<li>
+background task
+
+</ol>
+<p>
+marshal
+api
+sql
+file
+</p>
+
+<ol>
+<li>
+groups bug
+
+</ol>
+<p>
+redirect_to :back
+</p>
+
+
+<p>
+db column
+</p>
+
+
+
+
+<p>
+errors:
+app/controllers/admin/group_controller.rb:61
+params[:student] may be nil
+params[:student] ---&gt; params[:studnet] || []
+</p>
+
+<p>
+no route for /paper/1/draft
+undefined method 'map' for nil
+</p>
+
+
+<p>
+学习：
+1. 中英文切换
+2. 多语言支持
+3. 路由
+4. 路径空间 /admin/paper..   /student/paper
+5. 错误处理
+</p>
+
+      
+      <br>
+      <div class="pull-right">
+        <!-- JiaThis Button BEGIN -->
+        <div class="jiathis_style_24x24">
+          <a class="jiathis_button_qzone"></a>
+          <a class="jiathis_button_tsina"></a>
+          <a class="jiathis_button_weixin"></a>
+          <a class="jiathis_button_renren"></a>
+          <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jtico jtico_jiathis" target="_blank"></a>
+        </div>
+        <script type="text/javascript" src="http://v3.jiathis.com/code/jia.js" charset="utf-8"></script>
+        <!-- JiaThis Button END -->
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-8 col-md-offset-2 bg-clouds col-lg-8 col-lg-offset-2 col-xs-12 content-block">
+
+      <!-- Duoshuo Comment BEGIN -->
+      <div class="ds-thread"></div>
+      <script type="text/javascript">
+      var duoshuoQuery = {short_name:"adousj"};
+        (function() {
+          var ds = document.createElement('script');
+          ds.type = 'text/javascript';ds.async = true;
+          ds.src = 'http://static.duoshuo.com/embed.js';
+          ds.charset = 'UTF-8';
+          (document.getElementsByTagName('head')[0] 
+          || document.getElementsByTagName('body')[0]).appendChild(ds);
+        })();
+        </script>
+      <!-- Duoshuo Comment END -->
+
+    </div>
+  </div>
+</div>
+
+<script type="text/javascript" src="js/jquery-1.9.1.min.js"></script>
+<script type="text/javascript" src="bootstrap3/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="js/blog.js"></script>
+
+</body>
+</html>

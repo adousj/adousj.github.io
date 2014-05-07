@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>emacs</title>
+
+  <link rel="stylesheet" href="bootstrap3/css/bootstrap.min.css">
+  <link rel="stylesheet" href="bootstrap3/css/bootstrap-theme.min.css">
+  <link rel="stylesheet" href="Font-Awesome/css/font-awesome.min.css">
+  <link rel="stylesheet" href="css/style.css">
+
+</head>
+<body>
+
+<div class="navbar navbar-inverse bg-midnight-blue navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+        <span class="sr-only">Adou Wiki</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="#">Vimwiki</a>
+    </div>
+    <div class="collapse navbar-collapse">
+      <ul class="nav navbar-nav">
+        <li><a href="index.html">首页</a></li>
+        <li><a href="计划.html">计划</a></li>
+        <li><a href="学习计划.html">学习计划</a></li>
+        <li><a href="小小工具.html">小小工具</a></li>
+        <li><a href="娱乐.html">娱乐</a></li>
+        <li><a href="tips.html">tips</a></li>
+        <li><a href="about me.html">关于我</a></li>
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div>
+</div>
+
+<div class="container">
+  <div class="row">
+    <div class="col-md-8 col-md-offset-2 bg-clouds col-lg-8 col-lg-offset-2 col-xs-12 content-block" id="main-content">
+
+      
+<h1 id="toc_1">emacs</h1>
+
+<p>
+C-x C-c 退出
+C-v     查看下一屏文字
+M-v     查看上一屏
+C-l     重绘屏幕，将光标所在行置于屏幕的中央
+</p>
+
+<p>
+C-f     向右移动一个字符
+C-b     向左移动一个字符
+</p>
+
+<p>
+M-f     向右移动一个词【对中文是移动到下一个标点符号】
+M-b     向左移动一个词【对中文是移动到上一个标点符号】
+</p>
+
+<p>
+C-n     移动到下一行
+C-p     移动到上一行
+</p>
+
+<p>
+C-a     移动到行首
+C-e     移动到行尾
+</p>
+
+<p>
+M-a     移动到句首
+M-e     移动到句尾
+</p>
+
+<p>
+M-&lt;     移动到所有文字最开头
+M-&gt;     移动到所有文字最末尾
+</p>
+<blockquote>
+注意 shift
+</blockquote>
+
+<p>
+C-u     数字参数
+</p>
+
+<p>
+C-g     取消命令
+</p>
+
+<p>
+C-x 1   只保留一个窗格（即关闭其他所有窗格）
+</p>
+
+<p>
+C-u 8 * 插入 ********，输入重复
+</p>
+
+<p>
+&lt;Delback&gt;    删除光标前的一个字符
+C-d          删除光标后的一个字符
+</p>
+
+<p>
+M-&lt;Delback&gt;  移除光标前的一个词
+M-d          移除光标后的一个词
+</p>
+
+<p>
+C-k          移除从光标到“行尾”间的字符
+M-k          移除从光标到“句尾”间的字符
+</p>
+
+<p>
+删除
+C-@ 或 C-SPC    开始
+移动光标选择
+C-w             删除
+</p>
+
+<p>
+C-y     粘贴
+</p>
+
+<p>
+C-x u   撤销
+C-/     撤销
+</p>
+
+<p>
+C-x C-f     寻找一个文件
+C-x C-s     存储这个文件
+C-x C-b     列出缓冲区
+C-x s       保存多个缓冲区
+C-z         暂时离开
+</p>
+
+<p>
+替换
+M-x replace-string
+</p>
+<blockquote>
+original word
+changed word
+</blockquote>
+
+<p>
+搜索
+C-s     向前搜索
+C-r     向后搜索
+</p>
+
+<p>
+Emacs 的搜索命令的独特之处在于，它是“渐进的（incremental）”。意思是搜
+索与输入同时进行：你在键盘上一字一句地输入搜索词的过程中，Emacs 就已经
+开始替你搜索了。
+</p>
+
+<p>
+C-s 是向前搜索，C-r 是向后搜索。不过手别这么快！别着急试。
+</p>
+
+<p>
+在按下 C-s 之后，回显区里会有“I-search”字样出现，表明目前 Emacs 正处
+于“渐进搜索”状态，并等待你输入搜索字串。按 &lt;Return&gt; 可以结束搜索。
+</p>
+
+<p>
+&gt;&gt; 输入 C-s 开始一个搜索。注意敲慢一点，一次输入一个字符。
+   慢慢输入“cursor”这个词，每敲一个字都停顿一下并观察光标。
+   现在你应该已曾经找到“cursor”这个词了。
+&gt;&gt; 再按一次 C-s，搜索下一个“cursor”出现的位置。
+&gt;&gt; 现在按四次退格键，看看光标是如何移动的。
+&gt;&gt; 敲 &lt;Return&gt; 结束搜索。
+</p>
+
+      
+      <br>
+      <div class="pull-right">
+        <!-- JiaThis Button BEGIN -->
+        <div class="jiathis_style_24x24">
+          <a class="jiathis_button_qzone"></a>
+          <a class="jiathis_button_tsina"></a>
+          <a class="jiathis_button_weixin"></a>
+          <a class="jiathis_button_renren"></a>
+          <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jtico jtico_jiathis" target="_blank"></a>
+        </div>
+        <script type="text/javascript" src="http://v3.jiathis.com/code/jia.js" charset="utf-8"></script>
+        <!-- JiaThis Button END -->
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-8 col-md-offset-2 bg-clouds col-lg-8 col-lg-offset-2 col-xs-12 content-block">
+
+      <!-- Duoshuo Comment BEGIN -->
+      <div class="ds-thread"></div>
+      <script type="text/javascript">
+      var duoshuoQuery = {short_name:"adousj"};
+        (function() {
+          var ds = document.createElement('script');
+          ds.type = 'text/javascript';ds.async = true;
+          ds.src = 'http://static.duoshuo.com/embed.js';
+          ds.charset = 'UTF-8';
+          (document.getElementsByTagName('head')[0] 
+          || document.getElementsByTagName('body')[0]).appendChild(ds);
+        })();
+        </script>
+      <!-- Duoshuo Comment END -->
+
+    </div>
+  </div>
+</div>
+
+<script type="text/javascript" src="js/jquery-1.9.1.min.js"></script>
+<script type="text/javascript" src="bootstrap3/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="js/blog.js"></script>
+
+</body>
+</html>

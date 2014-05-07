@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>getting started with rails</title>
+
+  <link rel="stylesheet" href="bootstrap3/css/bootstrap.min.css">
+  <link rel="stylesheet" href="bootstrap3/css/bootstrap-theme.min.css">
+  <link rel="stylesheet" href="Font-Awesome/css/font-awesome.min.css">
+  <link rel="stylesheet" href="css/style.css">
+
+</head>
+<body>
+
+<div class="navbar navbar-inverse bg-midnight-blue navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+        <span class="sr-only">Adou Wiki</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="#">Vimwiki</a>
+    </div>
+    <div class="collapse navbar-collapse">
+      <ul class="nav navbar-nav">
+        <li><a href="index.html">首页</a></li>
+        <li><a href="计划.html">计划</a></li>
+        <li><a href="学习计划.html">学习计划</a></li>
+        <li><a href="小小工具.html">小小工具</a></li>
+        <li><a href="娱乐.html">娱乐</a></li>
+        <li><a href="tips.html">tips</a></li>
+        <li><a href="about me.html">关于我</a></li>
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div>
+</div>
+
+<div class="container">
+  <div class="row">
+    <div class="col-md-8 col-md-offset-2 bg-clouds col-lg-8 col-lg-offset-2 col-xs-12 content-block" id="main-content">
+
+      
+<h1 id="toc_1">getting started with rails</h1>
+
+<p>
+1. install rails
+gem install rails
+rails --version
+</p>
+
+<p>
+2. create the blog application
+rails new blog
+rails new blog --skip-bundle
+</p>
+
+<p>
+3. creating the database (empty)
+rake db:create
+help for fake : rake -T
+</p>
+
+<p>
+4. say 'hello',rails
+rails generate controller home index
+</p>
+
+<p>
+5. setting the application home page
+Blog::Application.routers.draw do
+</p>
+<blockquote>
+root :to =&gt; "home#index"
+</blockquote>
+
+<p>
+6. creating a resource
+rails generate scaffold Post name:string title:string content:text
+</p>
+
+<p>
+7. running a migration
+rake db:migrate
+</p>
+
+<p>
+8. add a link
+#app/view/home/index.html.erb
+&lt;h1&gt;Hello,Rails!&lt;/h1&gt;
+&lt;%= link_to "My Blog", posts_path %&gt;
+</p>
+
+<p>
+9. adding some validation
+validates :title, :presence =&gt; true,
+</p>
+<blockquote>
+:length =&gt; { :minium =&gt; 5 }
+</blockquote>
+
+<p>
+10. using the console
+rails console
+rails console -sandbox
+</p>
+
+<p>
+11. layout
+</p>
+<ol>
+<li>
+app/views/layouts/application.html.erb
+
+</ol>
+
+<p>
+12. adding comments model
+rails generate model Comment commenter:string body:text post:reference
+rake db:migrate
+</p>
+<ol>
+<li>
+post.rb model
+
+</ol>
+<p>
+has_many :comments
+</p>
+
+<p>
+13. adding a route for comments
+resources :posts do
+</p>
+<blockquote>
+resources :comments
+</blockquote>
+<p>
+end
+</p>
+
+<p>
+14. generating a controller for comment
+rails generate controller Comments
+</p>
+
+<p>
+15. 
+</p>
+
+
+<p>
+16. rails build-in help
+rake doc:guides
+rake doc:rails
+</p>
+
+      
+      <br>
+      <div class="pull-right">
+        <!-- JiaThis Button BEGIN -->
+        <div class="jiathis_style_24x24">
+          <a class="jiathis_button_qzone"></a>
+          <a class="jiathis_button_tsina"></a>
+          <a class="jiathis_button_weixin"></a>
+          <a class="jiathis_button_renren"></a>
+          <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jtico jtico_jiathis" target="_blank"></a>
+        </div>
+        <script type="text/javascript" src="http://v3.jiathis.com/code/jia.js" charset="utf-8"></script>
+        <!-- JiaThis Button END -->
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-8 col-md-offset-2 bg-clouds col-lg-8 col-lg-offset-2 col-xs-12 content-block">
+
+      <!-- Duoshuo Comment BEGIN -->
+      <div class="ds-thread"></div>
+      <script type="text/javascript">
+      var duoshuoQuery = {short_name:"adousj"};
+        (function() {
+          var ds = document.createElement('script');
+          ds.type = 'text/javascript';ds.async = true;
+          ds.src = 'http://static.duoshuo.com/embed.js';
+          ds.charset = 'UTF-8';
+          (document.getElementsByTagName('head')[0] 
+          || document.getElementsByTagName('body')[0]).appendChild(ds);
+        })();
+        </script>
+      <!-- Duoshuo Comment END -->
+
+    </div>
+  </div>
+</div>
+
+<script type="text/javascript" src="js/jquery-1.9.1.min.js"></script>
+<script type="text/javascript" src="bootstrap3/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="js/blog.js"></script>
+
+</body>
+</html>

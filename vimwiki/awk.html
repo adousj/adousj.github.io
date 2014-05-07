@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>awk</title>
+
+  <link rel="stylesheet" href="bootstrap3/css/bootstrap.min.css">
+  <link rel="stylesheet" href="bootstrap3/css/bootstrap-theme.min.css">
+  <link rel="stylesheet" href="Font-Awesome/css/font-awesome.min.css">
+  <link rel="stylesheet" href="css/style.css">
+
+</head>
+<body>
+
+<div class="navbar navbar-inverse bg-midnight-blue navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+        <span class="sr-only">Adou Wiki</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="#">Vimwiki</a>
+    </div>
+    <div class="collapse navbar-collapse">
+      <ul class="nav navbar-nav">
+        <li><a href="index.html">首页</a></li>
+        <li><a href="计划.html">计划</a></li>
+        <li><a href="学习计划.html">学习计划</a></li>
+        <li><a href="小小工具.html">小小工具</a></li>
+        <li><a href="娱乐.html">娱乐</a></li>
+        <li><a href="tips.html">tips</a></li>
+        <li><a href="about me.html">关于我</a></li>
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div>
+</div>
+
+<div class="container">
+  <div class="row">
+    <div class="col-md-8 col-md-offset-2 bg-clouds col-lg-8 col-lg-offset-2 col-xs-12 content-block" id="main-content">
+
+      
+<h1 id="toc_1">awk</h1>
+
+<p>
+echo <code>date +"%F %H:%M" -d "-5 min" | awk '{gsub(/-/,".");} {gsub(/:/," "); print }'</code>
+awk最基本功能是在文件或字符串中基于指定规则浏览和抽取信息。
+简单的
+a,1,A,127.0.0.1
+d,2,A,127.0.0.1
+a,1,C,127.0.0.1
+</p>
+
+<p>
+作为基本数据保存为test.txt 
+cat test.txt | awk '{print $1}'  打印第一排
+cat test.txt | awk '{print $4}'  打印第四排
+cat test.txt | awk '{print $4}' | sort 打印并排序
+cat test.txt | awk '{print $4}' | sort | uniq 打印排序并去重
+cat test.txt | awk '/192.168.0.2/ {print \(1,\)2,\(3,\)4}' 
+</p>
+<blockquote>
+匹配出ip为192.168.0.2的这行数据
+</blockquote>
+<p>
+<a href="http://man.lupaworld.com/content/manage/ringkee/awk.htm">http://man.lupaworld.com/content/manage/ringkee/awk.htm</a>
+</p>
+
+<p>
+-F","    文件本身的分隔符
+-OFS    输入域分隔符，默认为一个空格
+awk '{if(\(1=="b") print }' test.txt 如果\)1 == b 
+awk '{if(\(5&gt;600) print "JG:" \)1 }' test.txt 如果$1 &gt; 600
+awk '{sum+=$5;num++;} END {print sum,num,sum/num;}' test.txt (500..+800.. = 3500, 6次,总数/6)
+awk '/19[2|6]/ {print $4}' test.txt  匹配192，或者196的
+awk 'END {print NR}' test.txt    总共有几行 8行
+awk 'gsub(/^a/,"phper.yang") {print}' test.txt 
+</p>
+<blockquote>
+把a开头的替换成phper.yang
+</blockquote>
+<p>
+awk 'BEGIN {print index("phper.yang","p")}'
+</p>
+<blockquote>
+查询o第一次出现的位置 
+</blockquote>
+<p>
+awk '{print length(\(4)}' test.txt   打印出\)4的字符的长度
+awk 'BEGIN {print match("phper.yang",/y/)}'
+</p>
+<blockquote>
+查询y在phper.yang中的位置
+</blockquote>
+<p>
+awk 'BEGIN {print split("123#456#789", myarray, "#")}' i
+</p>
+<blockquote>
+返回字符串数组元素个数 
+</blockquote>
+<p>
+awk 'BEGIN {print substr("phper.yang",5,9)}'
+</p>
+<blockquote>
+第5个字符开始，取9个字符
+</blockquote>
+<p>
+echo "65" | awk '{printf"%c\n",$0}' ( awk 'BEGIN {printf "%c\n",65}'/awk 'BEGIN {printf "%f\n",999}' ) A 字符串转换
+awk -F"," '{print $1}' a.txt
+awk -F"," 'BEGIN { OFS="%" } {print \(1,\)2}' a.txt 
+</p>
+<blockquote>
+按照,号隔开，输出按%输出
+</blockquote>
+<p>
+awk -F"," '{print \(1,"%",\)2}' a.txt awk -F"," '{print \(1"%"\)2}' a.txt
+</p>
+<blockquote>
+同楼上
+</blockquote>
+<p>
+cut -c 1-3 a.txt 打印 字段1，字段2 {-c:指定字符位置,从1到3个字符}
+cut -f 1-3 -d, a.txt    分隔符是,打印1到3
+cut -f 1,3 -d, a.txt    打印1，或者3
+</p>
+
+<p>
+1. cat file1 file2 | sort | uniq 
+</p>
+<blockquote>
+(取出两个文件的并集(重复的行只保留一份))
+</blockquote>
+<p>
+2. cat file1 file2 | sort | uniq -d 
+</p>
+<blockquote>
+(取出两个文件的交集(只留下同时存在于两个文件中的文件))
+</blockquote>
+<p>
+3. cat file1 file2 | sort | uniq -u   (删除交集，留下其他的行)
+LANG=C sort file1 file2 | uniq   两个未排序文件的并集
+LANG=C sort file1 file2 | uniq -d  两个未排序文件的交集
+LANG=C sort file1 file1 file2 | uniq -u   两个未排序文件的差集
+LANG=C sort file1 file2 | uniq -u    两个未排序文件的对称差集
+LANG=C comm file1 file2 | sed 's/^\t*//'     两个有序文件的并集
+LANG=C comm -12 file1 file2     两个有序文件的交集
+LANG=C comm -13 file1 file2     两个有序文件的差集
+LANG=C comm -3 file1 file2 | sed 's/^\t*//' 两个有序文件的对称差集
+</p>
+
+      
+      <br>
+      <div class="pull-right">
+        <!-- JiaThis Button BEGIN -->
+        <div class="jiathis_style_24x24">
+          <a class="jiathis_button_qzone"></a>
+          <a class="jiathis_button_tsina"></a>
+          <a class="jiathis_button_weixin"></a>
+          <a class="jiathis_button_renren"></a>
+          <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jtico jtico_jiathis" target="_blank"></a>
+        </div>
+        <script type="text/javascript" src="http://v3.jiathis.com/code/jia.js" charset="utf-8"></script>
+        <!-- JiaThis Button END -->
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-8 col-md-offset-2 bg-clouds col-lg-8 col-lg-offset-2 col-xs-12 content-block">
+
+      <!-- Duoshuo Comment BEGIN -->
+      <div class="ds-thread"></div>
+      <script type="text/javascript">
+      var duoshuoQuery = {short_name:"adousj"};
+        (function() {
+          var ds = document.createElement('script');
+          ds.type = 'text/javascript';ds.async = true;
+          ds.src = 'http://static.duoshuo.com/embed.js';
+          ds.charset = 'UTF-8';
+          (document.getElementsByTagName('head')[0] 
+          || document.getElementsByTagName('body')[0]).appendChild(ds);
+        })();
+        </script>
+      <!-- Duoshuo Comment END -->
+
+    </div>
+  </div>
+</div>
+
+<script type="text/javascript" src="js/jquery-1.9.1.min.js"></script>
+<script type="text/javascript" src="bootstrap3/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="js/blog.js"></script>
+
+</body>
+</html>

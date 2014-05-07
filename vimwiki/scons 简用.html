@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>scons 简用</title>
+
+  <link rel="stylesheet" href="bootstrap3/css/bootstrap.min.css">
+  <link rel="stylesheet" href="bootstrap3/css/bootstrap-theme.min.css">
+  <link rel="stylesheet" href="Font-Awesome/css/font-awesome.min.css">
+  <link rel="stylesheet" href="css/style.css">
+
+</head>
+<body>
+
+<div class="navbar navbar-inverse bg-midnight-blue navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+        <span class="sr-only">Adou Wiki</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="#">Vimwiki</a>
+    </div>
+    <div class="collapse navbar-collapse">
+      <ul class="nav navbar-nav">
+        <li><a href="index.html">首页</a></li>
+        <li><a href="计划.html">计划</a></li>
+        <li><a href="学习计划.html">学习计划</a></li>
+        <li><a href="小小工具.html">小小工具</a></li>
+        <li><a href="娱乐.html">娱乐</a></li>
+        <li><a href="tips.html">tips</a></li>
+        <li><a href="about me.html">关于我</a></li>
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div>
+</div>
+
+<div class="container">
+  <div class="row">
+    <div class="col-md-8 col-md-offset-2 bg-clouds col-lg-8 col-lg-offset-2 col-xs-12 content-block" id="main-content">
+
+      
+<h1 id="toc_1">scons简用</h1>
+
+<p>
+Program('prog' , ['prog1.c','prog2.c','prog3.c'])
+</p>
+
+<p>
+可以使用Glob函数配置符合指定命名规则的文件，如：
+Program('program', Glob('*.c'))
+可以匹配当前目录下所有c文件
+</p>
+
+<p>
+编译库文件
+静态库，将Program替换为Library或StaticLibrary即可，如：
+Library('foo', ['f1.c', 'f2.o', 'f3.c', 'f4.o'])
+或
+StaticLibrary('foo', ['f1.c', 'f2.c', 'f3.c'])
+动态库，将Program替换为SharedLibrary即可，如：
+SharedLibrary('foo', ['f1.c', 'f2.c', 'f3.c'])
+</p>
+
+<p>
+如何指定链接参数
+Program('prog.c', LIBS='foo', LIBPATH='.')
+</p>
+
+
+<h3 id="toc_1.0.1">scons简介</h3>
+
+<p>
+首先编写SConstruct脚本：
+</p>
+
+<p>
+1、Program：生成可执行文件 
+</p>
+<blockquote>
+Program(‘hello.c’)  
+Program(‘hello’,'hello.c’) 
+Program(target = "hello" , source = "hello.c") 
+Program(‘hello’, Split(‘hello.c file1.c file2.c’)) 
+Program(Glob("*.c")) 
+src = ["hello.c","foo.c"];Program(src) 
+</blockquote>
+  
+<p>
+2、Object：生成目标文件 
+</p>
+  
+<p>
+3、Library：生成静态/动态库文件 
+</p>
+<blockquote>
+Library(‘foo’, ['f1.c', 'f2.c', 'f3.c']) 编译library 
+SharedLibrary(‘foo’, ['f1.c', 'f2.c', 'f3.c']) 编译 shared library 
+StaticLibrary(‘bar’, ['f4.c', 'f5.c', 'f6.c']) 编译 static library
+</blockquote>
+<blockquote>
+库的使用方法： 
+</blockquote>
+<p>
+Program(‘xmltest’,['xmltest.c'], 
+</p>
+<blockquote>
+LIBS=’xml2′, 
+LIBPATH=['/usr/local/lib'], 
+CPPPATH=['/usr/local/include/libxml2'])
+</blockquote>
+
+<p>
+4、SourceSignatures：判断源文件是否修改 
+</p>
+<blockquote>
+SourceSignatures(‘MD5′)     根据内容是否改变，默认方式 
+SourceSignatures(‘timestamp’) 根据修改时间
+</blockquote>
+
+<p>
+5、TargetSignatures：判断目标文件是否改变 
+</p>
+<blockquote>
+TargetSignatures(‘build’)   根据编译结果 
+TargetSignatures(‘content’)  根据文件内容，如果只是加了句注释，将不会被重新编译 
+</blockquote>
+  
+<p>
+6、Ignore：忽略依赖关系 
+</p>
+<blockquote>
+Ignore(hello, ‘hello.h’)  忽略某个依赖关系
+</blockquote>
+
+<p>
+7、Depends：明确依赖关系 
+</p>
+<blockquote>
+Depends(hello, ‘other_file’) 明确依赖关系
+</blockquote>
+
+<p>
+8、多目录： 
+</p>
+<blockquote>
+源文件的目录结构如下： 
+src： 
+|    SConstruct 
+|    test.cpp 
+|    mA(目录)： 
+|     SConscript 
+|     func.cpp 
+其中test.cpp为主文件，中调用func.cpp中定义的函数 
+</blockquote>
+<blockquote>
+SConstruct内容如下： 
+</blockquote>
+<p>
+subobj = SConscript(['mA/SConscript'])  
+obj = subobj + Object(Glob("*.cpp"))  
+Program("test",list(obj))  
+</p>
+<blockquote>
+SConscript内容 ： 
+</blockquote>
+<p>
+obj = Object(Glob("*.cpp"))  
+Return("obj")  
+</p>
+<blockquote>
+上例中，在主目录中执行 scons就可以编译整个"工程"。
+SConstruct编译主目录中的test.cpp，并通过SConscript编译mA目录下的源文件，并最终生成可执行文件,
+SConscript用于编译mA中的func.cpp并把生成的func.o传递给主目录的SConstruct。
+</blockquote>
+
+  
+<p>
+9.env：环境变量 
+</p>
+<blockquote>
+可以使用如下的SConstruct查看环境变量的内容：
+</blockquote>
+
+<p>
+env = Environment()  
+dict = env.Dictionary()  
+keys = dict.keys()  
+keys.sort()  
+for key in keys:  
+</p>
+<blockquote>
+print "construction variable = ‘%s’, value = ‘%s’" % (key, dict[key])  
+</blockquote>
+<blockquote>
+环境变量的使用： 
+env = Environment()   #创建默认的环境变量，默认scons会按编译器的默认选项来进行编译 
+import os 
+env = Environment(CC = ‘gcc’,CCFLAGS = ‘-O2′) #创建并设置环境 变量 
+env.Program(‘foo.c’)
+</blockquote>
+<blockquote>
+环境变量的复制： 
+env = Environment(CC = ‘gcc’) 
+opt = env.Clone(CCFLAGS = ‘-O2′) 
+dbg = env.Clone(CCFLAGS = ‘-g’)
+</blockquote>
+<blockquote>
+环境变量的替换： 
+env = Environment(CCFLAGS = ‘-DDEFINE1′) 
+env.Replace(CCFLAGS = ‘-DDEFINE2′) 
+env.Program(‘foo.c’)
+</blockquote>
+
+<p>
+执行scons进行编译 
+</p>
+<blockquote>
+scons       编译 
+scons -c   clean 
+scons -Q  只显示编译信息，去除多余的打印信息 
+scons -Q   –implicit-cache hello 保存依赖关系 
+–implicit-deps-changed   强制更新依赖关系 
+–implicit-deps-unchanged  强制使用原先的依赖关系，即使已经改变
+</blockquote>
+
+      
+      <br>
+      <div class="pull-right">
+        <!-- JiaThis Button BEGIN -->
+        <div class="jiathis_style_24x24">
+          <a class="jiathis_button_qzone"></a>
+          <a class="jiathis_button_tsina"></a>
+          <a class="jiathis_button_weixin"></a>
+          <a class="jiathis_button_renren"></a>
+          <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jtico jtico_jiathis" target="_blank"></a>
+        </div>
+        <script type="text/javascript" src="http://v3.jiathis.com/code/jia.js" charset="utf-8"></script>
+        <!-- JiaThis Button END -->
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-8 col-md-offset-2 bg-clouds col-lg-8 col-lg-offset-2 col-xs-12 content-block">
+
+      <!-- Duoshuo Comment BEGIN -->
+      <div class="ds-thread"></div>
+      <script type="text/javascript">
+      var duoshuoQuery = {short_name:"adousj"};
+        (function() {
+          var ds = document.createElement('script');
+          ds.type = 'text/javascript';ds.async = true;
+          ds.src = 'http://static.duoshuo.com/embed.js';
+          ds.charset = 'UTF-8';
+          (document.getElementsByTagName('head')[0] 
+          || document.getElementsByTagName('body')[0]).appendChild(ds);
+        })();
+        </script>
+      <!-- Duoshuo Comment END -->
+
+    </div>
+  </div>
+</div>
+
+<script type="text/javascript" src="js/jquery-1.9.1.min.js"></script>
+<script type="text/javascript" src="bootstrap3/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="js/blog.js"></script>
+
+</body>
+</html>

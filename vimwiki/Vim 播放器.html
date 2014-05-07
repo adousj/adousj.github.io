@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Vim 播放器</title>
+
+  <link rel="stylesheet" href="bootstrap3/css/bootstrap.min.css">
+  <link rel="stylesheet" href="bootstrap3/css/bootstrap-theme.min.css">
+  <link rel="stylesheet" href="Font-Awesome/css/font-awesome.min.css">
+  <link rel="stylesheet" href="css/style.css">
+
+</head>
+<body>
+
+<div class="navbar navbar-inverse bg-midnight-blue navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+        <span class="sr-only">Adou Wiki</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="#">Vimwiki</a>
+    </div>
+    <div class="collapse navbar-collapse">
+      <ul class="nav navbar-nav">
+        <li><a href="index.html">首页</a></li>
+        <li><a href="计划.html">计划</a></li>
+        <li><a href="学习计划.html">学习计划</a></li>
+        <li><a href="小小工具.html">小小工具</a></li>
+        <li><a href="娱乐.html">娱乐</a></li>
+        <li><a href="tips.html">tips</a></li>
+        <li><a href="about me.html">关于我</a></li>
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div>
+</div>
+
+<div class="container">
+  <div class="row">
+    <div class="col-md-8 col-md-offset-2 bg-clouds col-lg-8 col-lg-offset-2 col-xs-12 content-block" id="main-content">
+
+      
+<h1 id="toc_1">Vim 播放器</h1>
+
+
+<p>
+vimplayer.vim
+</p>
+
+<pre>
+" vim player
+"
+if exists("loaded_vimplayer")
+    finish
+endif
+let loaded_vimplayer = 1
+
+function VimPlayer()
+python &lt;&lt;EOF
+
+import vim
+
+framenum = 0
+linenum = 40
+columnnum = 80
+timenum = 40
+
+minfo = vim.current.buffer[-1].split(' ')
+print minfo
+i = 0
+while i &lt; len(minfo) :
+    print i
+    if minfo[i] == 'frame' :
+        framenum = int(minfo[i+1])
+        i += 2
+    elif minfo[i] == 'line' :
+        linenum = int(minfo[i+1])
+        i += 2
+    elif minfo[i] == 'column' :
+        columnnum = int(minfo[i+1])
+        i += 2
+    elif minfo[i] == 'time' :
+        timenum = int(minfo[i+1])
+        i += 2
+    else :
+        i += 1
+
+'''
+print framenum 
+print linenum 
+print columnnum
+print timenum
+'''
+
+vim.command( 'set nonu' )
+vim.command( 'set nowrap' )
+vim.command( 'set scrolloff=0' )
+vim.command( 'set columns=%d' % columnnum )       
+vim.command( 'set lines=%d' % linenum )          
+vim.command( 'normal gg' )
+
+for i in xrange(framenum-1) :
+    #print i
+    vim.command( 'execute "normal %d\&lt;CR&gt;zt"' % linenum )
+    vim.command( 'redraw')
+    vim.command( 'sleep %dm' % timenum )
+   
+
+EOF
+endfunction
+
+command! Player call VimPlayer()
+nmap &lt;silent&gt; &lt;Leader&gt;mm :call VimPlayer()&lt;CR&gt;
+
+" command! &lt;leader&gt;NN call VimPlayer()
+"
+"if !hasmapto('&lt;Plug&gt;VimPlayer')
+"  nmap &lt;silent&gt;&lt;unique&gt; &lt;Leader&gt;pp &lt;Plug&gt;VimPlayer
+"endif
+"nnoremap &lt;unique&gt;&lt;script&gt; &lt;Plug&gt;VimPlayer:VimPlayer&lt;CR&gt;
+</pre>
+
+      
+      <br>
+      <div class="pull-right">
+        <!-- JiaThis Button BEGIN -->
+        <div class="jiathis_style_24x24">
+          <a class="jiathis_button_qzone"></a>
+          <a class="jiathis_button_tsina"></a>
+          <a class="jiathis_button_weixin"></a>
+          <a class="jiathis_button_renren"></a>
+          <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jtico jtico_jiathis" target="_blank"></a>
+        </div>
+        <script type="text/javascript" src="http://v3.jiathis.com/code/jia.js" charset="utf-8"></script>
+        <!-- JiaThis Button END -->
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-8 col-md-offset-2 bg-clouds col-lg-8 col-lg-offset-2 col-xs-12 content-block">
+
+      <!-- Duoshuo Comment BEGIN -->
+      <div class="ds-thread"></div>
+      <script type="text/javascript">
+      var duoshuoQuery = {short_name:"adousj"};
+        (function() {
+          var ds = document.createElement('script');
+          ds.type = 'text/javascript';ds.async = true;
+          ds.src = 'http://static.duoshuo.com/embed.js';
+          ds.charset = 'UTF-8';
+          (document.getElementsByTagName('head')[0] 
+          || document.getElementsByTagName('body')[0]).appendChild(ds);
+        })();
+        </script>
+      <!-- Duoshuo Comment END -->
+
+    </div>
+  </div>
+</div>
+
+<script type="text/javascript" src="js/jquery-1.9.1.min.js"></script>
+<script type="text/javascript" src="bootstrap3/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="js/blog.js"></script>
+
+</body>
+</html>

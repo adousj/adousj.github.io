@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>5-14</title>
+
+  <link rel="stylesheet" href="bootstrap3/css/bootstrap.min.css">
+  <link rel="stylesheet" href="bootstrap3/css/bootstrap-theme.min.css">
+  <link rel="stylesheet" href="Font-Awesome/css/font-awesome.min.css">
+  <link rel="stylesheet" href="css/style.css">
+
+</head>
+<body>
+
+<div class="navbar navbar-inverse bg-midnight-blue navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+        <span class="sr-only">Adou Wiki</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="#">Vimwiki</a>
+    </div>
+    <div class="collapse navbar-collapse">
+      <ul class="nav navbar-nav">
+        <li><a href="index.html">首页</a></li>
+        <li><a href="计划.html">计划</a></li>
+        <li><a href="学习计划.html">学习计划</a></li>
+        <li><a href="小小工具.html">小小工具</a></li>
+        <li><a href="娱乐.html">娱乐</a></li>
+        <li><a href="tips.html">tips</a></li>
+        <li><a href="about me.html">关于我</a></li>
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div>
+</div>
+
+<div class="container">
+  <div class="row">
+    <div class="col-md-8 col-md-offset-2 bg-clouds col-lg-8 col-lg-offset-2 col-xs-12 content-block" id="main-content">
+
+      
+<h1 id="toc_1">每日心得</h1>
+
+<h2 id="toc_1.1">2012 - 5 - 14</h2>
+<p>
+删除后挽救的
+</p>
+
+<p>
+把视频的前后两部分，分别配上不同的音乐，为什么一定要把视频分开配上音乐，然后再合成一个视频呢？ 可以把两个音频合成一个，然后和视频配成整体，计算量小啊。 中间需要用到cat命令，windows没有，用emacs的eshell完成，cat视频停住，或者是太慢，时间太长。 CMD : 
+</p>
+<blockquote>
+ffmpeg -i music1.mp3 -sameq -ar 44100 aout1.mp3
+ffmpeg -i music2.mp3 -sameq -ar 44100 aout2.mp3
+</blockquote>
+
+<p>
+eshell中： 
+</p>
+<blockquote>
+cat aout1.mp3 aout2.mp3 &gt;aout.mp3
+</blockquote>
+
+<p>
+CMD : 
+</p>
+<blockquote>
+ffmpeg -i video.avi -i aout3.mp3 result.avi
+</blockquote>
+
+
+<h2 id="toc_1.2">ffmpeg</h2>
+
+<p>
+一、ffmpeg命令详解 
+ffmpeg非常强大，轻松几条命令就可以完成你的工作。 
+</p>
+
+<p>
+把darkdoor.[001-100].jpg序列帧和001.mp3音频文件利用mpeg4编码方式合成视频文件darkdoor.avi： $ ffmpeg -i 001.mp3 -i darkdoor.%3d.jpg -s 1024×768 -author skypp -vcodec mpeg4 darkdoor.avi 
+</p>
+
+<p>
+ffmpeg还支持mov格式： $ ffmpeg -i darkdoor.%3d.jpg darkdoor.mov 
+</p>
+
+<p>
+要查看你的ffmpeg支持哪些格式，可以用如下命令： $ ffmpeg -formats | less 
+</p>
+
+<p>
+还可以把视频文件导出成jpg序列帧： $ ffmpeg -i bc-cinematic-en.avi example.%d.jpg 
+</p>
+
+<p>
+debian下安装ffmpeg很简单： ＃apt-get install ffmpeg 
+</p>
+
+<p>
+###################################### 
+下面是转来的使用说明，慢慢研究吧，嘿嘿 
+###################################### 
+</p>
+
+      
+      <br>
+      <div class="pull-right">
+        <!-- JiaThis Button BEGIN -->
+        <div class="jiathis_style_24x24">
+          <a class="jiathis_button_qzone"></a>
+          <a class="jiathis_button_tsina"></a>
+          <a class="jiathis_button_weixin"></a>
+          <a class="jiathis_button_renren"></a>
+          <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jtico jtico_jiathis" target="_blank"></a>
+        </div>
+        <script type="text/javascript" src="http://v3.jiathis.com/code/jia.js" charset="utf-8"></script>
+        <!-- JiaThis Button END -->
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-8 col-md-offset-2 bg-clouds col-lg-8 col-lg-offset-2 col-xs-12 content-block">
+
+      <!-- Duoshuo Comment BEGIN -->
+      <div class="ds-thread"></div>
+      <script type="text/javascript">
+      var duoshuoQuery = {short_name:"adousj"};
+        (function() {
+          var ds = document.createElement('script');
+          ds.type = 'text/javascript';ds.async = true;
+          ds.src = 'http://static.duoshuo.com/embed.js';
+          ds.charset = 'UTF-8';
+          (document.getElementsByTagName('head')[0] 
+          || document.getElementsByTagName('body')[0]).appendChild(ds);
+        })();
+        </script>
+      <!-- Duoshuo Comment END -->
+
+    </div>
+  </div>
+</div>
+
+<script type="text/javascript" src="js/jquery-1.9.1.min.js"></script>
+<script type="text/javascript" src="bootstrap3/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="js/blog.js"></script>
+
+</body>
+</html>

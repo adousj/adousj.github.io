@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>padrino</title>
+
+  <link rel="stylesheet" href="bootstrap3/css/bootstrap.min.css">
+  <link rel="stylesheet" href="bootstrap3/css/bootstrap-theme.min.css">
+  <link rel="stylesheet" href="Font-Awesome/css/font-awesome.min.css">
+  <link rel="stylesheet" href="css/style.css">
+
+</head>
+<body>
+
+<div class="navbar navbar-inverse bg-midnight-blue navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+        <span class="sr-only">Adou Wiki</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="#">Vimwiki</a>
+    </div>
+    <div class="collapse navbar-collapse">
+      <ul class="nav navbar-nav">
+        <li><a href="index.html">首页</a></li>
+        <li><a href="计划.html">计划</a></li>
+        <li><a href="学习计划.html">学习计划</a></li>
+        <li><a href="小小工具.html">小小工具</a></li>
+        <li><a href="娱乐.html">娱乐</a></li>
+        <li><a href="tips.html">tips</a></li>
+        <li><a href="about me.html">关于我</a></li>
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div>
+</div>
+
+<div class="container">
+  <div class="row">
+    <div class="col-md-8 col-md-offset-2 bg-clouds col-lg-8 col-lg-offset-2 col-xs-12 content-block" id="main-content">
+
+      
+<h1 id="toc_1">padrino</h1>
+
+<p>
+web frameword above sinatra
+</p>
+
+<p>
+<a href="restful.html">restful</a>
+padrino rest or sinatra rest
+</p>
+
+<p>
+<a href="padrino mailer.html">padrino mailer</a>
+</p>
+
+<p>
+<a href="acitverecord tasks.html">acitverecord tasks</a>
+</p>
+
+<p>
+<a href="datamapper tasks.html">datamapper tasks</a>
+</p>
+
+<p>
+<a href="sequel tasks.html">sequel tasks</a>
+</p>
+
+<p>
+<a href="padrino problem.html">padrino problem</a>
+</p>
+
+<h2 id="toc_1.1">project generator</h2>
+<p>
+<a href="http://www.padrinorb.com/guides/generators">http://www.padrinorb.com/guides/generators</a>
+padrino g project &lt;the_app_name&gt; &lt;/path/to/create/app&gt; --&lt;component-name&gt; &lt;value&gt;
+padrino g project demo_project  # DemoApp extends Padrino:Application
+padrino g project demo_project -t rspec -e haml -m rr -s jquery -a mysql -d datamapper -c sass
+padrino g project demo_project --test none --renderer none
+padrino g project demo_project --app alternate_app_name # alias -n
+padrino g project demo_project --run_bundler # alias -b   # bundle install
+</p>
+
+<h2 id="toc_1.2">controller generator</h2>
+<p>
+padrino g controller Admin
+padrino g controller Admin -a my_sub_app
+padrino g controller Admin get:index get:new post:create
+</p>
+
+<p>
+padrino g controller User -d
+</p>
+
+<h2 id="toc_1.3">model generator</h2>
+<p>
+padrino g model User
+padrino g model User name:string age:integer email:string
+  [app/models/users.rb]
+  [db/migrate/xxx_create_users.rb]
+  [test/models/user_test.rb]
+padrino g model User -d
+</p>
+
+<h2 id="toc_1.4">migration generator</h2>
+<p>
+padrino g migration AddFieldsToUsers
+padrino g migration RemoveFieldsFromUsers
+padrino g migration AddFieldsToUsers last_login:datetime crypted_password:string
+padrino g migration RemoveFieldsFromUsers password:string ip_address:string
+padrino g migration AddFieldsToUsers -d
+</p>
+
+<h2 id="toc_1.5">mailer generator</h2>
+<p>
+padrino g mailer UserNotifier -a my_sub_app
+padrino g mailer UserNotifier confirm_account welcome inactive_account
+  app/mailers/user_notifier.rb
+padrino g mailer UserNotifier -d
+</p>
+
+<h2 id="toc_1.6">sub app generator</h2>
+<p>
+padrino g projet demo_project
+cd demo_project
+padrino g app one
+padrino g app two
+  config/apps.rb
+padrino g controller base --app foo
+padrino g controller base
+padrino g controller base --app bar
+padrino g mailer registration --app foo
+padrino g mailer registration
+padrino g mailer registration --app bar
+</p>
+
+
+<h2 id="toc_1.7">admin generator</h2>
+<p>
+padrino g admin
+padrino g admin --theme blue
+</p>
+
+<p>
+padrino rake ar:create
+padrino rake ar:migrate
+padrino rake seed
+</p>
+
+
+<p>
+padrino g model post title:string body:text -a app
+</p>
+
+<p>
+padrino g controller pposts get:index get:show
+</p>
+
+<p>
+padrino g admin_page post
+</p>
+
+<p>
+padrino g migration AddAccountToPost account_id:integer
+</p>
+
+
+
+<h2 id="toc_1.8">run</h2>
+<p>
+padrino start
+padrino start -d -p 3000 -e development -a thin
+padrino stop
+padrino concole
+padrino rake
+</p>
+
+
+<h2 id="toc_1.9">helpers</h2>
+<p>
+link_to post.title, url_for(:posts, :show, :id =&gt; post)
+time_ago_in_words(post.created_at || Time.now) + ' ago'
+</p>
+
+<p>
+simple_format(post.body)
+</p>
+
+<p>
+url(:posts, :edit. :id =&gt; @post.id)
+</p>
+
+<p>
+flash[:notice] = 'Post was successfully created.'
+</p>
+
+<p>
+style_link_tag 'reset', 'application'
+javascript_include_tag 'jquery', 'application'
+yield_cotent :include
+</p>
+
+
+<ul>
+<li>
+form_tag url_for(:posts, :index), :method =&gt; 'get' do
+  search for:
+  = text_field_tag 'query', :value =&gt; params[:query]
+  = submit_tag 'Search'
+
+</ul>
+
+
+<ul>
+<li>
+content_for :include do
+  = feed_tag(:rss, url(:posts, :index, :formate =&gt; :rss), :title =&gt; 'RSS')
+  = feed_tag(:atom, url(:posts, :index, :formate =&gt; :atom), :title =&gt; 'ATOM')
+
+</ul>
+
+      
+      <br>
+      <div class="pull-right">
+        <!-- JiaThis Button BEGIN -->
+        <div class="jiathis_style_24x24">
+          <a class="jiathis_button_qzone"></a>
+          <a class="jiathis_button_tsina"></a>
+          <a class="jiathis_button_weixin"></a>
+          <a class="jiathis_button_renren"></a>
+          <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jtico jtico_jiathis" target="_blank"></a>
+        </div>
+        <script type="text/javascript" src="http://v3.jiathis.com/code/jia.js" charset="utf-8"></script>
+        <!-- JiaThis Button END -->
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-8 col-md-offset-2 bg-clouds col-lg-8 col-lg-offset-2 col-xs-12 content-block">
+
+      <!-- Duoshuo Comment BEGIN -->
+      <div class="ds-thread"></div>
+      <script type="text/javascript">
+      var duoshuoQuery = {short_name:"adousj"};
+        (function() {
+          var ds = document.createElement('script');
+          ds.type = 'text/javascript';ds.async = true;
+          ds.src = 'http://static.duoshuo.com/embed.js';
+          ds.charset = 'UTF-8';
+          (document.getElementsByTagName('head')[0] 
+          || document.getElementsByTagName('body')[0]).appendChild(ds);
+        })();
+        </script>
+      <!-- Duoshuo Comment END -->
+
+    </div>
+  </div>
+</div>
+
+<script type="text/javascript" src="js/jquery-1.9.1.min.js"></script>
+<script type="text/javascript" src="bootstrap3/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="js/blog.js"></script>
+
+</body>
+</html>

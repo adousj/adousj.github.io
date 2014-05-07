@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>大小写变化</title>
+
+  <link rel="stylesheet" href="bootstrap3/css/bootstrap.min.css">
+  <link rel="stylesheet" href="bootstrap3/css/bootstrap-theme.min.css">
+  <link rel="stylesheet" href="Font-Awesome/css/font-awesome.min.css">
+  <link rel="stylesheet" href="css/style.css">
+
+</head>
+<body>
+
+<div class="navbar navbar-inverse bg-midnight-blue navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+        <span class="sr-only">Adou Wiki</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="#">Vimwiki</a>
+    </div>
+    <div class="collapse navbar-collapse">
+      <ul class="nav navbar-nav">
+        <li><a href="index.html">首页</a></li>
+        <li><a href="计划.html">计划</a></li>
+        <li><a href="学习计划.html">学习计划</a></li>
+        <li><a href="小小工具.html">小小工具</a></li>
+        <li><a href="娱乐.html">娱乐</a></li>
+        <li><a href="tips.html">tips</a></li>
+        <li><a href="about me.html">关于我</a></li>
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div>
+</div>
+
+<div class="container">
+  <div class="row">
+    <div class="col-md-8 col-md-offset-2 bg-clouds col-lg-8 col-lg-offset-2 col-xs-12 content-block" id="main-content">
+
+      
+<h1 id="toc_1">大小写变化</h1>
+
+
+<p>
+平时在写程序时经常会遇到大小写转换的问题，vim中提供了很多非常方便的大小写转换命令，可以快速的进行字母、单词、任意行的大小写转换，可以和vim的光标移动指令组合使用。
+</p>
+
+<p>
+~          将光标下的字母改变大小写
+</p>
+
+<p>
+3~         将光标位置开始的3个字母改变其大小写
+</p>
+
+<p>
+g~~        改变当前行字母的大小写
+</p>
+
+<p>
+U          将可视模式下选择的字母全改成大写字母
+</p>
+
+<p>
+u          将可视模式下选择的字母全改成小写
+</p>
+
+<p>
+gUU        将当前行的字母改成大写
+</p>
+
+<p>
+3gUU       将从光标开始到下面3行字母改成大写
+</p>
+
+<p>
+guu       将当前行的字母全改成小写
+</p>
+
+<p>
+gUw       将光标下的单词改成大写。
+</p>
+
+<p>
+guw       将光标下的单词改成小写。
+</p>
+
+
+<p>
+vim中大小写转化的命令是
+gu或者gU
+形象一点的解释就是小u意味着转为小写；大U意味着转为大写.
+</p>
+
+<p>
+剩下的就是对这两个命令的限定（限定操作的行，字母，单词）等等
+</p>
+
+<h3 id="toc_1.0.1">1、整篇文章大写转化为小写</h3>
+<p>
+打开文件后，无须进入命令行模式。键入:ggguG 
+</p>
+
+<p>
+解释一下：ggguG分作三段gg gu G
+gg=光标到文件第一个字符
+gu=把选定范围全部小写
+G=到文件结束
+</p>
+
+
+<h3 id="toc_1.0.2">2、整篇文章小写转化为大写</h3>
+<p>
+打开文件后，无须进入命令行模式。键入:gggUG
+</p>
+
+<p>
+解释一下：gggUG分作三段gg gU G
+gg=光标到文件第一个字符
+gU=把选定范围全部大写
+G=到文件结束
+</p>
+
+
+<h3 id="toc_1.0.3">3、只转化某个单词</h3>
+<p>
+guw 、gue
+gUw、gUe
+这样，光标后面的单词便会进行大小写转换
+想转换5个单词的命令如下：
+gu5w、gu5e
+gU5w、gU5e
+</p>
+
+
+<h3 id="toc_1.0.4">4、转换几行的大小写</h3>
+
+<p>
+将光标定位到想转换的行上，键入：1gU 从光标所在行 往下一行都进行小写到大写的转换
+10gU，则进行11行小写到大写的转换
+以此类推，就出现其他的大小写转换命令
+gU0        ：从光标所在位置到行首，都变为大写
+gU$        ：从光标所在位置到行尾，都变为大写
+gUG        ：从光标所在位置到文章最后一个字符，都变为大写
+gU1G    ：从光标所在位置到文章第一个字符，都变为大写
+</p>
+
+      
+      <br>
+      <div class="pull-right">
+        <!-- JiaThis Button BEGIN -->
+        <div class="jiathis_style_24x24">
+          <a class="jiathis_button_qzone"></a>
+          <a class="jiathis_button_tsina"></a>
+          <a class="jiathis_button_weixin"></a>
+          <a class="jiathis_button_renren"></a>
+          <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jtico jtico_jiathis" target="_blank"></a>
+        </div>
+        <script type="text/javascript" src="http://v3.jiathis.com/code/jia.js" charset="utf-8"></script>
+        <!-- JiaThis Button END -->
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-8 col-md-offset-2 bg-clouds col-lg-8 col-lg-offset-2 col-xs-12 content-block">
+
+      <!-- Duoshuo Comment BEGIN -->
+      <div class="ds-thread"></div>
+      <script type="text/javascript">
+      var duoshuoQuery = {short_name:"adousj"};
+        (function() {
+          var ds = document.createElement('script');
+          ds.type = 'text/javascript';ds.async = true;
+          ds.src = 'http://static.duoshuo.com/embed.js';
+          ds.charset = 'UTF-8';
+          (document.getElementsByTagName('head')[0] 
+          || document.getElementsByTagName('body')[0]).appendChild(ds);
+        })();
+        </script>
+      <!-- Duoshuo Comment END -->
+
+    </div>
+  </div>
+</div>
+
+<script type="text/javascript" src="js/jquery-1.9.1.min.js"></script>
+<script type="text/javascript" src="bootstrap3/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="js/blog.js"></script>
+
+</body>
+</html>

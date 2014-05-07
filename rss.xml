@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
+  <channel>
+    <id>http://adou.gitcafe.com</id>
+    <title>~/Adou's Blog</title>
+    <link>http://adou.gitcafe.com</link>
+    <language>zh-cn</language>
+    <copyright>&amp;#x2117; &amp;amp; &amp;#xA9; 2014 Adou He</copyright>
+    <link href="http://adou.gitcafe.com"/>
+    <link href="http://adou.gitcafe.com/rss.xml" rel="self"/>
+    <updated>2014-02-22T07:48:00Z</updated>
+    <lastBuildDate>2014-02-22T07:48:00Z</lastBuildDate>
+    <pubDate>2014-02-22T07:48:00Z</pubDate>
+    <description>~Adou got his ideas out of head.</description>
+    <author>
+      <name>Adou</name>
+    </author>
+    <item>
+      <title>test</title>
+      <link>http://adou.gitcafe.com/test</link>
+      <description type="html">&lt;p&gt;测试 middleman&lt;/p&gt;
+</description>
+      <guid>tag:adou.gitcafe.com,article.url</guid>
+      <pubDate>2014-02-22T07:48:00Z</pubDate>
+      <category></category>
+    </item>
+  </channel>
+</rss>

@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>python ftp</title>
+
+  <link rel="stylesheet" href="bootstrap3/css/bootstrap.min.css">
+  <link rel="stylesheet" href="bootstrap3/css/bootstrap-theme.min.css">
+  <link rel="stylesheet" href="Font-Awesome/css/font-awesome.min.css">
+  <link rel="stylesheet" href="css/style.css">
+
+</head>
+<body>
+
+<div class="navbar navbar-inverse bg-midnight-blue navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+        <span class="sr-only">Adou Wiki</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="#">Vimwiki</a>
+    </div>
+    <div class="collapse navbar-collapse">
+      <ul class="nav navbar-nav">
+        <li><a href="index.html">首页</a></li>
+        <li><a href="计划.html">计划</a></li>
+        <li><a href="学习计划.html">学习计划</a></li>
+        <li><a href="小小工具.html">小小工具</a></li>
+        <li><a href="娱乐.html">娱乐</a></li>
+        <li><a href="tips.html">tips</a></li>
+        <li><a href="about me.html">关于我</a></li>
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div>
+</div>
+
+<div class="container">
+  <div class="row">
+    <div class="col-md-8 col-md-offset-2 bg-clouds col-lg-8 col-lg-offset-2 col-xs-12 content-block" id="main-content">
+
+      
+<h1 id="toc_1">python ftp</h1>
+
+<p>
+<a href="vimwiki ftp空间.html">vimwiki ftp空间</a>
+</p>
+
+<h2 id="toc_1.1">我的总结</h2>
+<p>
+ftplib 模块
+</p>
+<pre>
+# FTP操作基本流程示意
+
+FTP.connect(服务器地址,端口,超时时间)	# 连接服务器
+FTP.login(用户名,用户密码) 		# 用户登录
+FTP.cwd(路径)    			# 设置要操作FTP文件夹路径
+FTP.nlst()			# 获得目录下文件
+FTP.retrbinary(文件名,回调函数) 	# 下载FTP上的文件
+FTP.delete(文件名)            	# 删除FTP文件
+ftp.storbinary(文件名, 文件对象) 	# 上传FTP文件
+ftp.quit()                  	# 退出FTP服务器
+</pre>
+  
+<p>
+例子：
+</p>
+<pre>
+# !/usr/bin/python
+# coding : cp936
+# CopyRight 2012 Adou , All Rights Reserved .
+
+from ftplib import FTP
+
+host = 'portal.sjtu.edu.cn'
+timeout = 30
+port = 21
+user = 'username'
+psw = 'password'
+
+ftp = FTP(host=host,user=user,passwd=psw,timeout=timeout)
+#ftp.connect('portal.sjtu.edu.cn',port,timeout)
+#ftp.connect()
+#ftp.login(username,psw)
+print ftp.getwelcome()
+ftp.cwd('vimwiki')
+
+files = ftp.nlst()
+for i in files :
+    print i
+#path = i
+#f = open(path,'wb')
+#filename = 'RETR' + i
+#ftp.retribinary(filename,f.write)
+#ftp.delete(i)
+#ftp.storbinary("STOR"+filename,open(path,'rb'))
+ftp.quit()
+</pre>
+
+<h2 id="toc_1.2">照抄</h2>
+<p>
+Python 编程中使用ftplib模块的FTP对象，可以进行方便的实现FTP客户端功能，简易的流程如下：
+</p>
+
+<ol>
+<li>
+FTP操作基本流程示意
+
+</ol>
+
+<p>
+FTP.connect(服务器地址,端口,超时时间)	# 连接服务器
+FTP.login(用户名,用户密码) 		# 用户登录
+FTP.cwd(路径)    			# 设置要操作FTP文件夹路径
+FTP.nlst()			# 获得目录下文件
+FTP.retrbinary(文件名,回调函数) 	# 下载FTP上的文件
+FTP.delete(文件名)            	# 删除FTP文件
+ftp.storbinary(文件名, 文件对象) 	# 上传FTP文件
+ftp.quit()                  	# 退出FTP服务器
+connect(服务器地址,端口[,超时]) ：连接FTP服务器地址。
+</p>
+
+<p>
+login(用户名，用户密码) ：进行FTP登陆，然后才能对文件进行操作。
+</p>
+
+<p>
+cwd(路径) ：设置ftp的当前操作的路径
+</p>
+
+<p>
+nlst() ：获得当前路径下的所有文件及文件夹名。
+</p>
+
+<p>
+retrbinary(FTP上文件名,处理回调函数名) ：将ftp上的文件保存到本机上。
+</p>
+
+<p>
+delete(文件名) ：用于删除文件。
+</p>
+
+<p>
+storbinary(文件名称, 文件对象) ：用于上传文件。
+</p>
+
+<p>
+quit() ：退出ftp服务器并断开连接。
+</p>
+
+<p>
+具体的用法如以下例子：
+</p>
+
+<ol>
+<li>
+例：FTP编程
+
+</ol>
+<p>
+from ftplib import FTP
+</p>
+    
+<p>
+ftp = FTP()
+timeout = 30
+port = 21
+ftp.connect('192.168.1.188',port,timeout) # 连接FTP服务器
+ftp.login('UserName','888888') # 登录
+print ftp.getwelcome()  # 获得欢迎信息 
+ftp.cwd('file/test')    # 设置FTP路径
+list = ftp.nlst()       # 获得目录列表
+for name in list:
+</p>
+<blockquote>
+print(name)             # 打印文件名字
+</blockquote>
+<p>
+path = 'd:/data/' + name    # 文件保存路径
+f = open(path,'wb')         # 打开要保存文件
+filename = 'RETR ' + name   # 保存FTP文件
+ftp.retrbinary(filename,f.write) # 保存FTP上的文件
+ftp.delete(name)            # 删除FTP文件
+ftp.storbinary('STOR '+filename, open(path, 'rb')) # 上传FTP文件
+ftp.quit()                  # 退出FTP服务器
+</p>
+
+      
+      <br>
+      <div class="pull-right">
+        <!-- JiaThis Button BEGIN -->
+        <div class="jiathis_style_24x24">
+          <a class="jiathis_button_qzone"></a>
+          <a class="jiathis_button_tsina"></a>
+          <a class="jiathis_button_weixin"></a>
+          <a class="jiathis_button_renren"></a>
+          <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jtico jtico_jiathis" target="_blank"></a>
+        </div>
+        <script type="text/javascript" src="http://v3.jiathis.com/code/jia.js" charset="utf-8"></script>
+        <!-- JiaThis Button END -->
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-8 col-md-offset-2 bg-clouds col-lg-8 col-lg-offset-2 col-xs-12 content-block">
+
+      <!-- Duoshuo Comment BEGIN -->
+      <div class="ds-thread"></div>
+      <script type="text/javascript">
+      var duoshuoQuery = {short_name:"adousj"};
+        (function() {
+          var ds = document.createElement('script');
+          ds.type = 'text/javascript';ds.async = true;
+          ds.src = 'http://static.duoshuo.com/embed.js';
+          ds.charset = 'UTF-8';
+          (document.getElementsByTagName('head')[0] 
+          || document.getElementsByTagName('body')[0]).appendChild(ds);
+        })();
+        </script>
+      <!-- Duoshuo Comment END -->
+
+    </div>
+  </div>
+</div>
+
+<script type="text/javascript" src="js/jquery-1.9.1.min.js"></script>
+<script type="text/javascript" src="bootstrap3/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="js/blog.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>漫画 gui</title>
+
+  <link rel="stylesheet" href="bootstrap3/css/bootstrap.min.css">
+  <link rel="stylesheet" href="bootstrap3/css/bootstrap-theme.min.css">
+  <link rel="stylesheet" href="Font-Awesome/css/font-awesome.min.css">
+  <link rel="stylesheet" href="css/style.css">
+
+</head>
+<body>
+
+<div class="navbar navbar-inverse bg-midnight-blue navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+        <span class="sr-only">Adou Wiki</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="#">Vimwiki</a>
+    </div>
+    <div class="collapse navbar-collapse">
+      <ul class="nav navbar-nav">
+        <li><a href="index.html">首页</a></li>
+        <li><a href="计划.html">计划</a></li>
+        <li><a href="学习计划.html">学习计划</a></li>
+        <li><a href="小小工具.html">小小工具</a></li>
+        <li><a href="娱乐.html">娱乐</a></li>
+        <li><a href="tips.html">tips</a></li>
+        <li><a href="about me.html">关于我</a></li>
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div>
+</div>
+
+<div class="container">
+  <div class="row">
+    <div class="col-md-8 col-md-offset-2 bg-clouds col-lg-8 col-lg-offset-2 col-xs-12 content-block" id="main-content">
+
+      
+<h1 id="toc_1">漫画 gui</h1>
+
+<pre>
+# !/usr/bin/python
+# coding : cp936
+# CopyRight 2012 Adou , All Rights Reserved .
+
+import cv , cv2
+import math
+import os
+import sys
+from Tkinter import *
+import Tkinter
+from PIL import Image , ImageTk
+
+global ksize1 , ksize2 , sigma , edge , imglabel
+
+#ksize1 = IntVar()
+#sigma = DoubleVar()
+#filename = StringVar()
+#sigma = DoubleVar()
+    
+def odd( num ) :
+    num = int( num )
+    if num/2*2 == num :
+        num -= 1
+    return num
+
+def oddf( num ) :
+    ksize1.set( odd(ksize1.get()) )
+    ksize2.set( odd(ksize2.get()) )
+
+def filter():
+    ''''''
+    global filename , ksize1 , ksize2 , sigma , edge , imglabel , tkedge
+
+    if not os.path.isfile(filename.get()) :
+        print 'no such file'
+        return
+    else :
+        print filename.get()
+    img = cv2.imread(filename.get())
+    #height , width , dim = img.shape
+
+    #img = cv2.bilateralFilter(img,10,20,5)  # 1
+
+    img = cv2.bilateralFilter(img,4,8,2)  # 6
+    img = cv2.bilateralFilter(img,4,8,2)  # 6
+    img = cv2.bilateralFilter(img,4,8,2)  # 6
+    img = cv2.bilateralFilter(img,4,8,2)  # 6
+    img = cv2.bilateralFilter(img,4,8,2)  # 6
+
+    imgray = cv2.cvtColor(img,cv.CV_RGB2GRAY)
+
+    #sizeq = min(width,height)
+    #sizeq = height
+    sizeq = int( img.size**0.5*0.8 )
+    edge1 = cv2.GaussianBlur(imgray,(ksize1.get(),ksize1.get()),sigma.get())
+    edge2 = cv2.GaussianBlur(imgray,(ksize2.get(),ksize2.get()),sigma.get())
+    sum1 = cv2.sumElems(edge1)
+    sum2 = cv2.sumElems(edge2)
+    if sum1 &gt; sum2 :
+        edge = edge1 - edge2
+    else :
+        edge = edge2 - edge1
+
+    edge = 255 - edge
+    cv2.imshow('Img2Cartoon',edge)
+    #piedge = Image.fromstring('L',edge.shape,edge.tostring())
+    #piedge = Image.fromarray(edge)
+    #print piedge
+    #tkedge = ImageTk.PhotoImage( piedge )
+    #print tkedge
+    #imglabel['image'] = tkedge
+
+    #edge = cv2.bilateralFilter(edge,10,20,5)
+
+    #edge = cv2.morphologyEx( edge , cv2.MORPH_OPEN , st )
+    #edge = cv2.morphologyEx( edge , cv2.MORPH_CLOSE , st )
+    #edge = cv2.threshold(edge,40,1,cv2.THRESH_BINARY)
+    #cv2.imshow('DoG',edge)
+    #img = cv2.cvtColor(img,cv.CV_Lab2RGB)
+    #edges = cv2.cvtColor(edge,cv.CV_GRAY2RGB)
+    
+    #basename = os.path.basename(filename)
+    #cv2.imwrite('after/'+basename,edge)
+
+def savef() :
+    global edge , filename 
+    cv2.imwrite('cartoon_'+filename.get(),edge)
+
+if __name__ == '__main__' :
+    '''test'''
+    global filename , ksize1 , ksize2 , sigma , imglabel
+
+    root = Tk()
+    root.title('Img2Cartoon')
+    #root.geometry('640x480+100+160')
+
+    ###############################################
+    label1 = Label(root,text='ksize1',width=16)
+    label1.grid(row=0,column=0)
+
+    ksize1 = IntVar()
+    scale1 = Scale(root,from_=1,to=17,resolution=1,variable=ksize1,orient=HORIZONTAL,length=360,command=oddf)
+    ksize1.set(3)
+    scale1.grid(row=0,column=1)
+
+    filename = StringVar()
+    entry = Entry(root,text='1.jpg',textvariable=filename)
+    filename.set('1.jpg')
+    entry.grid(row=0,column=2)
+
+    ###############################################
+    label2 = Label(root,text='ksize2',width=16)
+    label2.grid(row=1,column=0)
+
+    ksize2 = IntVar()
+    scale2 = Scale(root,from_=1,to=17,resolution=1,variable=ksize2,orient=HORIZONTAL,length=360,command=oddf)
+    ksize2.set(5)
+    scale2.grid(row=1,column=1)
+
+    btn1 = Button(root,text='process',command=filter,width=16)
+    btn1.grid(row=1,column=2)
+
+    ###############################################
+    label3 = Label(root,text='ksize3',width=16)
+    label3.grid(row=2,column=0)
+
+    sigma = DoubleVar()
+    scale3 = Scale(root,from_=0.1,to=4.0,resolution=0.1,variable=sigma,orient=HORIZONTAL,length=360)
+    sigma.set(1.8)
+    scale3.grid(row=2,column=1)
+
+    btn2 = Button(root,text='save',command=savef,width=16)
+    btn2.grid(row=2,column=2)
+
+    ###############################################
+    imglabel = Label(root,bd=0)
+    imglabel.grid(row=3,column=0,columnspan=3)
+
+    root.mainloop()
+</pre>
+
+      
+      <br>
+      <div class="pull-right">
+        <!-- JiaThis Button BEGIN -->
+        <div class="jiathis_style_24x24">
+          <a class="jiathis_button_qzone"></a>
+          <a class="jiathis_button_tsina"></a>
+          <a class="jiathis_button_weixin"></a>
+          <a class="jiathis_button_renren"></a>
+          <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jtico jtico_jiathis" target="_blank"></a>
+        </div>
+        <script type="text/javascript" src="http://v3.jiathis.com/code/jia.js" charset="utf-8"></script>
+        <!-- JiaThis Button END -->
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-8 col-md-offset-2 bg-clouds col-lg-8 col-lg-offset-2 col-xs-12 content-block">
+
+      <!-- Duoshuo Comment BEGIN -->
+      <div class="ds-thread"></div>
+      <script type="text/javascript">
+      var duoshuoQuery = {short_name:"adousj"};
+        (function() {
+          var ds = document.createElement('script');
+          ds.type = 'text/javascript';ds.async = true;
+          ds.src = 'http://static.duoshuo.com/embed.js';
+          ds.charset = 'UTF-8';
+          (document.getElementsByTagName('head')[0] 
+          || document.getElementsByTagName('body')[0]).appendChild(ds);
+        })();
+        </script>
+      <!-- Duoshuo Comment END -->
+
+    </div>
+  </div>
+</div>
+
+<script type="text/javascript" src="js/jquery-1.9.1.min.js"></script>
+<script type="text/javascript" src="bootstrap3/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="js/blog.js"></script>
+
+</body>
+</html>
