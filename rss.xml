@@ -8,13 +8,76 @@
     <copyright>&amp;#x2117; &amp;amp; &amp;#xA9; 2014 Adou He</copyright>
     <link href="http://adou.gitcafe.com"/>
     <link href="http://adou.gitcafe.com/rss.xml" rel="self"/>
-    <updated>2014-02-22T07:48:00Z</updated>
-    <lastBuildDate>2014-02-22T07:48:00Z</lastBuildDate>
-    <pubDate>2014-02-22T07:48:00Z</pubDate>
+    <updated>2014-07-17T10:26:00Z</updated>
+    <lastBuildDate>2014-07-17T10:26:00Z</lastBuildDate>
+    <pubDate>2014-07-17T10:26:00Z</pubDate>
     <description>~Adou got his ideas out of head.</description>
     <author>
       <name>Adou</name>
     </author>
+    <item>
+      <title>Nginx + Passenger + Rails</title>
+      <link>http://adou.gitcafe.com/nginx-passenger-rails</link>
+      <description type="html">&lt;p&gt;最近开发一个 Rails 项目，项目 Demo 已经初步完成，需要部署到服务器。平时都是使用 Rails 自带 WebBrick, 或者使用 thin，很少配置 production 环境的。今天实践了一遍，虽然也遇到了几个坑，过程还算顺利。&lt;/p&gt;
+
+&lt;h2&gt;总体步骤&lt;/h2&gt;
+
+&lt;ul&gt;
+&lt;li&gt;安装 Passenger&lt;/li&gt;
+&lt;li&gt;安装 Nginx&lt;/li&gt;
+&lt;li&gt;配置 Nginx&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2&gt;安装 Passenger&lt;/h2&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="n"&gt;gem&lt;/span&gt; &lt;span class="n"&gt;install&lt;/span&gt; &lt;span class="n"&gt;passenger&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;h2&gt;安装 Nginx&lt;/h2&gt;
+
+&lt;p&gt;不可以使用官方的 Nginx，为跟 Passenger 集成，需要单独设置编译。不过你不用为“设置” “编译”苦恼，因为已经有编译安装脚本。&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="n"&gt;rvmsudo&lt;/span&gt; &lt;span class="n"&gt;passenger&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;install&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;nginx&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;modul&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;按着提示内容进行选择就行，我的原则就是“能默认就默认”，能直接 Enter 就回车走人。&lt;/p&gt;
+
+&lt;p&gt;编译可能需要一段时间，不过也不会很长，几分钟吧。&lt;/p&gt;
+
+&lt;h3&gt;安装命令&lt;/h3&gt;
+
+&lt;p&gt;在这里我就遇到了一个坑，本来现在就能打 Nginx 就能看到默认页面了。&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="n"&gt;sudo&lt;/span&gt; &lt;span class="n"&gt;service&lt;/span&gt; &lt;span class="n"&gt;nginx&lt;/span&gt; &lt;span class="n"&gt;start&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;or&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="n"&gt;sudo&lt;/span&gt; &lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;etc&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;init&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;d&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;nginx&lt;/span&gt; &lt;span class="n"&gt;stop&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;但是输入以上命令，不能启用 Nginx，提示类似 “no service named nginx&amp;quot;&lt;/p&gt;
+
+&lt;p&gt;不问为什么，但求结果，google了一下，找到了解决方式。&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="n"&gt;wget&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;O&lt;/span&gt; &lt;span class="n"&gt;init&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;deb&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;sh&lt;/span&gt; &lt;span class="n"&gt;http&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="c1"&gt;//library.linode.com/assets/660-init-deb.sh&lt;/span&gt;
+&lt;span class="n"&gt;sudo&lt;/span&gt; &lt;span class="n"&gt;mv&lt;/span&gt; &lt;span class="n"&gt;init&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;deb&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;sh&lt;/span&gt; &lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;etc&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;init&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;d&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;nginx&lt;/span&gt;
+&lt;span class="n"&gt;sudo&lt;/span&gt; &lt;span class="n"&gt;chmod&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt;&lt;span class="n"&gt;x&lt;/span&gt; &lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;etc&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;init&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;d&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;nginx&lt;/span&gt;
+&lt;span class="n"&gt;sudo&lt;/span&gt; &lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;usr&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;sbin&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;update&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;rc&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;d&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;f&lt;/span&gt; &lt;span class="n"&gt;nginx&lt;/span&gt; &lt;span class="n"&gt;defaults&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;现在就能通过命令控制 Nginx 了&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="n"&gt;sudo&lt;/span&gt; &lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;etc&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;init&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;d&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;nginx&lt;/span&gt; &lt;span class="n"&gt;stop&lt;/span&gt;
+&lt;span class="n"&gt;sudo&lt;/span&gt; &lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;etc&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;init&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;d&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;nginx&lt;/span&gt; &lt;span class="n"&gt;start&lt;/span&gt;
+&lt;span class="n"&gt;sudo&lt;/span&gt; &lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;etc&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;init&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;d&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;nginx&lt;/span&gt; &lt;span class="n"&gt;restart&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;h2&gt;配置 Nginx&lt;/h2&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="n"&gt;sudo&lt;/span&gt; &lt;span class="n"&gt;v&lt;/span&gt; &lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;opt&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;nginx&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;conf&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;nginx&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;conf&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;配置倒是很简洁，主要是因为我要求也简单，能用即可：) &lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="n"&gt;server&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+  &lt;span class="n"&gt;listen&lt;/span&gt; &lt;span class="mi"&gt;80&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+  &lt;span class="n"&gt;server_name&lt;/span&gt; &lt;span class="n"&gt;localhost&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+  &lt;span class="n"&gt;passenger_enabled&lt;/span&gt; &lt;span class="n"&gt;on&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+  &lt;span class="n"&gt;root&lt;/span&gt; &lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;path&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;to&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;your_app&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;public&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;span class="p"&gt;}&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;具体为什么指向 public 页面，我也不知道。重要的是&lt;code&gt;it works&lt;/code&gt;&lt;/p&gt;
+</description>
+      <guid>tag:adou.gitcafe.com,article.url</guid>
+      <pubDate>2014-07-17T10:26:00Z</pubDate>
+      <category>Rails</category>
+    </item>
     <item>
       <title>test</title>
       <link>http://adou.gitcafe.com/test</link>

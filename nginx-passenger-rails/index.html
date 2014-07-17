@@ -1,0 +1,203 @@
+
+
+
+<!DOCTYPE html>
+<!--[if lt IE 7]><html class="no-js lt-ie9 lt-ie8 lt-ie7" lang="en"><![endif]-->
+<!--[if IE 7]><html class="no-js lt-ie9 lt-ie8" lang="en"><![endif]-->
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en"><![endif]-->
+<!--[if gt IE 8]<!-->
+<html class="no-js" lang="en">
+  <!--<![endif]-->
+  <head>
+    <meta charset="UTF-8">
+
+    <title>
+        Nginx + Passenger + Rails
+ - Adou's Blog
+    </title>
+
+    <meta name="description" content="~Adou got his ideas out of head.">
+    <meta name="keywords" content="  ["Rails"]
+">
+    <meta name="author" content="adou">
+
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta http-equiv="cleartype" content="on">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+
+    <link rel="apple-touch-icon-precomposed" type="image/png" sizes="57x57" href="/apple-touch-icon-57x57-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" type="image/png" sizes="72x72" href="/apple-touch-icon-72x72-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" type="image/png" sizes="114x114" href="/apple-touch-icon-114x114-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" type="image/png" sizes="144x144" href="/apple-touch-icon-144x144-precomposed.png" />
+    <link rel="apple-touch-icon-precomposed" type="image/png" href="/apple-touch-icon-precomposed.png">
+    <link rel="apple-touch-icon" type="image/png" href="/apple-touch-icon.png">
+
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon.png">
+    <link rel="shortcut icon" sizes="16x16" href="/favicon.ico">
+    <link rel="alternate" type="application/rss+xml" title="Ben He's Homepage" href="/feed.xml" />
+    <!--[if lt IE 9]>
+    <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+
+    <link href="/stylesheets/application.css?1405598164" media="screen" rel="stylesheet" type="text/css" />
+    <script src="/javascripts/application.js?1405598163" type="text/javascript"></script>
+
+  </head>
+  <body class="nginx-passenger-rails nginx-passenger-rails_index">
+    <aside class="sidebar">
+      <h1 class="site-name"><a href="/">Adou</a></h1>
+      <nav class="global-nav">
+        <ul>
+          <li><a href="/">博客</a></li>
+          <li><a href="/">Photos</a></li>
+          <li><a href="/profile">关于我</a></li>
+        </ul>        
+      </nav>
+
+      <nav class="social-connect">
+        <ul>
+          <li><a href="/rss.xml"><i class="icon-rss"></i></a></li>
+          <!-- <li><a href="//twitter.com/beenhero"><i class="icon-twitter"></i></a></li> -->
+          <!-- <li><a href="//facebook.com/beenhero"><i class="icon-facebook"></i></a></li> -->
+          <li><a href="//weibo.com/u/1715225261"><i class="icon-weibo"></i></a></li>
+          <li><a href="//renren.com/261753537"><i class="icon-renren"></i></a></li>
+        </ul>
+      </nav>
+      
+      <!-- Ad -->
+      <div class="block ad">
+        <h4 class="block-title"><a href="https://github.com/beenhero/beenhero.com">beenhero.com</a></h4>
+        <p class="block-cnt">谢谢~/Bin提供的模板</p>
+      </div>
+
+    </aside>
+
+    <section class="main">
+      <div class="container">
+          
+
+  <article class="post single">
+
+    <header>
+  <h2 class="title">
+    <a href="/nginx-passenger-rails">Nginx + Passenger + Rails</a>
+  </h2>
+</header>
+
+<aside class="aside-block">
+  <ul class="meta">
+    <li class="date">
+      2014-07-17
+    </li>
+    <li class="tags">
+      
+        <a href="/tags/rails">Rails</a>
+      
+    </li>
+  </ul>
+</aside>
+
+<div class="content">
+  <p>最近开发一个 Rails 项目，项目 Demo 已经初步完成，需要部署到服务器。平时都是使用 Rails 自带 WebBrick, 或者使用 thin，很少配置 production 环境的。今天实践了一遍，虽然也遇到了几个坑，过程还算顺利。</p>
+
+<h2>总体步骤</h2>
+
+<ul>
+<li>安装 Passenger</li>
+<li>安装 Nginx</li>
+<li>配置 Nginx</li>
+</ul>
+
+<h2>安装 Passenger</h2>
+<div class="highlight"><pre><span class="n">gem</span> <span class="n">install</span> <span class="n">passenger</span>
+</pre></div>
+<h2>安装 Nginx</h2>
+
+<p>不可以使用官方的 Nginx，为跟 Passenger 集成，需要单独设置编译。不过你不用为“设置” “编译”苦恼，因为已经有编译安装脚本。</p>
+<div class="highlight"><pre><span class="n">rvmsudo</span> <span class="n">passenger</span><span class="o">-</span><span class="n">install</span><span class="o">-</span><span class="n">nginx</span><span class="o">-</span><span class="n">modul</span>
+</pre></div>
+<p>按着提示内容进行选择就行，我的原则就是“能默认就默认”，能直接 Enter 就回车走人。</p>
+
+<p>编译可能需要一段时间，不过也不会很长，几分钟吧。</p>
+
+<h3>安装命令</h3>
+
+<p>在这里我就遇到了一个坑，本来现在就能打 Nginx 就能看到默认页面了。</p>
+<div class="highlight"><pre><span class="n">sudo</span> <span class="n">service</span> <span class="n">nginx</span> <span class="n">start</span>
+</pre></div>
+<p>or</p>
+<div class="highlight"><pre><span class="n">sudo</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">init</span><span class="p">.</span><span class="n">d</span><span class="o">/</span><span class="n">nginx</span> <span class="n">stop</span>
+</pre></div>
+<p>但是输入以上命令，不能启用 Nginx，提示类似 “no service named nginx&quot;</p>
+
+<p>不问为什么，但求结果，google了一下，找到了解决方式。</p>
+<div class="highlight"><pre><span class="n">wget</span> <span class="o">-</span><span class="n">O</span> <span class="n">init</span><span class="o">-</span><span class="n">deb</span><span class="p">.</span><span class="n">sh</span> <span class="n">http</span><span class="o">:</span><span class="c1">//library.linode.com/assets/660-init-deb.sh</span>
+<span class="n">sudo</span> <span class="n">mv</span> <span class="n">init</span><span class="o">-</span><span class="n">deb</span><span class="p">.</span><span class="n">sh</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">init</span><span class="p">.</span><span class="n">d</span><span class="o">/</span><span class="n">nginx</span>
+<span class="n">sudo</span> <span class="n">chmod</span> <span class="o">+</span><span class="n">x</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">init</span><span class="p">.</span><span class="n">d</span><span class="o">/</span><span class="n">nginx</span>
+<span class="n">sudo</span> <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">sbin</span><span class="o">/</span><span class="n">update</span><span class="o">-</span><span class="n">rc</span><span class="p">.</span><span class="n">d</span> <span class="o">-</span><span class="n">f</span> <span class="n">nginx</span> <span class="n">defaults</span>
+</pre></div>
+<p>现在就能通过命令控制 Nginx 了</p>
+<div class="highlight"><pre><span class="n">sudo</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">init</span><span class="p">.</span><span class="n">d</span><span class="o">/</span><span class="n">nginx</span> <span class="n">stop</span>
+<span class="n">sudo</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">init</span><span class="p">.</span><span class="n">d</span><span class="o">/</span><span class="n">nginx</span> <span class="n">start</span>
+<span class="n">sudo</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">init</span><span class="p">.</span><span class="n">d</span><span class="o">/</span><span class="n">nginx</span> <span class="n">restart</span>
+</pre></div>
+<h2>配置 Nginx</h2>
+<div class="highlight"><pre><span class="n">sudo</span> <span class="n">v</span> <span class="o">/</span><span class="n">opt</span><span class="o">/</span><span class="n">nginx</span><span class="o">/</span><span class="n">conf</span><span class="o">/</span><span class="n">nginx</span><span class="p">.</span><span class="n">conf</span>
+</pre></div>
+<p>配置倒是很简洁，主要是因为我要求也简单，能用即可：) </p>
+<div class="highlight"><pre><span class="n">server</span> <span class="p">{</span>
+  <span class="n">listen</span> <span class="mi">80</span><span class="p">;</span>
+  <span class="n">server_name</span> <span class="n">localhost</span><span class="p">;</span>
+  <span class="n">passenger_enabled</span> <span class="n">on</span><span class="p">;</span>
+  <span class="n">root</span> <span class="o">/</span><span class="n">path</span><span class="o">/</span><span class="n">to</span><span class="o">/</span><span class="n">your_app</span><span class="o">/</span><span class="n">public</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+<p>具体为什么指向 public 页面，我也不知道。重要的是<code>it works</code></p>
+
+</div>
+
+  </article>
+
+  <div class="comments">
+    <!-- Duoshuo Comment BEGIN -->
+    <div class="ds-thread"></div>
+    <script type="text/javascript">
+    var duoshuoQuery = {short_name:"adousj"};
+      (function() {
+        var ds = document.createElement('script');
+        ds.type = 'text/javascript';ds.async = true;
+        ds.src = 'http://static.duoshuo.com/embed.js';
+        ds.charset = 'UTF-8';
+        (document.getElementsByTagName('head')[0] 
+        || document.getElementsByTagName('body')[0]).appendChild(ds);
+      })();
+      </script>
+    <!-- Duoshuo Comment END -->
+  </div>
+
+      </div>
+    </section>
+    
+    <footer>
+      <div class="copyright">
+        <p>2014&copy;Adou</p>
+      </div>
+    </footer>
+
+    <script type="text/javascript">
+
+      var _gaq = _gaq || [];
+      _gaq.push(['_setAccount', '']);
+      _gaq.push(['_trackPageview']);
+
+      (function() {
+        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+      })();
+
+    </script>
+  </body>
+</html>
