@@ -40,7 +40,7 @@
     <script src="/javascripts/application.js?1405679332" type="text/javascript"></script>
 
   </head>
-  <body class="tags tags_rails tags_rails_index">
+  <body class="tags tags_linux tags_linux_index">
     <aside class="sidebar">
       <h1 class="site-name"><a href="/">Adou</a></h1>
       <nav class="global-nav">
@@ -71,49 +71,51 @@
 
     <section class="main">
       <div class="container">
-        <h1 class="tag-page-title">Articles tagged '<em>Rails</em>'</h1>
+        <h1 class="tag-page-title">Articles tagged '<em>linux</em>'</h1>
 
 <div id="posts">
   
     <article class="post">
       <header>
   <h2 class="title">
-    <a href="/nginx-passenger-rails">Nginx + Passenger + Rails</a>
+    <a href="/linux">linux 创建用户命令</a>
   </h2>
 </header>
 
 <aside class="aside-block">
   <ul class="meta">
     <li class="date">
-      2014-07-17
+      2014-07-18
     </li>
     <li class="tags">
       
-        <a href="/tags/rails">Rails</a>
+        <a href="/tags/linux">linux</a>
       
     </li>
   </ul>
 </aside>
 
 <div class="content">
-  <p>最近开发一个 Rails 项目，项目 Demo 已经初步完成，需要部署到服务器。平时都是使用 Rails 自带 WebBrick, 或者使用 thin，很少配置 production 环境的。今天实践了一遍，虽然也遇到了几个坑，过程还算顺利。</p>
+  <p>因为从来都是自己用自己的电脑，而且一直使用的是Ubuntu，所以都是在系统安装过程中新建用户，从来没有尝试过用命令行。</p>
 
-<h3>我的软件版本</h3>
-
-<ul>
-<li>Ubuntu Server 14.04</li>
-<li>Ruby 2.0.0-p481</li>
-<li>Passenger 4.0.46</li>
-</ul>
-
-<h2>总体步骤</h2>
+<p>这次使用过程中涉及到的命令如下：</p>
+<div class="highlight"><pre><span class="n">useradd</span>
+<span class="n">adduser</span>
+<span class="n">usermod</span>
+<span class="n">userdel</span>
+<span class="n">passwd</span>
+</pre></div>
+<h2>useradd</h2>
+<div class="highlight"><pre><span class="n">useradd</span> <span class="n">adou</span>
+</pre></div>
+<p>只会创建 adou 用户，但是并没有创建 /home/adou/ 文件夹，也没有创建密码，不能登录系统。</p>
 
 
   <p>
     ......
   </p>
   <p>
-    <a href="/nginx-passenger-rails">阅读全文 →</a>
+    <a href="/linux">阅读全文 →</a>
   </p>
 </div>
 

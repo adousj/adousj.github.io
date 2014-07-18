@@ -8,17 +8,161 @@
     <copyright>&amp;#x2117; &amp;amp; &amp;#xA9; 2014 Adou He</copyright>
     <link href="http://adou.gitcafe.com"/>
     <link href="http://adou.gitcafe.com/rss.xml" rel="self"/>
-    <updated>2014-07-17T10:26:00Z</updated>
-    <lastBuildDate>2014-07-17T10:26:00Z</lastBuildDate>
-    <pubDate>2014-07-17T10:26:00Z</pubDate>
+    <updated>2014-07-18T10:24:00Z</updated>
+    <lastBuildDate>2014-07-18T10:24:00Z</lastBuildDate>
+    <pubDate>2014-07-18T10:24:00Z</pubDate>
     <description>~Adou got his ideas out of head.</description>
     <author>
       <name>Adou</name>
     </author>
     <item>
+      <title>PostgreSQL 入门</title>
+      <link>http://adou.gitcafe.com/postgresql</link>
+      <description type="html">&lt;p&gt;&lt;a href="http://www.ruanyifeng.com/blog/2013/12/getting_started_with_postgresql.html"&gt;参考自阮一峰博客&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;经常会用到 PostgreSQL，虽然基本都是在 Rails 中使用，基本的操作都是 ActiveRecord 上处理。所以一直也不知道怎么操作 PostgreSQL，只是模糊知道跟 MySql不大一样，详情就不大了了了。遇到问题，也只能到 StackOverflow 上抱牛人大腿了 ：)&lt;/p&gt;
+
+&lt;h2&gt;安装&lt;/h2&gt;
+
+&lt;p&gt;PostgreSQL 客户端：&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="n"&gt;sudo&lt;/span&gt; &lt;span class="n"&gt;apt&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;get&lt;/span&gt; &lt;span class="n"&gt;install&lt;/span&gt; &lt;span class="n"&gt;postgresql&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;cllient&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;PostgreSQL 服务器：&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="n"&gt;sudo&lt;/span&gt; &lt;span class="n"&gt;apt&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;get&lt;/span&gt; &lt;span class="n"&gt;install&lt;/span&gt; &lt;span class="n"&gt;postgresql&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;图形管理&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="n"&gt;sudo&lt;/span&gt; &lt;span class="n"&gt;apt&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;get&lt;/span&gt; &lt;span class="n"&gt;install&lt;/span&gt; &lt;span class="n"&gt;pgamdin3&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;h2&gt;安装后情况&lt;/h2&gt;
+
+&lt;p&gt;初始安装结束后，默认已经能够生成了一个 postgres 的用户，和一个 postgres 的数据库用户。这里的一直困扰我的是，它还一并生成了一个 postgres 的 linux 系统用户。以前不知道这一点而，对此一直很困扰。&lt;/p&gt;
+
+&lt;h2&gt;登陆数据库&lt;/h2&gt;
+
+&lt;h4&gt;切换系统用户到 adou&lt;/h4&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="n"&gt;sudo&lt;/span&gt; &lt;span class="n"&gt;su&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt; &lt;span class="n"&gt;postgres&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;h4&gt;登录数据库&lt;/h4&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="n"&gt;psql&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;相当于以当前系统用户 postgres 登录数据库，默认是没有密码的。&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="n"&gt;sudo&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;u&lt;/span&gt; &lt;span class="n"&gt;adou&lt;/span&gt; &lt;span class="n"&gt;psql&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;以 adou 用户登录数据库。&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="n"&gt;psql&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;U&lt;/span&gt; &lt;span class="n"&gt;examin&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;d&lt;/span&gt; &lt;span class="n"&gt;examin_test&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;h&lt;/span&gt; &lt;span class="mf"&gt;127.0.0.1&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;p&lt;/span&gt; &lt;span class="mi"&gt;5432&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;h3&gt;设置密码&lt;/h3&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="err"&gt;\&lt;/span&gt;&lt;span class="n"&gt;password&lt;/span&gt; &lt;span class="n"&gt;postgres&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;h4&gt;创建数据库新用户&lt;/h4&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="n"&gt;CREATE&lt;/span&gt; &lt;span class="n"&gt;USER&lt;/span&gt; &lt;span class="n"&gt;examin&lt;/span&gt; &lt;span class="n"&gt;WITH&lt;/span&gt; &lt;span class="n"&gt;PASSWORD&lt;/span&gt; &lt;span class="err"&gt;&amp;#39;&lt;/span&gt;&lt;span class="n"&gt;examin&lt;/span&gt;&lt;span class="err"&gt;&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;h4&gt;新建数据库&lt;/h4&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="n"&gt;CREATE&lt;/span&gt; &lt;span class="n"&gt;DATABASE&lt;/span&gt; &lt;span class="n"&gt;examin_test&lt;/span&gt; &lt;span class="n"&gt;OWNER&lt;/span&gt; &lt;span class="n"&gt;examin&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;h4&gt;将数据库所有权赋予 examin&lt;/h4&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="n"&gt;GRANT&lt;/span&gt; &lt;span class="n"&gt;ALL&lt;/span&gt; &lt;span class="n"&gt;PRIVILEGES&lt;/span&gt; &lt;span class="n"&gt;ON&lt;/span&gt; &lt;span class="n"&gt;DATABASE&lt;/span&gt; &lt;span class="n"&gt;examin_test&lt;/span&gt; &lt;span class="n"&gt;to&lt;/span&gt; &lt;span class="n"&gt;examin&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;h4&gt;退出&lt;/h4&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="err"&gt;\&lt;/span&gt;&lt;span class="n"&gt;q&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;h1&gt;Shell 方式&lt;/h1&gt;
+
+&lt;h4&gt;创建用户&lt;/h4&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="n"&gt;sudo&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;u&lt;/span&gt; &lt;span class="n"&gt;postgres&lt;/span&gt; &lt;span class="n"&gt;createuser&lt;/span&gt; &lt;span class="o"&gt;--&lt;/span&gt;&lt;span class="n"&gt;superuser&lt;/span&gt; &lt;span class="n"&gt;examin&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;h4&gt;创建数据库&lt;/h4&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="n"&gt;sudo&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;u&lt;/span&gt; &lt;span class="n"&gt;postgres&lt;/span&gt; &lt;span class="n"&gt;createdb&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;O&lt;/span&gt; &lt;span class="n"&gt;examin&lt;/span&gt; &lt;span class="n"&gt;examin_test&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;h4&gt;导入sql&lt;/h4&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="n"&gt;psql&lt;/span&gt; &lt;span class="n"&gt;examin_test&lt;/span&gt; &lt;span class="o"&gt;&amp;lt;&lt;/span&gt; &lt;span class="n"&gt;examin_test&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;sql&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;h1&gt;服务命令&lt;/h1&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="n"&gt;sudo&lt;/span&gt; &lt;span class="n"&gt;service&lt;/span&gt; &lt;span class="n"&gt;start&lt;/span&gt;
+&lt;span class="n"&gt;sudo&lt;/span&gt; &lt;span class="n"&gt;service&lt;/span&gt; &lt;span class="n"&gt;restart&lt;/span&gt;
+&lt;span class="n"&gt;sudo&lt;/span&gt; &lt;span class="n"&gt;service&lt;/span&gt; &lt;span class="n"&gt;stop&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;h1&gt;其他命令&lt;/h1&gt;
+
+&lt;ul&gt;
+&lt;li&gt;\h：查看SQL命令的解释，比如\h select。&lt;/li&gt;
+&lt;li&gt;\?：查看psql命令列表。&lt;/li&gt;
+&lt;li&gt;\l：列出所有数据库。&lt;/li&gt;
+&lt;li&gt;\c [database_name]：连接其他数据库。&lt;/li&gt;
+&lt;li&gt;\d：列出当前数据库的所有表格。&lt;/li&gt;
+&lt;li&gt;\d [table_name]：列出某一张表格的结构。&lt;/li&gt;
+&lt;li&gt;\du：列出所有用户。&lt;/li&gt;
+&lt;li&gt;\e：打开文本编辑器。&lt;/li&gt;
+&lt;li&gt;\conninfo：列出当前数据库和连接的信息。&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h1&gt;P.S.&lt;/h1&gt;
+
+&lt;p&gt;虽然没有什么新知识，至少对我自己来说是受益匪浅的，整理了一遍，也终于分清楚这些命令。&lt;/p&gt;
+</description>
+      <guid>tag:adou.gitcafe.com,article.url</guid>
+      <pubDate>2014-07-18T10:24:00Z</pubDate>
+      <category>PostgreSQL linux</category>
+    </item>
+    <item>
+      <title>linux 创建用户命令</title>
+      <link>http://adou.gitcafe.com/linux</link>
+      <description type="html">&lt;p&gt;因为从来都是自己用自己的电脑，而且一直使用的是Ubuntu，所以都是在系统安装过程中新建用户，从来没有尝试过用命令行。&lt;/p&gt;
+
+&lt;p&gt;这次使用过程中涉及到的命令如下：&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="n"&gt;useradd&lt;/span&gt;
+&lt;span class="n"&gt;adduser&lt;/span&gt;
+&lt;span class="n"&gt;usermod&lt;/span&gt;
+&lt;span class="n"&gt;userdel&lt;/span&gt;
+&lt;span class="n"&gt;passwd&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;h2&gt;useradd&lt;/h2&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="n"&gt;useradd&lt;/span&gt; &lt;span class="n"&gt;adou&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;只会创建 adou 用户，但是并没有创建 /home/adou/ 文件夹，也没有创建密码，不能登录系统。&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="n"&gt;useradd&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;m&lt;/span&gt; &lt;span class="n"&gt;adou&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;这种方式是可以同时创建 /home/adou/，不过密码还是需要通过:
+&lt;code&gt;
+passwd adou
+&lt;/code&gt;
+设置&lt;/p&gt;
+
+&lt;h2&gt;adduser 添加用户&lt;/h2&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="n"&gt;adduser&lt;/span&gt; &lt;span class="n"&gt;adou&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;这个命令更适合我这种初学者，一个命令全部搞定。&lt;/p&gt;
+
+&lt;h2&gt;　usermod 添加至用户组&lt;/h2&gt;
+
+&lt;p&gt;用户建立了之后要需要权限的，特别是 sudo 权限，默认有 sudo 用户组，把新用户加入即可。&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="n"&gt;usermod&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;a&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;G&lt;/span&gt; &lt;span class="n"&gt;sudo&lt;/span&gt; &lt;span class="n"&gt;adou&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;h2&gt;userdel 删除用户&lt;/h2&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="n"&gt;userdel&lt;/span&gt; &lt;span class="n"&gt;adou&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;这个只会删除用户，并不会删除用户文件。
+如果想连同文件全都删除
+&lt;code&gt;
+userdel -r adou
+&lt;/code&gt;&lt;/p&gt;
+</description>
+      <guid>tag:adou.gitcafe.com,article.url</guid>
+      <pubDate>2014-07-18T10:21:00Z</pubDate>
+      <category>linux</category>
+    </item>
+    <item>
       <title>Nginx + Passenger + Rails</title>
       <link>http://adou.gitcafe.com/nginx-passenger-rails</link>
       <description type="html">&lt;p&gt;最近开发一个 Rails 项目，项目 Demo 已经初步完成，需要部署到服务器。平时都是使用 Rails 自带 WebBrick, 或者使用 thin，很少配置 production 环境的。今天实践了一遍，虽然也遇到了几个坑，过程还算顺利。&lt;/p&gt;
+
+&lt;h3&gt;我的软件版本&lt;/h3&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Ubuntu Server 14.04&lt;/li&gt;
+&lt;li&gt;Ruby 2.0.0-p481&lt;/li&gt;
+&lt;li&gt;Passenger 4.0.46&lt;/li&gt;
+&lt;/ul&gt;
 
 &lt;h2&gt;总体步骤&lt;/h2&gt;
 

@@ -7,10 +7,22 @@
     <priority>0.8</priority>
   </url>
   <url>
+    <loc>http://adou.gitcafe.com/postgresql</loc>
+    <lastmod>2014-07-18T18:24:00+08:00</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
     <loc>http://adou.gitcafe.com/profile</loc>
-    <lastmod>2014-07-17T00:00:00+08:00</lastmod>
+    <lastmod>2014-07-18T00:00:00+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>http://adou.gitcafe.com/linux</loc>
+    <lastmod>2014-07-18T18:21:00+08:00</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
   </url>
   <url>
     <loc>http://adou.gitcafe.com/nginx-passenger-rails</loc>
@@ -20,13 +32,25 @@
   </url>
   <url>
     <loc>http://adou.gitcafe.com/</loc>
-    <lastmod>2014-07-17T00:00:00+08:00</lastmod>
+    <lastmod>2014-07-18T00:00:00+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1</priority>
   </url>
   <url>
+    <loc>http://adou.gitcafe.com/tags/postgresql-linux</loc>
+    <lastmod>2014-07-18T00:00:00+08:00</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>http://adou.gitcafe.com/tags/linux</loc>
+    <lastmod>2014-07-18T00:00:00+08:00</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
     <loc>http://adou.gitcafe.com/tags/rails</loc>
-    <lastmod>2014-07-17T00:00:00+08:00</lastmod>
+    <lastmod>2014-07-18T00:00:00+08:00</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>

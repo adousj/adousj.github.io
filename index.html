@@ -36,8 +36,8 @@
     <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
     <![endif]-->
 
-    <link href="/stylesheets/application.css?1405598164" media="screen" rel="stylesheet" type="text/css" />
-    <script src="/javascripts/application.js?1405598163" type="text/javascript"></script>
+    <link href="/stylesheets/application.css?1405679333" media="screen" rel="stylesheet" type="text/css" />
+    <script src="/javascripts/application.js?1405679332" type="text/javascript"></script>
 
   </head>
   <body class="index">
@@ -76,6 +76,88 @@
     <article class="post">
       <header>
   <h2 class="title">
+    <a href="/postgresql">PostgreSQL 入门</a>
+  </h2>
+</header>
+
+<aside class="aside-block">
+  <ul class="meta">
+    <li class="date">
+      2014-07-18
+    </li>
+    <li class="tags">
+      
+        <a href="/tags/postgresql-linux">PostgreSQL linux</a>
+      
+    </li>
+  </ul>
+</aside>
+
+<div class="content">
+  <p><a href="http://www.ruanyifeng.com/blog/2013/12/getting_started_with_postgresql.html">参考自阮一峰博客</a></p>
+
+<p>经常会用到 PostgreSQL，虽然基本都是在 Rails 中使用，基本的操作都是 ActiveRecord 上处理。所以一直也不知道怎么操作 PostgreSQL，只是模糊知道跟 MySql不大一样，详情就不大了了了。遇到问题，也只能到 StackOverflow 上抱牛人大腿了 ：)</p>
+
+
+  <p>
+    ......
+  </p>
+  <p>
+    <a href="/postgresql">阅读全文 →</a>
+  </p>
+</div>
+
+    </article>
+  
+    <article class="post">
+      <header>
+  <h2 class="title">
+    <a href="/linux">linux 创建用户命令</a>
+  </h2>
+</header>
+
+<aside class="aside-block">
+  <ul class="meta">
+    <li class="date">
+      2014-07-18
+    </li>
+    <li class="tags">
+      
+        <a href="/tags/linux">linux</a>
+      
+    </li>
+  </ul>
+</aside>
+
+<div class="content">
+  <p>因为从来都是自己用自己的电脑，而且一直使用的是Ubuntu，所以都是在系统安装过程中新建用户，从来没有尝试过用命令行。</p>
+
+<p>这次使用过程中涉及到的命令如下：</p>
+<div class="highlight"><pre><span class="n">useradd</span>
+<span class="n">adduser</span>
+<span class="n">usermod</span>
+<span class="n">userdel</span>
+<span class="n">passwd</span>
+</pre></div>
+<h2>useradd</h2>
+<div class="highlight"><pre><span class="n">useradd</span> <span class="n">adou</span>
+</pre></div>
+<p>只会创建 adou 用户，但是并没有创建 /home/adou/ 文件夹，也没有创建密码，不能登录系统。</p>
+
+
+  <p>
+    ......
+  </p>
+  <p>
+    <a href="/linux">阅读全文 →</a>
+  </p>
+</div>
+
+    </article>
+  
+    <article class="post">
+      <header>
+  <h2 class="title">
     <a href="/nginx-passenger-rails">Nginx + Passenger + Rails</a>
   </h2>
 </header>
@@ -96,17 +178,16 @@
 <div class="content">
   <p>最近开发一个 Rails 项目，项目 Demo 已经初步完成，需要部署到服务器。平时都是使用 Rails 自带 WebBrick, 或者使用 thin，很少配置 production 环境的。今天实践了一遍，虽然也遇到了几个坑，过程还算顺利。</p>
 
-<h2>总体步骤</h2>
+<h3>我的软件版本</h3>
 
 <ul>
-<li>安装 Passenger</li>
-<li>安装 Nginx</li>
-<li>配置 Nginx</li>
+<li>Ubuntu Server 14.04</li>
+<li>Ruby 2.0.0-p481</li>
+<li>Passenger 4.0.46</li>
 </ul>
 
-<h2>安装 Passenger</h2>
-<div class="highlight"><pre><span class="n">gem</span> <span class="n">install</span> <span class="n">passenger</span>
-</pre></div>
+<h2>总体步骤</h2>
+
 
   <p>
     ......
