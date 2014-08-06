@@ -1,3 +1,6 @@
+
+
+
 <!DOCTYPE html>
 <!--[if lt IE 7]><html class="no-js lt-ie9 lt-ie8 lt-ie7" lang="en"><![endif]-->
 <!--[if IE 7]><html class="no-js lt-ie9 lt-ie8" lang="en"><![endif]-->
@@ -9,11 +12,13 @@
     <meta charset="UTF-8">
 
     <title>
-      Adou's Blog
+        搭建 Laravel 开发环境
+ - Adou's Blog
     </title>
 
     <meta name="description" content="~Adou got his ideas out of head.">
-    <meta name="keywords" content="Journal,Lifelog,Photography,Portfolios">
+    <meta name="keywords" content="  ["Laravel", "Ubuntu", "Composer", "Php"]
+">
     <meta name="author" content="adou">
 
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
@@ -40,7 +45,7 @@
     <script src="/javascripts/application.js?1407334020" type="text/javascript"></script>
 
   </head>
-  <body class="index">
+  <body class="laravel laravel_index">
     <aside class="sidebar">
       <h1 class="site-name"><a href="/">Adou</a></h1>
       <nav class="global-nav">
@@ -71,10 +76,11 @@
 
     <section class="main">
       <div class="container">
-        <div id="posts">
-  
-    <article class="post">
-      <header>
+          
+
+  <article class="post single">
+
+    <header>
   <h2 class="title">
     <a href="/laravel">搭建 Laravel 开发环境</a>
   </h2>
@@ -104,185 +110,85 @@
 
 <p>中间也关注过一些 Php 开发框架，Laravel 就是让我眼前一亮的那个。第一印象就是，Laravel 跟 Ruby on Rails / Sinatra 太像了。Laravel 充分利用 Php 5 的新特性，使用起来完全就是另一种语言，当然是另一种更好的语言，让 Php 终于有了脚本语言的样子。</p>
 
+<p>我也开始学点学 Laravel，以后也能说自己回 Php了 :)</p>
 
-  <p>
-    ......
-  </p>
-  <p>
-    <a href="/laravel">阅读全文 →</a>
-  </p>
-</div>
+<p>今天就先从安装开发环境开始。</p>
 
-    </article>
-  
-    <article class="post">
-      <header>
-  <h2 class="title">
-    <a href="/postgresql">PostgreSQL 入门</a>
-  </h2>
-</header>
+<h2>0. 官网</h2>
 
-<aside class="aside-block">
-  <ul class="meta">
-    <li class="date">
-      2014-07-18
-    </li>
-    <li class="tags">
-      
-        <a href="/tags/postgresql">PostgreSQL</a>
-      
-        <a href="/tags/linux">linux</a>
-      
-    </li>
-  </ul>
-</aside>
+<p><a href="http://laravel.com/">Laravel 官网</a>，有最新，最规范的教程。</p>
 
-<div class="content">
-  <p><a href="http://www.ruanyifeng.com/blog/2013/12/getting_started_with_postgresql.html">参考自阮一峰博客</a></p>
-
-<p>经常会用到 PostgreSQL，虽然基本都是在 Rails 中使用，基本的操作都是 ActiveRecord 上处理。所以一直也不知道怎么操作 PostgreSQL，只是模糊知道跟 MySql不大一样，详情就不大了了了。遇到问题，也只能到 StackOverflow 上抱牛人大腿了 ：)</p>
-
-
-  <p>
-    ......
-  </p>
-  <p>
-    <a href="/postgresql">阅读全文 →</a>
-  </p>
-</div>
-
-    </article>
-  
-    <article class="post">
-      <header>
-  <h2 class="title">
-    <a href="/linux">linux 创建用户命令</a>
-  </h2>
-</header>
-
-<aside class="aside-block">
-  <ul class="meta">
-    <li class="date">
-      2014-07-18
-    </li>
-    <li class="tags">
-      
-        <a href="/tags/linux">linux</a>
-      
-    </li>
-  </ul>
-</aside>
-
-<div class="content">
-  <p>因为从来都是自己用自己的电脑，而且一直使用的是Ubuntu，所以都是在系统安装过程中新建用户，从来没有尝试过用命令行。</p>
-
-<p>这次使用过程中涉及到的命令如下：</p>
-<div class="highlight"><pre><span class="n">useradd</span>
-<span class="n">adduser</span>
-<span class="n">usermod</span>
-<span class="n">userdel</span>
-<span class="n">passwd</span>
-</pre></div>
-<h2>useradd</h2>
-<div class="highlight"><pre><span class="n">useradd</span> <span class="n">adou</span>
-</pre></div>
-<p>只会创建 adou 用户，但是并没有创建 /home/adou/ 文件夹，也没有创建密码，不能登录系统。</p>
-
-
-  <p>
-    ......
-  </p>
-  <p>
-    <a href="/linux">阅读全文 →</a>
-  </p>
-</div>
-
-    </article>
-  
-    <article class="post">
-      <header>
-  <h2 class="title">
-    <a href="/nginx-passenger-rails">Nginx + Passenger + Rails</a>
-  </h2>
-</header>
-
-<aside class="aside-block">
-  <ul class="meta">
-    <li class="date">
-      2014-07-17
-    </li>
-    <li class="tags">
-      
-        <a href="/tags/rails">Rails</a>
-      
-    </li>
-  </ul>
-</aside>
-
-<div class="content">
-  <p>最近开发一个 Rails 项目，项目 Demo 已经初步完成，需要部署到服务器。平时都是使用 Rails 自带 WebBrick, 或者使用 thin，很少配置 production 环境的。今天实践了一遍，虽然也遇到了几个坑，过程还算顺利。</p>
-
-<h3>我的软件版本</h3>
+<h2>1. 系统环境</h2>
 
 <ul>
-<li>Ubuntu Server 14.04</li>
-<li>Ruby 2.0.0-p481</li>
-<li>Passenger 4.0.46</li>
+<li>系统环境： Ubuntu 14.04 LTS x64</li>
+<li>编辑器： 一如既往的 <a href="http://www.sublimetext.com/3">Sublime Text 3</a>，一如既往的好用，特别是安装了 Laravel 插件后。</li>
 </ul>
 
-<h2>总体步骤</h2>
+<h2>2. 基础软件</h2>
 
+<p>为图方便数据库使用的是 Sqlite</p>
+<div class="highlight"><pre><span class="n">sudo</span> <span class="n">apt</span><span class="o">-</span><span class="n">get</span> <span class="n">install</span> <span class="n">sqlite</span>
+<span class="n">sudo</span> <span class="n">apt</span><span class="o">-</span><span class="n">get</span> <span class="n">install</span> <span class="n">php</span>
+<span class="n">sudo</span> <span class="n">apt</span><span class="o">-</span><span class="n">get</span> <span class="n">install</span> <span class="n">php</span><span class="o">-</span><span class="n">sqlite</span>
+</pre></div>
+<h2>3. 安装 Laravel</h2>
 
-  <p>
-    ......
-  </p>
-  <p>
-    <a href="/nginx-passenger-rails">阅读全文 →</a>
-  </p>
+<h3>安装 Composer</h3>
+
+<p>Composer 是个非常强大的工具（虽然别的语言早就有了），用于管理 Php 的包关系。详见 <a href="https://getcomposer.org/">Composer 官网</a></p>
+<div class="highlight"><pre><span class="n">curl</span> <span class="o">-</span><span class="n">sS</span> <span class="n">https</span><span class="o">:</span><span class="c1">//getcomposer.org/installer | php</span>
+<span class="n">mv</span> <span class="n">composer</span><span class="p">.</span><span class="n">phar</span> <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">local</span><span class="o">/</span><span class="n">bin</span><span class="o">/</span><span class="n">composer</span>
+</pre></div>
+<p>可能需要让 Composer 默认执行</p>
+<div class="highlight"><pre><span class="n">chmod</span> <span class="mi">777</span> <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">local</span><span class="o">/</span><span class="n">bin</span><span class="o">/</span><span class="n">composer</span>
+</pre></div>
+<h3>安装 Laravel</h3>
+
+<p>下载 <a href="http://laravel.com/laravel.phar">Laravel 安装器</a></p>
+<div class="highlight"><pre><span class="n">mv</span> <span class="n">laravel</span><span class="p">.</span><span class="n">phar</span> <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">local</span><span class="o">/</span><span class="n">bin</span><span class="o">/</span><span class="n">laravel</span>
+</pre></div>
+<p>让 Laravel 默认执行</p>
+<div class="highlight"><pre><span class="n">chmod</span> <span class="mi">777</span> <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">local</span><span class="o">/</span><span class="n">bin</span><span class="o">/</span><span class="n">laravel</span>
+</pre></div>
+<h2>测试</h2>
+
+<p>这个时候你就已经安装好了 Laravel 开发环境，可以测试一下。
+在你选定的开发目录下执行</p>
+<div class="highlight"><pre><span class="n">laravel</span> <span class="n">new</span> <span class="n">blog</span>
+</pre></div>
+<p>不出意外的话，这将在 blog 目录下创建一个 Laravel 新项目。
+现在就可以更新/安装项目的依赖包了</p>
+<div class="highlight"><pre><span class="n">cd</span> <span class="n">blog</span>
+<span class="n">composer</span> <span class="n">install</span>
+</pre></div>
+<p>过一会儿依赖的包就能够安装好了。
+刚才安装的程序里并没有 Apache Nginx，我们就用 Php 5.4+ 内置的 Web Server。</p>
+<div class="highlight"><pre><span class="n">php</span> <span class="n">artisan</span> <span class="n">serve</span>
+</pre></div>
+<p>现在打开 <a href="http://localhost:8000">http://localhost:8000</a>，你就能看到新网站了。</p>
+
 </div>
 
-    </article>
-  
-    <article class="post">
-      <header>
-  <h2 class="title">
-    <a href="/test">test</a>
-  </h2>
-</header>
+  </article>
 
-<aside class="aside-block">
-  <ul class="meta">
-    <li class="date">
-      2014-02-22
-    </li>
-    <li class="tags">
-      
-    </li>
-  </ul>
-</aside>
+  <div class="comments">
+    <!-- Duoshuo Comment BEGIN -->
+    <div class="ds-thread"></div>
+    <script type="text/javascript">
+    var duoshuoQuery = {short_name:"adousj"};
+      (function() {
+        var ds = document.createElement('script');
+        ds.type = 'text/javascript';ds.async = true;
+        ds.src = 'http://static.duoshuo.com/embed.js';
+        ds.charset = 'UTF-8';
+        (document.getElementsByTagName('head')[0] 
+        || document.getElementsByTagName('body')[0]).appendChild(ds);
+      })();
+      </script>
+    <!-- Duoshuo Comment END -->
+  </div>
 
-<div class="content">
-  <p>测试 middleman</p>
-
-
-  <p>
-    ......
-  </p>
-  <p>
-    <a href="/test">阅读全文 →</a>
-  </p>
-</div>
-
-    </article>
-  
-
-  
-    <ul class="pager">
-      
-      
-    </ul>
-  
-</div>
       </div>
     </section>
     

@@ -7,6 +7,12 @@
     <priority>0.8</priority>
   </url>
   <url>
+    <loc>http://adou.gitcafe.com/laravel</loc>
+    <lastmod>2014-08-06T21:02:00+08:00</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
     <loc>http://adou.gitcafe.com/postgresql</loc>
     <lastmod>2014-07-18T18:24:00+08:00</lastmod>
     <changefreq>monthly</changefreq>
@@ -14,7 +20,7 @@
   </url>
   <url>
     <loc>http://adou.gitcafe.com/profile</loc>
-    <lastmod>2014-07-19T00:00:00+08:00</lastmod>
+    <lastmod>2014-08-06T00:00:00+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
@@ -32,25 +38,49 @@
   </url>
   <url>
     <loc>http://adou.gitcafe.com/</loc>
-    <lastmod>2014-07-19T00:00:00+08:00</lastmod>
+    <lastmod>2014-08-06T00:00:00+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1</priority>
   </url>
   <url>
-    <loc>http://adou.gitcafe.com/tags/postgresql-linux</loc>
-    <lastmod>2014-07-19T00:00:00+08:00</lastmod>
+    <loc>http://adou.gitcafe.com/tags/laravel</loc>
+    <lastmod>2014-08-06T00:00:00+08:00</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>http://adou.gitcafe.com/tags/ubuntu</loc>
+    <lastmod>2014-08-06T00:00:00+08:00</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>http://adou.gitcafe.com/tags/composer</loc>
+    <lastmod>2014-08-06T00:00:00+08:00</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>http://adou.gitcafe.com/tags/php</loc>
+    <lastmod>2014-08-06T00:00:00+08:00</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>http://adou.gitcafe.com/tags/postgresql</loc>
+    <lastmod>2014-08-06T00:00:00+08:00</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>http://adou.gitcafe.com/tags/linux</loc>
-    <lastmod>2014-07-19T00:00:00+08:00</lastmod>
+    <lastmod>2014-08-06T00:00:00+08:00</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>http://adou.gitcafe.com/tags/rails</loc>
-    <lastmod>2014-07-19T00:00:00+08:00</lastmod>
+    <lastmod>2014-08-06T00:00:00+08:00</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>

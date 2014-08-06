@@ -8,13 +8,82 @@
     <copyright>&amp;#x2117; &amp;amp; &amp;#xA9; 2014 Adou He</copyright>
     <link href="http://adou.gitcafe.com"/>
     <link href="http://adou.gitcafe.com/rss.xml" rel="self"/>
-    <updated>2014-07-18T10:24:00Z</updated>
-    <lastBuildDate>2014-07-18T10:24:00Z</lastBuildDate>
-    <pubDate>2014-07-18T10:24:00Z</pubDate>
+    <updated>2014-08-06T13:02:00Z</updated>
+    <lastBuildDate>2014-08-06T13:02:00Z</lastBuildDate>
+    <pubDate>2014-08-06T13:02:00Z</pubDate>
     <description>~Adou got his ideas out of head.</description>
     <author>
       <name>Adou</name>
     </author>
+    <item>
+      <title>搭建 Laravel 开发环境</title>
+      <link>http://adou.gitcafe.com/laravel</link>
+      <description type="html">&lt;p&gt;一直使用 Ruby 开发 Web 项目，也慢慢适应了 Ruby 提供的种种方便的函数。之前也算接触过 Php，只是一些修修补补的小地方，从来没有好好学过。&lt;/p&gt;
+
+&lt;p&gt;中间也关注过一些 Php 开发框架，Laravel 就是让我眼前一亮的那个。第一印象就是，Laravel 跟 Ruby on Rails / Sinatra 太像了。Laravel 充分利用 Php 5 的新特性，使用起来完全就是另一种语言，当然是另一种更好的语言，让 Php 终于有了脚本语言的样子。&lt;/p&gt;
+
+&lt;p&gt;我也开始学点学 Laravel，以后也能说自己回 Php了 :)&lt;/p&gt;
+
+&lt;p&gt;今天就先从安装开发环境开始。&lt;/p&gt;
+
+&lt;h2&gt;0. 官网&lt;/h2&gt;
+
+&lt;p&gt;&lt;a href="http://laravel.com/"&gt;Laravel 官网&lt;/a&gt;，有最新，最规范的教程。&lt;/p&gt;
+
+&lt;h2&gt;1. 系统环境&lt;/h2&gt;
+
+&lt;ul&gt;
+&lt;li&gt;系统环境： Ubuntu 14.04 LTS x64&lt;/li&gt;
+&lt;li&gt;编辑器： 一如既往的 &lt;a href="http://www.sublimetext.com/3"&gt;Sublime Text 3&lt;/a&gt;，一如既往的好用，特别是安装了 Laravel 插件后。&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2&gt;2. 基础软件&lt;/h2&gt;
+
+&lt;p&gt;为图方便数据库使用的是 Sqlite&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="n"&gt;sudo&lt;/span&gt; &lt;span class="n"&gt;apt&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;get&lt;/span&gt; &lt;span class="n"&gt;install&lt;/span&gt; &lt;span class="n"&gt;sqlite&lt;/span&gt;
+&lt;span class="n"&gt;sudo&lt;/span&gt; &lt;span class="n"&gt;apt&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;get&lt;/span&gt; &lt;span class="n"&gt;install&lt;/span&gt; &lt;span class="n"&gt;php&lt;/span&gt;
+&lt;span class="n"&gt;sudo&lt;/span&gt; &lt;span class="n"&gt;apt&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;get&lt;/span&gt; &lt;span class="n"&gt;install&lt;/span&gt; &lt;span class="n"&gt;php&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;sqlite&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;h2&gt;3. 安装 Laravel&lt;/h2&gt;
+
+&lt;h3&gt;安装 Composer&lt;/h3&gt;
+
+&lt;p&gt;Composer 是个非常强大的工具（虽然别的语言早就有了），用于管理 Php 的包关系。详见 &lt;a href="https://getcomposer.org/"&gt;Composer 官网&lt;/a&gt;&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="n"&gt;curl&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;sS&lt;/span&gt; &lt;span class="n"&gt;https&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="c1"&gt;//getcomposer.org/installer | php&lt;/span&gt;
+&lt;span class="n"&gt;mv&lt;/span&gt; &lt;span class="n"&gt;composer&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;phar&lt;/span&gt; &lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;usr&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;local&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;bin&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;composer&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;可能需要让 Composer 默认执行&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="n"&gt;chmod&lt;/span&gt; &lt;span class="mi"&gt;777&lt;/span&gt; &lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;usr&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;local&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;bin&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;composer&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;h3&gt;安装 Laravel&lt;/h3&gt;
+
+&lt;p&gt;下载 &lt;a href="http://laravel.com/laravel.phar"&gt;Laravel 安装器&lt;/a&gt;&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="n"&gt;mv&lt;/span&gt; &lt;span class="n"&gt;laravel&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;phar&lt;/span&gt; &lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;usr&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;local&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;bin&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;laravel&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;让 Laravel 默认执行&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="n"&gt;chmod&lt;/span&gt; &lt;span class="mi"&gt;777&lt;/span&gt; &lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;usr&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;local&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;bin&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;laravel&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;h2&gt;测试&lt;/h2&gt;
+
+&lt;p&gt;这个时候你就已经安装好了 Laravel 开发环境，可以测试一下。
+在你选定的开发目录下执行&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="n"&gt;laravel&lt;/span&gt; &lt;span class="n"&gt;new&lt;/span&gt; &lt;span class="n"&gt;blog&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;不出意外的话，这将在 blog 目录下创建一个 Laravel 新项目。
+现在就可以更新/安装项目的依赖包了&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="n"&gt;cd&lt;/span&gt; &lt;span class="n"&gt;blog&lt;/span&gt;
+&lt;span class="n"&gt;composer&lt;/span&gt; &lt;span class="n"&gt;install&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;过一会儿依赖的包就能够安装好了。
+刚才安装的程序里并没有 Apache Nginx，我们就用 Php 5.4+ 内置的 Web Server。&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="n"&gt;php&lt;/span&gt; &lt;span class="n"&gt;artisan&lt;/span&gt; &lt;span class="n"&gt;serve&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;现在打开 &lt;a href="http://localhost:8000"&gt;http://localhost:8000&lt;/a&gt;，你就能看到新网站了。&lt;/p&gt;
+</description>
+      <guid>tag:adou.gitcafe.com,article.url</guid>
+      <pubDate>2014-08-06T13:02:00Z</pubDate>
+      <category>Laravel, Ubuntu, Composer, Php</category>
+    </item>
     <item>
       <title>PostgreSQL 入门</title>
       <link>http://adou.gitcafe.com/postgresql</link>
@@ -102,7 +171,7 @@
 </description>
       <guid>tag:adou.gitcafe.com,article.url</guid>
       <pubDate>2014-07-18T10:24:00Z</pubDate>
-      <category>PostgreSQL linux</category>
+      <category>PostgreSQL, linux</category>
     </item>
     <item>
       <title>linux 创建用户命令</title>
