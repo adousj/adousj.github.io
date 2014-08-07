@@ -1,0 +1,496 @@
+
+
+
+<!DOCTYPE html>
+<!--[if lt IE 7]><html class="no-js lt-ie9 lt-ie8 lt-ie7" lang="en"><![endif]-->
+<!--[if IE 7]><html class="no-js lt-ie9 lt-ie8" lang="en"><![endif]-->
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en"><![endif]-->
+<!--[if gt IE 8]<!-->
+<html class="no-js" lang="en">
+  <!--<![endif]-->
+  <head>
+    <meta charset="UTF-8">
+
+    <title>
+        Laravel 十分钟 Blog 教程
+ - Adou's Blog
+    </title>
+
+    <meta name="description" content="~Adou got his ideas out of head.">
+    <meta name="keywords" content="  ["Laravel", "Ubuntu", "Php", "Blog"]
+">
+    <meta name="author" content="adou">
+
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta http-equiv="cleartype" content="on">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+
+    <link rel="apple-touch-icon-precomposed" type="image/png" sizes="57x57" href="/apple-touch-icon-57x57-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" type="image/png" sizes="72x72" href="/apple-touch-icon-72x72-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" type="image/png" sizes="114x114" href="/apple-touch-icon-114x114-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" type="image/png" sizes="144x144" href="/apple-touch-icon-144x144-precomposed.png" />
+    <link rel="apple-touch-icon-precomposed" type="image/png" href="/apple-touch-icon-precomposed.png">
+    <link rel="apple-touch-icon" type="image/png" href="/apple-touch-icon.png">
+
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon.png">
+    <link rel="shortcut icon" sizes="16x16" href="/favicon.ico">
+    <link rel="alternate" type="application/rss+xml" title="Ben He's Homepage" href="/feed.xml" />
+    <!--[if lt IE 9]>
+    <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+
+    <link href="/stylesheets/application.css?1407416110" media="screen" rel="stylesheet" type="text/css" />
+    <script src="/javascripts/application.js?1407416110" type="text/javascript"></script>
+
+  </head>
+  <body class="10-minutes-tutorial-for-laravel 10-minutes-tutorial-for-laravel_index">
+    <aside class="sidebar">
+      <h1 class="site-name"><a href="/">Adou</a></h1>
+      <nav class="global-nav">
+        <ul>
+          <li><a href="/">博客</a></li>
+          <li><a href="/">Photos</a></li>
+          <li><a href="/profile">关于我</a></li>
+        </ul>        
+      </nav>
+
+      <nav class="social-connect">
+        <ul>
+          <li><a href="/rss.xml"><i class="icon-rss"></i></a></li>
+          <!-- <li><a href="//twitter.com/beenhero"><i class="icon-twitter"></i></a></li> -->
+          <!-- <li><a href="//facebook.com/beenhero"><i class="icon-facebook"></i></a></li> -->
+          <li><a href="//weibo.com/u/1715225261"><i class="icon-weibo"></i></a></li>
+          <li><a href="//renren.com/261753537"><i class="icon-renren"></i></a></li>
+        </ul>
+      </nav>
+      
+      <!-- Ad -->
+      <div class="block ad">
+        <h4 class="block-title"><a href="https://github.com/beenhero/beenhero.com">beenhero.com</a></h4>
+        <p class="block-cnt">谢谢~/Bin提供的模板</p>
+      </div>
+
+    </aside>
+
+    <section class="main">
+      <div class="container">
+          
+
+  <article class="post single">
+
+    <header>
+  <h2 class="title">
+    <a href="/10-minutes-tutorial-for-laravel">Laravel 十分钟 Blog 教程</a>
+  </h2>
+</header>
+
+<aside class="aside-block">
+  <ul class="meta">
+    <li class="date">
+      2014-08-07
+    </li>
+    <li class="tags">
+      
+        <a href="/tags/laravel">Laravel</a>
+      
+        <a href="/tags/ubuntu">Ubuntu</a>
+      
+        <a href="/tags/php">Php</a>
+      
+        <a href="/tags/blog">Blog</a>
+      
+    </li>
+  </ul>
+</aside>
+
+<div class="content">
+  <p>像 Django Rails 大家都有个 《10分钟Blog教程》，我貌似没看到 php 有这种让初学者顿时肾上腺素激增立马跟打了鸡血似的的教程。难道学 php 的童鞋尽皆具有沉着冷静的高贵气质，不屑于做这种图样图森的事儿？</p>
+
+<p>罢了罢了，这些降低逼格的事儿就由我来做吧，所幸我只是个初学者，也不怕被人骂菜鸟。</p>
+
+<h2>0. 前言</h2>
+
+<h3>设计方案</h3>
+
+<p>其实也没有什么设计，就是一个最最简单的博客，可以增删改查文章（Post）</p>
+
+<p>数据库为了简单，就用 sqlite，反正 Laravel 更换数据库方便，如果不爽可以自行更改过来。</p>
+
+<h3>环境安装</h3>
+
+<p>详见 <a href="http://adou.gitcafe.com/laravel/">搭建 Laravel 开发环境</a></p>
+
+<h2>1. 新建项目</h2>
+
+<p>先新建个 Blog 项目</p>
+<div class="highlight"><pre><span class="n">laravel</span> <span class="n">new</span> <span class="n">blog</span>
+</pre></div>
+<p>然后更新安装依赖包</p>
+<div class="highlight"><pre><span class="n">cd</span> <span class="n">blog</span>
+<span class="n">composer</span> <span class="n">install</span>
+</pre></div>
+<p>然后把数据库由默认的 mysql 更改为 sqlite</p>
+
+<blockquote>
+<p>app/config/database.php:29</p>
+</blockquote>
+<div class="highlight"><pre><span class="err">&#39;</span><span class="k">default</span><span class="err">&#39;</span> <span class="o">=&gt;</span> <span class="err">&#39;</span><span class="n">sqlite</span><span class="err">&#39;</span><span class="p">,</span>
+</pre></div>
+<p>启动服务器吧 （有 php 内置服务器就是好）</p>
+<div class="highlight"><pre><span class="n">php</span> <span class="n">artisan</span> <span class="n">serve</span>
+</pre></div>
+<p>注意：当觉得有bug不能排除时，可以重启服务器试试。</p>
+
+<h2>2. 创建 posts 表</h2>
+
+<p>这个时候就开始体现 Laravel 的方便之处了：能通过命令行生成你 migration 文件，而且是使用 php 编写，一种语言就解决所有。</p>
+<div class="highlight"><pre><span class="n">php</span> <span class="n">artisan</span> <span class="n">migrate</span><span class="o">:</span><span class="n">make</span> <span class="n">create_posts_table</span>
+</pre></div>
+<p>这时就会在 app/database/migrations/ 目录下生成类似文件：</p>
+
+<blockquote>
+<p>2014<em>08</em>07<em>062522</em>create<em>posts</em>table.php</p>
+</blockquote>
+
+<p>前面编号就是创建时的时间。</p>
+
+<p>里面就两个函数，up 用于更新数据库，down 用来回滚。</p>
+<div class="highlight"><pre>  <span class="kr">public</span> <span class="kd">function</span> <span class="nx">up</span><span class="p">()</span>
+  <span class="p">{</span>
+      <span class="nx">Schema</span><span class="o">::</span><span class="nx">create</span><span class="p">(</span><span class="s1">&#39;posts&#39;</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">$table</span><span class="p">)</span>
+      <span class="p">{</span>
+          <span class="nx">$table</span><span class="o">-&gt;</span><span class="nx">increments</span><span class="p">(</span><span class="s1">&#39;id&#39;</span><span class="p">);</span>
+          <span class="nx">$table</span><span class="o">-&gt;</span><span class="nx">string</span><span class="p">(</span><span class="s1">&#39;title&#39;</span><span class="p">);</span>
+          <span class="nx">$table</span><span class="o">-&gt;</span><span class="nx">text</span><span class="p">(</span><span class="s1">&#39;content&#39;</span><span class="p">);</span>
+          <span class="nx">$table</span><span class="o">-&gt;</span><span class="nx">timestamps</span><span class="p">();</span>
+      <span class="p">});</span>
+  <span class="p">}</span>
+
+  <span class="kr">public</span> <span class="kd">function</span> <span class="nx">down</span><span class="p">()</span>
+  <span class="p">{</span>
+      <span class="nx">Schema</span><span class="o">::</span><span class="nx">drop</span><span class="p">(</span><span class="s1">&#39;posts&#39;</span><span class="p">);</span>
+  <span class="p">}</span>
+</pre></div>
+<p>写好了 migration 文件就能在数据库新建 posts 表了，说的高大上，其实就是一个命令:</p>
+<div class="highlight"><pre><span class="n">php</span> <span class="n">artisan</span> <span class="n">migrate</span>
+</pre></div>
+<p>如果以后需要会滚的话，就是</p>
+<div class="highlight"><pre><span class="n">php</span> <span class="n">artisan</span> <span class="n">migrate</span><span class="o">:</span><span class="n">rollback</span>
+</pre></div>
+<h2>3. Post Model</h2>
+
+<p>然后就能新建 Post 的 Model 了，因为 Laravel 使用了 Eloquent ORM，操作数据库方便极了，用的时间长了你都不会写 sql 了。</p>
+
+<p>新建文件</p>
+
+<blockquote>
+<p>app/models/Post.php</p>
+</blockquote>
+<div class="highlight"><pre><span class="cp">&lt;?php</span>
+<span class="k">class</span> <span class="nc">Post</span> <span class="k">extends</span> <span class="nx">Eloquent</span> <span class="p">{}</span>
+</pre></div>
+<p>这时就能新建点儿种子数据了</p>
+
+<blockquote>
+<p>app/database/seeds.php:16</p>
+</blockquote>
+<div class="highlight"><pre>  <span class="kr">public</span> <span class="kd">function</span> <span class="nx">run</span><span class="p">()</span>
+  <span class="p">{</span>
+    <span class="nx">Eloquent</span><span class="o">::</span><span class="nx">unguard</span><span class="p">();</span>
+
+    <span class="c1">// $this-&gt;call(&#39;UserTableSeeder&#39;);</span>
+
+    <span class="k">for</span><span class="p">(</span><span class="nx">$i</span><span class="o">=</span><span class="mi">1</span><span class="p">;</span> <span class="nx">$i</span><span class="o">&lt;=</span><span class="mi">10</span><span class="p">;</span> <span class="nx">$i</span><span class="o">++</span><span class="p">)</span>
+      <span class="p">{</span>
+        <span class="nx">$post</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Post</span><span class="p">;</span>
+        <span class="nx">$post</span><span class="o">-&gt;</span><span class="nx">title</span> <span class="o">=</span> <span class="s1">&#39;post &#39;</span><span class="p">.</span><span class="nx">$i</span><span class="p">;</span>
+        <span class="nx">$post</span><span class="o">-&gt;</span><span class="nx">content</span> <span class="o">=</span> <span class="s1">&#39;just for test ...&#39;</span><span class="p">;</span>
+        <span class="nx">$post</span><span class="o">-&gt;</span><span class="nx">save</span><span class="p">();</span>
+      <span class="p">}</span>
+    <span class="p">}</span>
+  <span class="p">}</span>
+</pre></div>
+<p>现在就把运行 seeds.php，把写入到数据库吧</p>
+<div class="highlight"><pre><span class="n">php</span> <span class="n">artisan</span> <span class="n">db</span><span class="o">:</span><span class="n">seed</span>
+</pre></div>
+<h2>4. Post Controller</h2>
+
+<p>还是方便的命令行</p>
+<div class="highlight"><pre><span class="n">php</span> <span class="n">artisan</span> <span class="n">controller</span><span class="o">:</span><span class="n">make</span> <span class="n">PostController</span>
+</pre></div>
+<p>以上命令新建了文件：</p>
+
+<blockquote>
+<p>app/controllers/PostController.php</p>
+</blockquote>
+
+<p>其中定义了5个函数框架，遵循了 RESTful</p>
+
+<table><thead>
+<tr>
+<th>函数</th>
+<th>方法</th>
+<th>功能</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>index</td>
+<td>GET</td>
+<td>列表页</td>
+</tr>
+<tr>
+<td>create</td>
+<td>GET</td>
+<td>新建页</td>
+</tr>
+<tr>
+<td>store</td>
+<td>POST</td>
+<td>新建Post</td>
+</tr>
+<tr>
+<td>show</td>
+<td>GET</td>
+<td>显示单个Post</td>
+</tr>
+<tr>
+<td>edit</td>
+<td>GET</td>
+<td>编辑Post</td>
+</tr>
+<tr>
+<td>update</td>
+<td>PUT</td>
+<td>更新</td>
+</tr>
+<tr>
+<td>destroy</td>
+<td>DELETE</td>
+<td>删除</td>
+</tr>
+</tbody></table>
+
+<p>把 PostController 加入路由表</p>
+
+<blockquote>
+<p>app/routes.php</p>
+</blockquote>
+<div class="highlight"><pre><span class="n">Route</span><span class="o">::</span><span class="n">get</span><span class="p">(</span><span class="sc">&#39;/&#39;</span><span class="p">,</span> <span class="err">&#39;</span><span class="n">PostController</span><span class="err">@</span><span class="n">index</span><span class="err">&#39;</span><span class="p">);</span>
+
+<span class="n">Route</span><span class="o">::</span><span class="n">resource</span><span class="p">(</span><span class="err">&#39;</span><span class="n">posts</span><span class="err">&#39;</span><span class="p">,</span> <span class="err">&#39;</span><span class="n">PostController</span><span class="err">&#39;</span><span class="p">);</span>
+</pre></div>
+<p>下面咱就一个函数一个函数来写</p>
+
+<h2>5. index</h2>
+
+<p>在 PostController.php 的 index 函数中取出所有 posts</p>
+<div class="highlight"><pre><span class="kr">public</span> <span class="kd">function</span> <span class="nx">index</span><span class="p">()</span>
+<span class="p">{</span>
+  <span class="nx">$posts</span> <span class="o">=</span> <span class="nx">Post</span><span class="o">::</span><span class="nx">all</span><span class="p">();</span>
+
+  <span class="k">return</span> <span class="nx">View</span><span class="o">::</span><span class="nx">make</span><span class="p">(</span><span class="s1">&#39;posts.index&#39;</span><span class="p">,</span> <span class="nx">array</span><span class="p">(</span><span class="s1">&#39;posts&#39;</span> <span class="o">=&gt;</span> <span class="nx">$posts</span><span class="p">));</span>
+<span class="p">}</span>
+</pre></div>
+<p>然后就是 views 了,新建 app/views/posts 目录,目录下新建 index.blade.php</p>
+<div class="highlight"><pre><span class="err">@</span><span class="n">foreach</span><span class="p">(</span><span class="err">$</span><span class="n">posts</span> <span class="n">as</span> <span class="err">$</span><span class="n">post</span><span class="p">)</span>
+  <span class="o">&lt;</span><span class="n">h3</span><span class="o">&gt;</span><span class="p">{{</span> <span class="err">$</span><span class="n">post</span><span class="o">-&gt;</span><span class="n">title</span> <span class="p">}}</span><span class="o">&lt;/</span><span class="n">h3</span><span class="o">&gt;</span>
+<span class="err">@</span><span class="n">endforeach</span>
+</pre></div>
+<p>现在再看看 <a href="http://localhost:8000/posts">http://localhost:8000/posts</a></p>
+
+<h2>6. create</h2>
+
+<p>也是与上面类似过程
+PostController.php 的 create 函数</p>
+<div class="highlight"><pre><span class="kr">public</span> <span class="kd">function</span> <span class="nx">create</span><span class="p">()</span>
+<span class="p">{</span>
+  <span class="nx">$post</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Post</span><span class="p">;</span>
+
+  <span class="k">return</span> <span class="nx">View</span><span class="o">::</span><span class="nx">make</span><span class="p">(</span><span class="s1">&#39;posts.create&#39;</span><span class="p">,</span> <span class="nx">array</span><span class="p">(</span><span class="s1">&#39;post&#39;</span> <span class="o">=&gt;</span> <span class="nx">$post</span><span class="p">));</span>
+<span class="p">}</span>
+</pre></div>
+<p>新建 app/views/posts/_post.blade.php，这是一个子模板，可以嵌套到其他模板中</p>
+<div class="highlight"><pre><span class="p">{{</span> <span class="nb">Form</span><span class="p">::</span><span class="nl">label</span><span class="p">(</span><span class="s1">&#39;title&#39;</span><span class="p">,</span> <span class="s1">&#39;Title&#39;</span><span class="p">)</span> <span class="p">}}</span>
+<span class="p">{{</span> <span class="nb">Form</span><span class="p">::</span><span class="nl">text</span><span class="p">(</span><span class="s1">&#39;title&#39;</span><span class="p">,</span> <span class="nv">$post</span><span class="o">-&gt;</span><span class="nb">title</span><span class="p">)</span> <span class="p">}}</span>
+<span class="o">&lt;</span><span class="nx">br</span><span class="o">&gt;</span>
+<span class="p">{{</span> <span class="nb">Form</span><span class="p">::</span><span class="nl">label</span><span class="p">(</span><span class="s1">&#39;content&#39;</span><span class="p">,</span> <span class="s1">&#39;Content&#39;</span><span class="p">)</span> <span class="p">}}</span>
+<span class="p">{{</span> <span class="nb">Form</span><span class="p">::</span><span class="nl">textarea</span><span class="p">(</span><span class="s1">&#39;content&#39;</span><span class="p">,</span> <span class="nv">$post</span><span class="o">-&gt;</span><span class="nb">content</span><span class="p">)</span> <span class="p">}}</span>
+<span class="o">&lt;</span><span class="nx">br</span><span class="o">&gt;</span>
+<span class="p">{{</span> <span class="nb">Form</span><span class="p">::</span><span class="nl">submit</span><span class="p">(</span><span class="s1">&#39;Submit&#39;</span><span class="p">)</span> <span class="p">}}</span>
+</pre></div>
+<p>新建 app/views/posts/create.blade.php</p>
+<div class="highlight"><pre><span class="nt">&lt;h3&gt;</span>Create New Post<span class="nt">&lt;/h3&gt;</span>
+
+{{ Form::model($post, array(&#39;action&#39; =&gt; &#39;PostController@store&#39;, &#39;method&#39; =&gt; &#39;post&#39;)) }}
+  @include(&#39;posts._post&#39;, array(&#39;post&#39; =&gt; $post))
+{{ Form::close() }}
+</pre></div>
+<p>其中 @include 就是表示嵌套 _post.blade.php.</p>
+
+<p>现在再看看 <a href="http://localhost:8000/posts/create">http://localhost:8000/posts/create</a></p>
+
+<p>不过现在还不能提交增加 post，需要完成下面的 create 函数才行.</p>
+
+<h2>7. store</h2>
+
+<p>PostController.php 的 store 函数</p>
+<div class="highlight"><pre><span class="kr">public</span> <span class="kd">function</span> <span class="nx">store</span><span class="p">()</span>
+<span class="p">{</span>
+  <span class="nx">$post</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Post</span><span class="p">;</span>
+  <span class="nx">$post</span><span class="o">-&gt;</span><span class="nx">title</span> <span class="o">=</span> <span class="nx">Input</span><span class="o">::</span><span class="nx">get</span><span class="p">(</span><span class="s1">&#39;title&#39;</span><span class="p">);</span>
+  <span class="nx">$post</span><span class="o">-&gt;</span><span class="nx">content</span> <span class="o">=</span> <span class="nx">Input</span><span class="o">::</span><span class="nx">get</span><span class="p">(</span><span class="s1">&#39;content&#39;</span><span class="p">);</span>
+
+  <span class="k">if</span><span class="p">(</span><span class="nx">$post</span><span class="o">-&gt;</span><span class="nx">save</span><span class="p">())</span>
+    <span class="k">return</span> <span class="nx">Redirect</span><span class="o">::</span><span class="nx">action</span><span class="p">(</span><span class="s1">&#39;PostController@index&#39;</span><span class="p">);</span>
+  <span class="k">else</span>
+    <span class="k">return</span> <span class="nx">View</span><span class="o">::</span><span class="nx">make</span><span class="p">(</span><span class="s1">&#39;posts.create&#39;</span><span class="p">,</span> <span class="nx">array</span><span class="p">(</span><span class="s1">&#39;post&#39;</span> <span class="o">=&gt;</span> <span class="nx">$post</span><span class="p">));</span> 
+<span class="p">}</span>
+</pre></div>
+<p>现在<a href="http://localhost:8000/posts/create">http://localhost:8000/posts/create</a>提交一个新的 post，看看是不是成功了 :)</p>
+
+<h2>8. show</h2>
+
+<p>PostController.php 的 show 函数</p>
+<div class="highlight"><pre><span class="kr">public</span> <span class="kd">function</span> <span class="nx">show</span><span class="p">(</span><span class="nx">$id</span><span class="p">)</span>
+<span class="p">{</span>
+  <span class="nx">$post</span> <span class="o">=</span> <span class="nx">Post</span><span class="o">::</span><span class="nx">find</span><span class="p">(</span><span class="nx">$id</span><span class="p">);</span>
+
+  <span class="k">return</span> <span class="nx">View</span><span class="o">::</span><span class="nx">make</span><span class="p">(</span><span class="s1">&#39;posts.show&#39;</span><span class="p">,</span> <span class="nx">array</span><span class="p">(</span><span class="s1">&#39;post&#39;</span> <span class="o">=&gt;</span> <span class="nx">$post</span><span class="p">));</span>
+<span class="p">}</span>
+</pre></div>
+<p>新建 app/views/posts/show.blade.php</p>
+<div class="highlight"><pre><span class="nt">&lt;h1&gt;</span>{{ $post-&gt;title }}<span class="nt">&lt;/h1&gt;</span>
+<span class="nt">&lt;p&gt;</span>{{ $post-&gt;content }}<span class="nt">&lt;/p&gt;</span>
+</pre></div>
+<p>可以通过 <a href="http://localhost:8000/posts/1">http://localhost:8000/posts/1</a> 查看第一个 post</p>
+
+<h2>9. edit</h2>
+
+<p>PostController.php 的 edit 函数</p>
+<div class="highlight"><pre><span class="kr">public</span> <span class="kd">function</span> <span class="nx">edit</span><span class="p">(</span><span class="nx">$id</span><span class="p">)</span>
+<span class="p">{</span>
+  <span class="nx">$post</span> <span class="o">=</span> <span class="nx">Post</span><span class="o">::</span><span class="nx">find</span><span class="p">(</span><span class="nx">$id</span><span class="p">);</span>
+
+  <span class="k">return</span> <span class="nx">View</span><span class="o">::</span><span class="nx">make</span><span class="p">(</span><span class="s1">&#39;posts.edit&#39;</span><span class="p">,</span> <span class="nx">array</span><span class="p">(</span><span class="s1">&#39;post&#39;</span> <span class="o">=&gt;</span> <span class="nx">$post</span><span class="p">));</span>
+<span class="p">}</span>
+</pre></div>
+<p>新建 app/views/posts/edit.blade.php</p>
+<div class="highlight"><pre><span class="nt">&lt;h3&gt;</span>Edit Post<span class="nt">&lt;/h3&gt;</span>
+
+{{ Form::model($post, array(&#39;action&#39; =&gt; array(&#39;PostController@update&#39;, $post-&gt;id), &#39;method&#39; =&gt; &#39;put&#39;)) }}
+  @include(&#39;posts._post&#39;, array(&#39;post&#39; =&gt; $post))
+{{ Form::close() }}
+</pre></div>
+<p>查看 <a href="http://localhost:8000/posts/1/edit">http://localhost:8000/posts/1/edit</a></p>
+
+<p>不过需要完成下面的 update 函数才能提交更新</p>
+
+<h2>10. update</h2>
+
+<p>PostController.php 的 update 函数</p>
+<div class="highlight"><pre><span class="kr">public</span> <span class="kd">function</span> <span class="nx">update</span><span class="p">(</span><span class="nx">$id</span><span class="p">)</span>
+<span class="p">{</span>
+  <span class="nx">$post</span> <span class="o">=</span> <span class="nx">Post</span><span class="o">::</span><span class="nx">find</span><span class="p">(</span><span class="nx">$id</span><span class="p">);</span>
+  <span class="nx">$post</span><span class="o">-&gt;</span><span class="nx">title</span> <span class="o">=</span> <span class="nx">Input</span><span class="o">::</span><span class="nx">get</span><span class="p">(</span><span class="s1">&#39;title&#39;</span><span class="p">);</span>
+  <span class="nx">$post</span><span class="o">-&gt;</span><span class="nx">content</span> <span class="o">=</span> <span class="nx">Input</span><span class="o">::</span><span class="nx">get</span><span class="p">(</span><span class="s1">&#39;content&#39;</span><span class="p">);</span>
+
+  <span class="k">if</span><span class="p">(</span><span class="nx">$post</span><span class="o">-&gt;</span><span class="nx">save</span><span class="p">())</span>
+    <span class="k">return</span> <span class="nx">Redirect</span><span class="o">::</span><span class="nx">action</span><span class="p">(</span><span class="s1">&#39;PostController@show&#39;</span><span class="p">,</span> <span class="nx">$id</span><span class="p">);</span>
+  <span class="k">else</span>
+    <span class="k">return</span> <span class="nx">View</span><span class="o">::</span><span class="nx">make</span><span class="p">(</span><span class="s1">&#39;posts.edit&#39;</span><span class="p">,</span> <span class="nx">array</span><span class="p">(</span><span class="s1">&#39;post&#39;</span> <span class="o">=&gt;</span> <span class="nx">$post</span><span class="p">));</span> 
+<span class="p">}</span>
+</pre></div>
+<p>现在就能提交更新了 <a href="http://localhost:8000/posts/1/edit">http://localhost:8000/posts/1/edit</a></p>
+
+<h2>11. destroy</h2>
+
+<p>PostController.php 的 destroy 函数</p>
+<div class="highlight"><pre><span class="kr">public</span> <span class="kd">function</span> <span class="nx">destroy</span><span class="p">(</span><span class="nx">$id</span><span class="p">)</span>
+<span class="p">{</span>
+  <span class="nx">$post</span> <span class="o">=</span> <span class="nx">Post</span><span class="o">::</span><span class="nx">find</span><span class="p">(</span><span class="nx">$id</span><span class="p">);</span>
+  <span class="nx">$post</span><span class="o">-&gt;</span><span class="k">delete</span><span class="p">();</span>
+
+  <span class="k">return</span> <span class="nx">Redirect</span><span class="o">::</span><span class="nx">action</span><span class="p">(</span><span class="s1">&#39;PostController@index&#39;</span><span class="p">);</span>
+<span class="p">}</span>
+</pre></div>
+<h2>12. 更新 index 模板</h2>
+
+<p>现在功能都有了，但是页面还都是分的散单独页面，现在就在index模板添加到各个页面的链接。</p>
+
+<blockquote>
+<p>app/views/posts/index.blade.php</p>
+</blockquote>
+<div class="highlight"><pre><span class="o">&lt;</span><span class="n">h3</span><span class="o">&gt;</span><span class="p">{{</span> <span class="n">link_to_action</span><span class="p">(</span><span class="err">&#39;</span><span class="n">PostController</span><span class="err">@</span><span class="n">create</span><span class="err">&#39;</span><span class="p">,</span> <span class="err">&#39;</span><span class="n">New</span> <span class="n">Post</span><span class="err">&#39;</span><span class="p">)</span> <span class="p">}}</span><span class="o">&lt;/</span><span class="n">h3</span><span class="o">&gt;</span>
+
+<span class="o">&lt;</span><span class="n">table</span><span class="o">&gt;</span>
+<span class="err">@</span><span class="n">foreach</span><span class="p">(</span><span class="err">$</span><span class="n">posts</span> <span class="n">as</span> <span class="err">$</span><span class="n">post</span><span class="p">)</span>
+  <span class="o">&lt;</span><span class="n">tr</span><span class="o">&gt;</span>
+    <span class="o">&lt;</span><span class="n">td</span><span class="o">&gt;</span><span class="p">{{</span> <span class="err">$</span><span class="n">post</span><span class="o">-&gt;</span><span class="n">title</span> <span class="p">}}</span><span class="o">&lt;/</span><span class="n">td</span><span class="o">&gt;</span>
+
+    <span class="o">&lt;</span><span class="n">td</span><span class="o">&gt;</span><span class="p">{{</span> <span class="n">link_to_action</span><span class="p">(</span><span class="err">&#39;</span><span class="n">PostController</span><span class="err">@</span><span class="n">show</span><span class="err">&#39;</span><span class="p">,</span> <span class="err">&#39;</span><span class="n">View</span><span class="err">&#39;</span><span class="p">,</span> <span class="n">array</span><span class="p">(</span><span class="err">&#39;</span><span class="kt">id</span><span class="err">&#39;</span> <span class="o">=&gt;</span> <span class="err">$</span><span class="n">post</span><span class="o">-&gt;</span><span class="kt">id</span><span class="p">))</span> <span class="p">}}</span><span class="o">&lt;/</span><span class="n">td</span><span class="o">&gt;</span>
+
+    <span class="o">&lt;</span><span class="n">td</span><span class="o">&gt;</span><span class="p">{{</span> <span class="n">link_to_action</span><span class="p">(</span><span class="err">&#39;</span><span class="n">PostController</span><span class="err">@</span><span class="n">edit</span><span class="err">&#39;</span><span class="p">,</span> <span class="s">&quot;Edit&quot;</span><span class="p">,</span> <span class="n">array</span><span class="p">(</span><span class="err">&#39;</span><span class="kt">id</span><span class="err">&#39;</span> <span class="o">=&gt;</span> <span class="err">$</span><span class="n">post</span><span class="o">-&gt;</span><span class="kt">id</span><span class="p">))</span> <span class="p">}}</span><span class="o">&lt;/</span><span class="n">td</span><span class="o">&gt;</span>
+
+    <span class="o">&lt;</span><span class="n">td</span><span class="o">&gt;</span>
+    <span class="p">{{</span> <span class="n">Form</span><span class="o">::</span><span class="n">open</span><span class="p">(</span><span class="n">array</span><span class="p">(</span><span class="err">&#39;</span><span class="n">action</span><span class="err">&#39;</span> <span class="o">=&gt;</span> <span class="n">array</span><span class="p">(</span><span class="err">&#39;</span><span class="n">PostController</span><span class="err">@</span><span class="n">destroy</span><span class="err">&#39;</span><span class="p">,</span> <span class="err">$</span><span class="n">post</span><span class="o">-&gt;</span><span class="kt">id</span><span class="p">),</span> <span class="err">&#39;</span><span class="n">method</span><span class="err">&#39;</span> <span class="o">=&gt;</span> <span class="err">&#39;</span><span class="n">delete</span><span class="err">&#39;</span><span class="p">,</span> <span class="err">&#39;</span><span class="n">style</span><span class="err">&#39;</span> <span class="o">=&gt;</span> <span class="err">&#39;</span><span class="n">display</span><span class="o">:</span><span class="kr">inline</span><span class="o">-</span><span class="n">block</span><span class="p">;</span><span class="err">&#39;</span><span class="p">))</span> <span class="p">}}</span>
+      <span class="p">{{</span> <span class="n">Form</span><span class="o">::</span><span class="n">submit</span><span class="p">(</span><span class="err">&#39;</span><span class="n">Delete</span><span class="err">&#39;</span><span class="p">,</span> <span class="n">array</span><span class="p">(</span><span class="err">&#39;</span><span class="n">onclick</span><span class="err">&#39;</span> <span class="o">=&gt;</span> <span class="s">&quot;return confirm(&#39;Are you sure?&#39;);&quot;</span><span class="p">))</span> <span class="p">}}</span>
+    <span class="p">{{</span> <span class="n">Form</span><span class="o">::</span><span class="n">close</span><span class="p">()</span> <span class="p">}}</span>
+    <span class="o">&lt;/</span><span class="n">td</span><span class="o">&gt;</span>
+<span class="err">@</span><span class="n">endforeach</span>
+<span class="o">&lt;/</span><span class="n">table</span><span class="o">&gt;</span>
+</pre></div>
+<h2>13. 结语</h2>
+
+<p>呵呵～ 够简单吧（似乎称为简陋更恰当），
+本来还想连 comments 一起加上，但是写的已经太长，以后的重复部分太多，太啰嗦，思路是一致的，就到此为止吧。</p>
+
+<p>可以在 github 上查看项目 <a href="https://github.com/adousj/laravel-blog">github.com/adousj/laravel-blog</a>。
+我已经添加了 comments 功能，本教程的代码在 <a href="https://github.com/adousj/laravel-blog/tree/stage/1-posts">stage/1-posts</a> 分支下。</p>
+
+</div>
+
+  </article>
+
+  <div class="comments">
+    <!-- Duoshuo Comment BEGIN -->
+    <div class="ds-thread"></div>
+    <script type="text/javascript">
+    var duoshuoQuery = {short_name:"adousj"};
+      (function() {
+        var ds = document.createElement('script');
+        ds.type = 'text/javascript';ds.async = true;
+        ds.src = 'http://static.duoshuo.com/embed.js';
+        ds.charset = 'UTF-8';
+        (document.getElementsByTagName('head')[0] 
+        || document.getElementsByTagName('body')[0]).appendChild(ds);
+      })();
+      </script>
+    <!-- Duoshuo Comment END -->
+  </div>
+
+      </div>
+    </section>
+    
+    <footer>
+      <div class="copyright">
+        <p>2014&copy;Adou</p>
+      </div>
+    </footer>
+
+    <script type="text/javascript">
+
+      var _gaq = _gaq || [];
+      _gaq.push(['_setAccount', '']);
+      _gaq.push(['_trackPageview']);
+
+      (function() {
+        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+      })();
+
+    </script>
+  </body>
+</html>
