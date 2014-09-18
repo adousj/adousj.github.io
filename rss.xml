@@ -8,13 +8,130 @@
     <copyright>&amp;#x2117; &amp;amp; &amp;#xA9; 2014 Adou He</copyright>
     <link href="http://adou.gitcafe.com"/>
     <link href="http://adou.gitcafe.com/rss.xml" rel="self"/>
-    <updated>2014-08-07T08:03:00Z</updated>
-    <lastBuildDate>2014-08-07T08:03:00Z</lastBuildDate>
-    <pubDate>2014-08-07T08:03:00Z</pubDate>
+    <updated>2014-09-18T04:19:00Z</updated>
+    <lastBuildDate>2014-09-18T04:19:00Z</lastBuildDate>
+    <pubDate>2014-09-18T04:19:00Z</pubDate>
     <description>~Adou got his ideas out of head.</description>
     <author>
       <name>Adou</name>
     </author>
+    <item>
+      <title>使用 Ruby 解 Code Jam</title>
+      <link>http://adou.gitcafe.com/conquer-codejam-with-ruby</link>
+      <description type="html">&lt;p&gt;这几天开始注意到 Code Jam，规则还不是很熟悉，做了两个题目练习一下。貌似只用提交答案，所以语言并没有限制。我就用 Ruby 试着解了个题目。&lt;/p&gt;
+
+&lt;p&gt;虽然之前用过 Ruby 做过计算，对 Ruby 的计算能力表示堪忧，但是语法的表现力还是很令人满意的，简言之就是：写起来很爽，跑起来很慢，很慢。使用 JRuby 可以快点，但仅仅是快一点 :(&lt;/p&gt;
+
+&lt;h2&gt;题目&lt;/h2&gt;
+
+&lt;p&gt;&lt;a href="https://code.google.com/codejam/contest/4214486/dashboard"&gt;APAC 2015 Round A #A Password Attacker&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;这是一个排列组合的问题，m 个字符组成长度为 n 的字符串 (m&amp;lt;=n)，每个字符至少出现一次，求组合数目。&lt;/p&gt;
+
+&lt;p&gt;每个字符至少出现一次，则有 n-m 个字符可以是 m 个字符中的任意字符，使用递归穷尽 n-m 字符所有组合情况。每种情况下，第 i 个字符出现 xi 次，则有&lt;/p&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;x1 + x2 + &amp;hellip; + xm = n&lt;/p&gt;
+
+&lt;p&gt;其中 xi &amp;gt;= 1&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;组合次数为&lt;/p&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;n! / (x1! &lt;em&gt;&amp;hellip;&lt;/em&gt; xm!)&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;将每种组合数相加就能得到总的组合数目。&lt;/p&gt;
+
+&lt;p&gt;但是，但是，这只能解决 samll dataset，即使改写成 C++，还是不能解决 large dataset。
+看来还有更好的解决方法。&lt;/p&gt;
+
+&lt;h2&gt;Ruby 相关&lt;/h2&gt;
+
+&lt;p&gt;文件读取&lt;/p&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;fin = File.open(filename)&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;读取一行 n,m&lt;/p&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;m, n = fin.readline.split.map(&amp;amp;:to_i)&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;非常方便的 map inject&lt;/p&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;@nums.map{|i| MMath.factorial(i) }.inject(&amp;amp;:*)&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;Ruby 中的 Array Hash 很方便&lt;/p&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;@nums = Array.new(m) { 1 }&lt;/p&gt;
+
+&lt;p&gt;@@factorials = { 0 =&amp;gt; 1, 1 =&amp;gt; 1 }&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;还有，不用关心Int大小的问题，自动转化成 BinInteger&lt;/p&gt;
+
+&lt;h2&gt;代码&lt;/h2&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="n"&gt;class&lt;/span&gt; &lt;span class="n"&gt;Solution&lt;/span&gt;
+  &lt;span class="n"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;ways&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;m&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;n&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+
+    &lt;span class="err"&gt;@&lt;/span&gt;&lt;span class="n"&gt;m&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="err"&gt;@&lt;/span&gt;&lt;span class="n"&gt;n&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;m&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;n&lt;/span&gt;
+    &lt;span class="err"&gt;@&lt;/span&gt;&lt;span class="n"&gt;nums&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;Array&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;new&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;m&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt; &lt;span class="mi"&gt;1&lt;/span&gt; &lt;span class="p"&gt;}&lt;/span&gt;
+    &lt;span class="err"&gt;@&lt;/span&gt;&lt;span class="n"&gt;n_factorial&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;MMath&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;factorial&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="err"&gt;@&lt;/span&gt;&lt;span class="n"&gt;n&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+
+    &lt;span class="n"&gt;trav&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;n&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;m&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="o"&gt;%&lt;/span&gt; &lt;span class="mi"&gt;1000000007&lt;/span&gt;
+  &lt;span class="n"&gt;end&lt;/span&gt;
+
+  &lt;span class="n"&gt;def&lt;/span&gt; &lt;span class="n"&gt;trav&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;k&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+    &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="n"&gt;k&lt;/span&gt;&lt;span class="o"&gt;==&lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt;
+      &lt;span class="err"&gt;@&lt;/span&gt;&lt;span class="n"&gt;n_factorial&lt;/span&gt; &lt;span class="o"&gt;/&lt;/span&gt; &lt;span class="err"&gt;@&lt;/span&gt;&lt;span class="n"&gt;nums&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;map&lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="o"&gt;|&lt;/span&gt;&lt;span class="n"&gt;i&lt;/span&gt;&lt;span class="o"&gt;|&lt;/span&gt; &lt;span class="n"&gt;MMath&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;factorial&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;i&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="p"&gt;}.&lt;/span&gt;&lt;span class="n"&gt;inject&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="o"&gt;&amp;amp;:*&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+    &lt;span class="k"&gt;else&lt;/span&gt;
+      &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mf"&gt;0.&lt;/span&gt;&lt;span class="p"&gt;..&lt;/span&gt;&lt;span class="err"&gt;@&lt;/span&gt;&lt;span class="n"&gt;m&lt;/span&gt;&lt;span class="p"&gt;).&lt;/span&gt;&lt;span class="n"&gt;map&lt;/span&gt; &lt;span class="k"&gt;do&lt;/span&gt; &lt;span class="o"&gt;|&lt;/span&gt;&lt;span class="n"&gt;i&lt;/span&gt;&lt;span class="o"&gt;|&lt;/span&gt;
+        &lt;span class="err"&gt;@&lt;/span&gt;&lt;span class="n"&gt;nums&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;i&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt; &lt;span class="o"&gt;+=&lt;/span&gt; &lt;span class="mi"&gt;1&lt;/span&gt;
+        &lt;span class="n"&gt;result&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;trav&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;k&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+        &lt;span class="err"&gt;@&lt;/span&gt;&lt;span class="n"&gt;nums&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;i&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt; &lt;span class="o"&gt;-=&lt;/span&gt; &lt;span class="mi"&gt;1&lt;/span&gt;
+        &lt;span class="n"&gt;result&lt;/span&gt;
+      &lt;span class="n"&gt;end&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;inject&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="o"&gt;&amp;amp;:+&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+    &lt;span class="n"&gt;end&lt;/span&gt;
+  &lt;span class="n"&gt;end&lt;/span&gt;
+&lt;span class="n"&gt;end&lt;/span&gt;
+
+&lt;span class="n"&gt;class&lt;/span&gt; &lt;span class="n"&gt;MMath&lt;/span&gt;
+  &lt;span class="err"&gt;@@&lt;/span&gt;&lt;span class="n"&gt;factorials&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt; &lt;span class="mi"&gt;0&lt;/span&gt; &lt;span class="o"&gt;=&amp;gt;&lt;/span&gt; &lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+                 &lt;span class="mi"&gt;1&lt;/span&gt; &lt;span class="o"&gt;=&amp;gt;&lt;/span&gt; &lt;span class="mi"&gt;1&lt;/span&gt; &lt;span class="p"&gt;}&lt;/span&gt;
+
+  &lt;span class="n"&gt;def&lt;/span&gt; &lt;span class="n"&gt;self&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;factorial&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;n&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+    &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="err"&gt;@@&lt;/span&gt;&lt;span class="n"&gt;factorials&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;n&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;
+      &lt;span class="err"&gt;@@&lt;/span&gt;&lt;span class="n"&gt;factorials&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;n&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;
+    &lt;span class="k"&gt;else&lt;/span&gt;
+      &lt;span class="err"&gt;@@&lt;/span&gt;&lt;span class="n"&gt;factorials&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;n&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;n&lt;/span&gt; &lt;span class="o"&gt;*&lt;/span&gt; &lt;span class="n"&gt;factorial&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;n&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+    &lt;span class="n"&gt;end&lt;/span&gt;
+  &lt;span class="n"&gt;end&lt;/span&gt;
+&lt;span class="n"&gt;end&lt;/span&gt;
+
+
+&lt;span class="n"&gt;fin&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;File&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;open&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="err"&gt;&amp;#39;&lt;/span&gt;&lt;span class="n"&gt;A&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;small&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;practice&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;in&lt;/span&gt;&lt;span class="err"&gt;&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="n"&gt;fout&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;File&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;open&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="err"&gt;&amp;#39;&lt;/span&gt;&lt;span class="n"&gt;A&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;small&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;practice&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;out&lt;/span&gt;&lt;span class="err"&gt;&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="sc"&gt;&amp;#39;w&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="n"&gt;t&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;fin&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;readline&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;to_i&lt;/span&gt;
+&lt;span class="n"&gt;i&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="mi"&gt;1&lt;/span&gt;
+&lt;span class="k"&gt;while&lt;/span&gt; &lt;span class="n"&gt;i&lt;/span&gt; &lt;span class="o"&gt;&amp;lt;=&lt;/span&gt; &lt;span class="n"&gt;t&lt;/span&gt;
+  &lt;span class="n"&gt;puts&lt;/span&gt; &lt;span class="n"&gt;i&lt;/span&gt;
+  &lt;span class="n"&gt;m&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;n&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;fin&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;readline&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;split&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;map&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="o"&gt;&amp;amp;:&lt;/span&gt;&lt;span class="n"&gt;to_i&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+  &lt;span class="n"&gt;fout&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;write&lt;/span&gt; &lt;span class="s"&gt;&amp;quot;Case #%d: %d&lt;/span&gt;&lt;span class="se"&gt;\n&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;&lt;/span&gt; &lt;span class="o"&gt;%&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;i&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;  &lt;span class="n"&gt;Solution&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;new&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;ways&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;m&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;n&lt;/span&gt;&lt;span class="p"&gt;)]&lt;/span&gt;
+  &lt;span class="n"&gt;i&lt;/span&gt; &lt;span class="o"&gt;+=&lt;/span&gt; &lt;span class="mi"&gt;1&lt;/span&gt;
+&lt;span class="n"&gt;end&lt;/span&gt;
+&lt;span class="n"&gt;fout&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;close&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;</description>
+      <guid>tag:adou.gitcafe.com,article.url</guid>
+      <pubDate>2014-09-18T04:19:00Z</pubDate>
+      <category></category>
+    </item>
     <item>
       <title>Laravel 十分钟 Blog 教程</title>
       <link>http://adou.gitcafe.com/10-minutes-tutorial-for-laravel</link>

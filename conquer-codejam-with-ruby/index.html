@@ -1,0 +1,255 @@
+
+
+
+<!DOCTYPE html>
+<!--[if lt IE 7]><html class="no-js lt-ie9 lt-ie8 lt-ie7" lang="en"><![endif]-->
+<!--[if IE 7]><html class="no-js lt-ie9 lt-ie8" lang="en"><![endif]-->
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en"><![endif]-->
+<!--[if gt IE 8]<!-->
+<html class="no-js" lang="en">
+  <!--<![endif]-->
+  <head>
+    <meta charset="UTF-8">
+
+    <title>
+        使用 Ruby 解 Code Jam
+ - Adou's Blog
+    </title>
+
+    <meta name="description" content="~Adou got his ideas out of head.">
+    <meta name="keywords" content="  []
+">
+    <meta name="author" content="adou">
+
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta http-equiv="cleartype" content="on">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+
+    <link rel="apple-touch-icon-precomposed" type="image/png" sizes="57x57" href="/apple-touch-icon-57x57-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" type="image/png" sizes="72x72" href="/apple-touch-icon-72x72-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" type="image/png" sizes="114x114" href="/apple-touch-icon-114x114-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" type="image/png" sizes="144x144" href="/apple-touch-icon-144x144-precomposed.png" />
+    <link rel="apple-touch-icon-precomposed" type="image/png" href="/apple-touch-icon-precomposed.png">
+    <link rel="apple-touch-icon" type="image/png" href="/apple-touch-icon.png">
+
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon.png">
+    <link rel="shortcut icon" sizes="16x16" href="/favicon.ico">
+    <link rel="alternate" type="application/rss+xml" title="Ben He's Homepage" href="/feed.xml" />
+    <!--[if lt IE 9]>
+    <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+
+    <link href="/stylesheets/application.css?1411014180" media="screen" rel="stylesheet" type="text/css" />
+    <script src="/javascripts/application.js?1411014180" type="text/javascript"></script>
+
+  </head>
+  <body class="conquer-codejam-with-ruby conquer-codejam-with-ruby_index">
+    <aside class="sidebar">
+      <h1 class="site-name"><a href="/">Adou</a></h1>
+      <nav class="global-nav">
+        <ul>
+          <li><a href="/">博客</a></li>
+          <li><a href="/">Photos</a></li>
+          <li><a href="/profile">关于我</a></li>
+        </ul>        
+      </nav>
+
+      <nav class="social-connect">
+        <ul>
+          <li><a href="/rss.xml"><i class="icon-rss"></i></a></li>
+          <!-- <li><a href="//twitter.com/beenhero"><i class="icon-twitter"></i></a></li> -->
+          <!-- <li><a href="//facebook.com/beenhero"><i class="icon-facebook"></i></a></li> -->
+          <li><a href="//weibo.com/u/1715225261"><i class="icon-weibo"></i></a></li>
+          <li><a href="//renren.com/261753537"><i class="icon-renren"></i></a></li>
+        </ul>
+      </nav>
+      
+      <!-- Ad -->
+      <div class="block ad">
+        <h4 class="block-title"><a href="https://github.com/beenhero/beenhero.com">beenhero.com</a></h4>
+        <p class="block-cnt">谢谢~/Bin提供的模板</p>
+      </div>
+
+    </aside>
+
+    <section class="main">
+      <div class="container">
+          
+
+  <article class="post single">
+
+    <header>
+  <h2 class="title">
+    <a href="/conquer-codejam-with-ruby">使用 Ruby 解 Code Jam</a>
+  </h2>
+</header>
+
+<aside class="aside-block">
+  <ul class="meta">
+    <li class="date">
+      2014-09-18
+    </li>
+    <li class="tags">
+      
+    </li>
+  </ul>
+</aside>
+
+<div class="content">
+  <p>这几天开始注意到 Code Jam，规则还不是很熟悉，做了两个题目练习一下。貌似只用提交答案，所以语言并没有限制。我就用 Ruby 试着解了个题目。</p>
+
+<p>虽然之前用过 Ruby 做过计算，对 Ruby 的计算能力表示堪忧，但是语法的表现力还是很令人满意的，简言之就是：写起来很爽，跑起来很慢，很慢。使用 JRuby 可以快点，但仅仅是快一点 :(</p>
+
+<h2>题目</h2>
+
+<p><a href="https://code.google.com/codejam/contest/4214486/dashboard">APAC 2015 Round A #A Password Attacker</a></p>
+
+<p>这是一个排列组合的问题，m 个字符组成长度为 n 的字符串 (m&lt;=n)，每个字符至少出现一次，求组合数目。</p>
+
+<p>每个字符至少出现一次，则有 n-m 个字符可以是 m 个字符中的任意字符，使用递归穷尽 n-m 字符所有组合情况。每种情况下，第 i 个字符出现 xi 次，则有</p>
+
+<blockquote>
+<p>x1 + x2 + &hellip; + xm = n</p>
+
+<p>其中 xi &gt;= 1</p>
+</blockquote>
+
+<p>组合次数为</p>
+
+<blockquote>
+<p>n! / (x1! <em>&hellip;</em> xm!)</p>
+</blockquote>
+
+<p>将每种组合数相加就能得到总的组合数目。</p>
+
+<p>但是，但是，这只能解决 samll dataset，即使改写成 C++，还是不能解决 large dataset。
+看来还有更好的解决方法。</p>
+
+<h2>Ruby 相关</h2>
+
+<p>文件读取</p>
+
+<blockquote>
+<p>fin = File.open(filename)</p>
+</blockquote>
+
+<p>读取一行 n,m</p>
+
+<blockquote>
+<p>m, n = fin.readline.split.map(&amp;:to_i)</p>
+</blockquote>
+
+<p>非常方便的 map inject</p>
+
+<blockquote>
+<p>@nums.map{|i| MMath.factorial(i) }.inject(&amp;:*)</p>
+</blockquote>
+
+<p>Ruby 中的 Array Hash 很方便</p>
+
+<blockquote>
+<p>@nums = Array.new(m) { 1 }</p>
+
+<p>@@factorials = { 0 =&gt; 1, 1 =&gt; 1 }</p>
+</blockquote>
+
+<p>还有，不用关心Int大小的问题，自动转化成 BinInteger</p>
+
+<h2>代码</h2>
+<div class="highlight"><pre><span class="n">class</span> <span class="n">Solution</span>
+  <span class="n">def</span> <span class="nf">ways</span><span class="p">(</span><span class="n">m</span><span class="p">,</span> <span class="n">n</span><span class="p">)</span>
+
+    <span class="err">@</span><span class="n">m</span><span class="p">,</span> <span class="err">@</span><span class="n">n</span> <span class="o">=</span> <span class="n">m</span><span class="p">,</span> <span class="n">n</span>
+    <span class="err">@</span><span class="n">nums</span> <span class="o">=</span> <span class="n">Array</span><span class="p">.</span><span class="n">new</span><span class="p">(</span><span class="n">m</span><span class="p">)</span> <span class="p">{</span> <span class="mi">1</span> <span class="p">}</span>
+    <span class="err">@</span><span class="n">n_factorial</span> <span class="o">=</span> <span class="n">MMath</span><span class="p">.</span><span class="n">factorial</span><span class="p">(</span><span class="err">@</span><span class="n">n</span><span class="p">)</span>
+
+    <span class="n">trav</span><span class="p">(</span><span class="n">n</span><span class="o">-</span><span class="n">m</span><span class="p">)</span> <span class="o">%</span> <span class="mi">1000000007</span>
+  <span class="n">end</span>
+
+  <span class="n">def</span> <span class="n">trav</span><span class="p">(</span><span class="n">k</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">k</span><span class="o">==</span><span class="mi">0</span>
+      <span class="err">@</span><span class="n">n_factorial</span> <span class="o">/</span> <span class="err">@</span><span class="n">nums</span><span class="p">.</span><span class="n">map</span><span class="p">{</span><span class="o">|</span><span class="n">i</span><span class="o">|</span> <span class="n">MMath</span><span class="p">.</span><span class="n">factorial</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="p">}.</span><span class="n">inject</span><span class="p">(</span><span class="o">&amp;:*</span><span class="p">)</span>
+    <span class="k">else</span>
+      <span class="p">(</span><span class="mf">0.</span><span class="p">..</span><span class="err">@</span><span class="n">m</span><span class="p">).</span><span class="n">map</span> <span class="k">do</span> <span class="o">|</span><span class="n">i</span><span class="o">|</span>
+        <span class="err">@</span><span class="n">nums</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">+=</span> <span class="mi">1</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="n">trav</span><span class="p">(</span><span class="n">k</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+        <span class="err">@</span><span class="n">nums</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">-=</span> <span class="mi">1</span>
+        <span class="n">result</span>
+      <span class="n">end</span><span class="p">.</span><span class="n">inject</span><span class="p">(</span><span class="o">&amp;:+</span><span class="p">)</span>
+    <span class="n">end</span>
+  <span class="n">end</span>
+<span class="n">end</span>
+
+<span class="n">class</span> <span class="n">MMath</span>
+  <span class="err">@@</span><span class="n">factorials</span> <span class="o">=</span> <span class="p">{</span> <span class="mi">0</span> <span class="o">=&gt;</span> <span class="mi">1</span><span class="p">,</span>
+                 <span class="mi">1</span> <span class="o">=&gt;</span> <span class="mi">1</span> <span class="p">}</span>
+
+  <span class="n">def</span> <span class="n">self</span><span class="p">.</span><span class="n">factorial</span><span class="p">(</span><span class="n">n</span><span class="p">)</span>
+    <span class="k">if</span> <span class="err">@@</span><span class="n">factorials</span><span class="p">[</span><span class="n">n</span><span class="p">]</span>
+      <span class="err">@@</span><span class="n">factorials</span><span class="p">[</span><span class="n">n</span><span class="p">]</span>
+    <span class="k">else</span>
+      <span class="err">@@</span><span class="n">factorials</span><span class="p">[</span><span class="n">n</span><span class="p">]</span> <span class="o">=</span> <span class="n">n</span> <span class="o">*</span> <span class="n">factorial</span><span class="p">(</span><span class="n">n</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+    <span class="n">end</span>
+  <span class="n">end</span>
+<span class="n">end</span>
+
+
+<span class="n">fin</span> <span class="o">=</span> <span class="n">File</span><span class="p">.</span><span class="n">open</span><span class="p">(</span><span class="err">&#39;</span><span class="n">A</span><span class="o">-</span><span class="n">small</span><span class="o">-</span><span class="n">practice</span><span class="p">.</span><span class="n">in</span><span class="err">&#39;</span><span class="p">)</span>
+<span class="n">fout</span> <span class="o">=</span> <span class="n">File</span><span class="p">.</span><span class="n">open</span><span class="p">(</span><span class="err">&#39;</span><span class="n">A</span><span class="o">-</span><span class="n">small</span><span class="o">-</span><span class="n">practice</span><span class="p">.</span><span class="n">out</span><span class="err">&#39;</span><span class="p">,</span> <span class="sc">&#39;w&#39;</span><span class="p">)</span>
+<span class="n">t</span> <span class="o">=</span> <span class="n">fin</span><span class="p">.</span><span class="n">readline</span><span class="p">.</span><span class="n">to_i</span>
+<span class="n">i</span> <span class="o">=</span> <span class="mi">1</span>
+<span class="k">while</span> <span class="n">i</span> <span class="o">&lt;=</span> <span class="n">t</span>
+  <span class="n">puts</span> <span class="n">i</span>
+  <span class="n">m</span><span class="p">,</span> <span class="n">n</span> <span class="o">=</span> <span class="n">fin</span><span class="p">.</span><span class="n">readline</span><span class="p">.</span><span class="n">split</span><span class="p">.</span><span class="n">map</span><span class="p">(</span><span class="o">&amp;:</span><span class="n">to_i</span><span class="p">)</span>
+  <span class="n">fout</span><span class="p">.</span><span class="n">write</span> <span class="s">&quot;Case #%d: %d</span><span class="se">\n</span><span class="s">&quot;</span> <span class="o">%</span> <span class="p">[</span><span class="n">i</span><span class="p">,</span>  <span class="n">Solution</span><span class="p">.</span><span class="n">new</span><span class="p">.</span><span class="n">ways</span><span class="p">(</span><span class="n">m</span><span class="p">,</span> <span class="n">n</span><span class="p">)]</span>
+  <span class="n">i</span> <span class="o">+=</span> <span class="mi">1</span>
+<span class="n">end</span>
+<span class="n">fout</span><span class="p">.</span><span class="n">close</span>
+</pre></div>
+</div>
+
+  </article>
+
+  <div class="comments">
+    <!-- Duoshuo Comment BEGIN -->
+    <div class="ds-thread"></div>
+    <script type="text/javascript">
+    var duoshuoQuery = {short_name:"adousj"};
+      (function() {
+        var ds = document.createElement('script');
+        ds.type = 'text/javascript';ds.async = true;
+        ds.src = 'http://static.duoshuo.com/embed.js';
+        ds.charset = 'UTF-8';
+        (document.getElementsByTagName('head')[0] 
+        || document.getElementsByTagName('body')[0]).appendChild(ds);
+      })();
+      </script>
+    <!-- Duoshuo Comment END -->
+  </div>
+
+      </div>
+    </section>
+    
+    <footer>
+      <div class="copyright">
+        <p>2014&copy;Adou</p>
+      </div>
+    </footer>
+
+    <script type="text/javascript">
+
+      var _gaq = _gaq || [];
+      _gaq.push(['_setAccount', '']);
+      _gaq.push(['_trackPageview']);
+
+      (function() {
+        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+      })();
+
+    </script>
+  </body>
+</html>
