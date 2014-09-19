@@ -91,7 +91,13 @@
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>http://adou.gitcafe.com/tags/ruby-codejam</loc>
+    <loc>http://adou.gitcafe.com/tags/ruby</loc>
+    <lastmod>2014-09-19T00:00:00+08:00</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>http://adou.gitcafe.com/tags/codejam</loc>
     <lastmod>2014-09-19T00:00:00+08:00</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
