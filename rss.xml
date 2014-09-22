@@ -8,13 +8,28 @@
     <copyright>&amp;#x2117; &amp;amp; &amp;#xA9; 2014 Adou He</copyright>
     <link href="http://adou.gitcafe.com"/>
     <link href="http://adou.gitcafe.com/rss.xml" rel="self"/>
-    <updated>2014-09-18T04:19:00Z</updated>
-    <lastBuildDate>2014-09-18T04:19:00Z</lastBuildDate>
-    <pubDate>2014-09-18T04:19:00Z</pubDate>
+    <updated>2014-09-22T08:37:00Z</updated>
+    <lastBuildDate>2014-09-22T08:37:00Z</lastBuildDate>
+    <pubDate>2014-09-22T08:37:00Z</pubDate>
     <description>~Adou got his ideas out of head.</description>
     <author>
       <name>Adou</name>
     </author>
+    <item>
+      <title>解题 leetcode</title>
+      <link>http://adou.gitcafe.com/ac-leetcode</link>
+      <description type="html">&lt;p&gt;眼见进入九月份，就要开始找工作了，赶紧开始复习 C++，顺便也要找题目练习，于是找到了 &lt;a href="https://oj.leetcode.com/problems/"&gt;leetcode&lt;/a&gt;。leetcode 题目难度不大，但是其中涉及到了很多基础知识，而且 leetcode 本身就是定位面试。还有就是题量比较少，就 151 题，赶紧刷完，以后终于也能说我也刷过一整套题库了 :)&lt;/p&gt;
+
+&lt;p&gt;我都是用 C++ 做的，现在已经完成了 87/151，代码放在 &lt;a href="https://github.com/adousj/leetcode"&gt;github@adousj/leetcode&lt;/a&gt; 上。&lt;/p&gt;
+
+&lt;p&gt;刚开始激情澎湃，事情也少，进度还算可以，这几天各种事儿又纷至沓来，就慢了下来，争取十一结束前能搞定吧。&lt;/p&gt;
+
+&lt;p&gt;C++ 编译器使用的 GCC 4.7.2，大部分 C++11 的功能是支持的，我想可以使用些 auto lambda 智能指针，来看看 C++11 到底是一门多新的语言。&lt;/p&gt;
+</description>
+      <guid>tag:adou.gitcafe.com,article.url</guid>
+      <pubDate>2014-09-22T08:37:00Z</pubDate>
+      <category>leetcode, C++, github</category>
+    </item>
     <item>
       <title>使用 Ruby 解 Code Jam</title>
       <link>http://adou.gitcafe.com/conquer-codejam-with-ruby</link>
@@ -104,14 +119,10 @@
 
 &lt;span class="n"&gt;class&lt;/span&gt; &lt;span class="n"&gt;MMath&lt;/span&gt;
   &lt;span class="err"&gt;@@&lt;/span&gt;&lt;span class="n"&gt;factorials&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt; &lt;span class="mi"&gt;0&lt;/span&gt; &lt;span class="o"&gt;=&amp;gt;&lt;/span&gt; &lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
-                 &lt;span class="mi"&gt;1&lt;/span&gt; &lt;span class="o"&gt;=&amp;gt;&lt;/span&gt; &lt;span class="mi"&gt;1&lt;/span&gt; &lt;span class="p"&gt;}&lt;/span&gt;
+                   &lt;span class="mi"&gt;1&lt;/span&gt; &lt;span class="o"&gt;=&amp;gt;&lt;/span&gt; &lt;span class="mi"&gt;1&lt;/span&gt; &lt;span class="p"&gt;}&lt;/span&gt;
 
   &lt;span class="n"&gt;def&lt;/span&gt; &lt;span class="n"&gt;self&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;factorial&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;n&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
-    &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="err"&gt;@@&lt;/span&gt;&lt;span class="n"&gt;factorials&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;n&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;
-      &lt;span class="err"&gt;@@&lt;/span&gt;&lt;span class="n"&gt;factorials&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;n&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;
-    &lt;span class="k"&gt;else&lt;/span&gt;
-      &lt;span class="err"&gt;@@&lt;/span&gt;&lt;span class="n"&gt;factorials&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;n&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;n&lt;/span&gt; &lt;span class="o"&gt;*&lt;/span&gt; &lt;span class="n"&gt;factorial&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;n&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
-    &lt;span class="n"&gt;end&lt;/span&gt;
+    &lt;span class="err"&gt;@@&lt;/span&gt;&lt;span class="n"&gt;factorials&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;n&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt; &lt;span class="o"&gt;||=&lt;/span&gt; &lt;span class="n"&gt;n&lt;/span&gt; &lt;span class="o"&gt;*&lt;/span&gt; &lt;span class="n"&gt;factorial&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;n&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
   &lt;span class="n"&gt;end&lt;/span&gt;
 &lt;span class="n"&gt;end&lt;/span&gt;
 
@@ -480,7 +491,7 @@ PostController.php 的 create 函数&lt;/p&gt;
 </description>
       <guid>tag:adou.gitcafe.com,article.url</guid>
       <pubDate>2014-08-07T08:03:00Z</pubDate>
-      <category>Laravel, Ubuntu, Php, Blog</category>
+      <category>Laravel, Ubuntu, Php, Blog, github</category>
     </item>
     <item>
       <title>搭建 Laravel 开发环境</title>

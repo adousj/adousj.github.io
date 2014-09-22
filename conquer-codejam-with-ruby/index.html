@@ -41,8 +41,8 @@
     <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
     <![endif]-->
 
-    <link href="/stylesheets/application.css?1411104270" media="screen" rel="stylesheet" type="text/css" />
-    <script src="/javascripts/application.js?1411104270" type="text/javascript"></script>
+    <link href="/stylesheets/application.css?1411382327" media="screen" rel="stylesheet" type="text/css" />
+    <script src="/javascripts/application.js?1411382327" type="text/javascript"></script>
 
   </head>
   <body class="conquer-codejam-with-ruby conquer-codejam-with-ruby_index">
@@ -188,14 +188,10 @@
 
 <span class="n">class</span> <span class="n">MMath</span>
   <span class="err">@@</span><span class="n">factorials</span> <span class="o">=</span> <span class="p">{</span> <span class="mi">0</span> <span class="o">=&gt;</span> <span class="mi">1</span><span class="p">,</span>
-                 <span class="mi">1</span> <span class="o">=&gt;</span> <span class="mi">1</span> <span class="p">}</span>
+                   <span class="mi">1</span> <span class="o">=&gt;</span> <span class="mi">1</span> <span class="p">}</span>
 
   <span class="n">def</span> <span class="n">self</span><span class="p">.</span><span class="n">factorial</span><span class="p">(</span><span class="n">n</span><span class="p">)</span>
-    <span class="k">if</span> <span class="err">@@</span><span class="n">factorials</span><span class="p">[</span><span class="n">n</span><span class="p">]</span>
-      <span class="err">@@</span><span class="n">factorials</span><span class="p">[</span><span class="n">n</span><span class="p">]</span>
-    <span class="k">else</span>
-      <span class="err">@@</span><span class="n">factorials</span><span class="p">[</span><span class="n">n</span><span class="p">]</span> <span class="o">=</span> <span class="n">n</span> <span class="o">*</span> <span class="n">factorial</span><span class="p">(</span><span class="n">n</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
-    <span class="n">end</span>
+    <span class="err">@@</span><span class="n">factorials</span><span class="p">[</span><span class="n">n</span><span class="p">]</span> <span class="o">||=</span> <span class="n">n</span> <span class="o">*</span> <span class="n">factorial</span><span class="p">(</span><span class="n">n</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
   <span class="n">end</span>
 <span class="n">end</span>
 
