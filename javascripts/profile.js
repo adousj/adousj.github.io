@@ -1,0 +1,1 @@
+(function(){$(function(){return $(".video-block").hover(function(){return $(this).find(".video-hide").show()})})}).call(this);
