@@ -43,8 +43,8 @@
 
     <link href="/stylesheets/bootstrap/css/bootstrap.min.css?1411386285" media="screen" rel="stylesheet" type="text/css" />
 <link href="/stylesheets/bootstrap/css/bootstrap-theme.min.css?1411386285" media="screen" rel="stylesheet" type="text/css" />
-    <link href="/stylesheets/application.css?1412873789" media="screen" rel="stylesheet" type="text/css" />
-    <script src="/javascripts/application.js?1412873789" type="text/javascript"></script>
+    <link href="/stylesheets/application.css?1412874180" media="screen" rel="stylesheet" type="text/css" />
+    <script src="/javascripts/application.js?1412874180" type="text/javascript"></script>
 
   </head>
   <body class="c-11-functional-style-programing c-11-functional-style-programing_index">
@@ -187,6 +187,8 @@
 <span class="n">accumulate</span>
 </pre></div>
 <h2>Map</h2>
+
+<p>将一组数据统一进行某一操作, 如下求平方</p>
 <div class="highlight"><pre><span class="nx">vector</span><span class="o">&lt;</span><span class="nx">int</span><span class="o">&gt;</span> <span class="n">nums</span> <span class="o">=</span> <span class="p">{</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="mi">10</span> <span class="p">};</span>
 
 <span class="nb">transform</span><span class="p">(</span><span class="nx">nums.begin</span><span class="p">(),</span> <span class="nx">nums.end</span><span class="p">(),</span> <span class="nx">nums.begin</span><span class="p">(),</span> <span class="err">[</span><span class="cp">]</span>(int n){
@@ -198,17 +200,17 @@ for (auto n : nums)
 </pre></div>
 <h2>Reduce</h2>
 
-<p>这个看着比较靠谱的就是 <code>accumulate</code>
-<code>
-auto sum = accumulate(students.begin(), students.end(), new Student(&quot;&quot;, 0), [](Student* s1, Student* s2){
-  s1-&gt;age += s2-&gt;age;
-  return s1;
-});
-</code></p>
-
+<p>迭加操作
+这个看着比较靠谱的就是 <code>accumulate</code></p>
+<div class="highlight"><pre><span class="k">auto</span> <span class="n">sum</span> <span class="o">=</span> <span class="n">accumulate</span><span class="p">(</span><span class="n">students</span><span class="p">.</span><span class="n">begin</span><span class="p">(),</span> <span class="n">students</span><span class="p">.</span><span class="n">end</span><span class="p">(),</span> <span class="n">new</span> <span class="n">Student</span><span class="p">(</span><span class="s">&quot;&quot;</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span> <span class="p">[](</span><span class="n">Student</span><span class="o">*</span> <span class="n">s1</span><span class="p">,</span> <span class="n">Student</span><span class="o">*</span> <span class="n">s2</span><span class="p">){</span>
+  <span class="n">s1</span><span class="o">-&gt;</span><span class="n">age</span> <span class="o">+=</span> <span class="n">s2</span><span class="o">-&gt;</span><span class="n">age</span><span class="p">;</span>
+  <span class="k">return</span> <span class="n">s1</span><span class="p">;</span>
+<span class="p">});</span>
+</pre></div>
 <h2>Filter</h2>
 
-<p>找了半天没有找到对应 filter 的，所幸有 <code>for_each</code> 可以自己写</p>
+<p>选择具有某一性质的元素
+找了半天没有找到对应 filter 的，所幸有 <code>for_each</code> 可以自己写</p>
 <div class="highlight"><pre><span class="nx">vector</span><span class="o">&lt;</span><span class="nx">int</span><span class="o">&gt;</span> <span class="nb">result</span><span class="p">;</span>
 <span class="nx">for_each</span><span class="p">(</span><span class="nx">nums.begin</span><span class="p">(),</span> <span class="nx">nums.end</span><span class="p">(),</span> <span class="err">[</span><span class="o">&amp;</span><span class="nb">result</span><span class="cp">]</span>(int n){
   if (n % 3 == 1)
