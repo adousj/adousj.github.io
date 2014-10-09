@@ -1,0 +1,279 @@
+
+
+
+<!DOCTYPE html>
+<!--[if lt IE 7]><html class="no-js lt-ie9 lt-ie8 lt-ie7" lang="en"><![endif]-->
+<!--[if IE 7]><html class="no-js lt-ie9 lt-ie8" lang="en"><![endif]-->
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en"><![endif]-->
+<!--[if gt IE 8]<!-->
+<html class="no-js" lang="en">
+  <!--<![endif]-->
+  <head>
+    <meta charset="UTF-8">
+
+    <title>
+        C++11 函数式编程
+ - Adou's Blog
+    </title>
+
+    <meta name="description" content="~Adou got his ideas out of head.">
+    <meta name="keywords" content="  ["C++11", "lambda", "auto"]
+">
+    <meta name="author" content="adou">
+
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta http-equiv="cleartype" content="on">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+
+    <link rel="apple-touch-icon-precomposed" type="image/png" sizes="57x57" href="/apple-touch-icon-57x57-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" type="image/png" sizes="72x72" href="/apple-touch-icon-72x72-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" type="image/png" sizes="114x114" href="/apple-touch-icon-114x114-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" type="image/png" sizes="144x144" href="/apple-touch-icon-144x144-precomposed.png" />
+    <link rel="apple-touch-icon-precomposed" type="image/png" href="/apple-touch-icon-precomposed.png">
+    <link rel="apple-touch-icon" type="image/png" href="/apple-touch-icon.png">
+
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon.png">
+    <link rel="shortcut icon" sizes="16x16" href="/favicon.ico">
+    <link rel="alternate" type="application/rss+xml" title="Ben He's Homepage" href="/feed.xml" />
+    <!--[if lt IE 9]>
+    <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+
+    <link href="/stylesheets/bootstrap/css/bootstrap.min.css?1411386285" media="screen" rel="stylesheet" type="text/css" />
+<link href="/stylesheets/bootstrap/css/bootstrap-theme.min.css?1411386285" media="screen" rel="stylesheet" type="text/css" />
+    <link href="/stylesheets/application.css?1412873789" media="screen" rel="stylesheet" type="text/css" />
+    <script src="/javascripts/application.js?1412873789" type="text/javascript"></script>
+
+  </head>
+  <body class="c-11-functional-style-programing c-11-functional-style-programing_index">
+    <aside class="sidebar">
+      <h1 class="site-name"><a href="/">Adou</a></h1>
+      <nav class="global-nav">
+        <ul>
+          <li><a href="/">博客</a></li>
+          <li><a href="/photo">Photos</a></li>
+          <li><a href="/profile">关于我</a></li>
+        </ul>        
+      </nav>
+
+      <nav class="social-connect">
+        <ul>
+          <li><a href="/rss.xml"><i class="icon-rss"></i></a></li>
+          <!-- <li><a href="//twitter.com/beenhero"><i class="icon-twitter"></i></a></li> -->
+          <!-- <li><a href="//facebook.com/beenhero"><i class="icon-facebook"></i></a></li> -->
+          <li><a href="//weibo.com/u/1715225261"><i class="icon-weibo"></i></a></li>
+          <li><a href="//renren.com/261753537"><i class="icon-renren"></i></a></li>
+        </ul>
+      </nav>
+      
+      <!-- Ad -->
+      <div class="block ad">
+        <h4 class="block-title"><a href="https://github.com/beenhero/beenhero.com">beenhero.com</a></h4>
+        <p class="block-cnt">谢谢~/Bin提供的模板</p>
+      </div>
+
+    </aside>
+
+    <section class="main">
+      <div class="container">
+          
+
+  <article class="post single">
+
+    <header>
+  <h2 class="title">
+    <a href="/c-11-functional-style-programing">C++11 函数式编程</a>
+  </h2>
+</header>
+
+<aside class="aside-block">
+  <ul class="meta">
+    <li class="date">
+      2014-10-09
+    </li>
+    <li class="tags">
+      
+        <a href="/tags/c-11">C++11</a>
+      
+        <a href="/tags/lambda">lambda</a>
+      
+        <a href="/tags/auto">auto</a>
+      
+    </li>
+  </ul>
+</aside>
+
+<div class="content">
+  <p>C++11 支持了 lambda 表达式，lambda 的表达力增强了许多，特别是小小函数就轻松多了。而且主要是人家别的语言都支持了，再不支持就太不好意思了，再加上最近 Java 更新速度都快赶上 Chrome 了，7、8、9接踵而至。幸好 C++ 是以年份编号，03 之后就是 11 了 :)</p>
+
+<p>对于 lamdba 表达式, 还是从 《黑客与画家》 上盗个题目吧。</p>
+
+<blockquote>
+<p>add(a)(b)</p>
+</blockquote>
+<div class="highlight"><pre><span class="kd">function</span><span class="o">&lt;</span><span class="kr">int</span><span class="p">(</span><span class="kr">int</span><span class="p">)</span><span class="o">&gt;</span> <span class="nx">add</span><span class="p">(</span><span class="kr">int</span> <span class="nx">a</span><span class="p">)</span>
+<span class="p">{</span>
+  <span class="k">return</span> <span class="cp">[</span><span class="nx">a</span><span class="cp">]</span><span class="p">(</span><span class="kr">int</span> <span class="nx">b</span><span class="p">){</span> <span class="k">return</span> <span class="nx">a</span> <span class="o">+</span> <span class="nx">b</span><span class="p">;</span> <span class="p">};</span>
+<span class="p">}</span>
+
+<span class="kr">int</span> <span class="nx">main</span><span class="p">()</span>
+<span class="p">{</span>
+  <span class="nx">cout</span> <span class="o">&lt;&lt;</span> <span class="nx">add</span><span class="p">(</span><span class="mi">3</span><span class="p">)(</span><span class="mi">4</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="nx">endl</span><span class="p">;</span>
+
+  <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+<p>这代码好像比其他语言的要长点~，索性改成纯 lambda 的</p>
+<div class="highlight"><pre><span class="nx">auto</span> <span class="nx">add</span> <span class="o">=</span> <span class="cp">[]</span><span class="p">(</span><span class="kr">int</span> <span class="nx">a</span><span class="p">)</span><span class="o">-&gt;</span><span class="kd">function</span><span class="o">&lt;</span><span class="kr">int</span><span class="p">(</span><span class="kr">int</span><span class="p">)</span><span class="o">&gt;</span> <span class="p">{</span>
+  <span class="k">return</span> <span class="cp">[</span><span class="nx">a</span><span class="cp">]</span><span class="p">(</span><span class="kr">int</span> <span class="nx">b</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="nx">a</span> <span class="o">+</span> <span class="nx">b</span><span class="p">;</span>
+  <span class="p">};</span>
+<span class="p">};</span>
+
+<span class="nx">cout</span> <span class="o">&lt;&lt;</span> <span class="nx">add</span><span class="p">(</span><span class="mi">3</span><span class="p">)(</span><span class="mi">4</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="nx">endl</span><span class="p">;</span>
+</pre></div>
+<p>这里 <code>-&gt;function&lt;int(int)&gt;</code> 的返回值不能省略，至少在 Visual Studio 2013 上，编译器表示不能自动推导返回值类型。
+这里我们也看到了 auto 的好处，再也不用写乱七八糟好长好恶心的声明，一个 auto 了事，多方便，比如这里：</p>
+<div class="highlight"><pre><span class="nx">auto</span> <span class="nx">add</span> <span class="o">=</span> <span class="cp">[]</span><span class="p">(</span><span class="kr">int</span> <span class="nx">a</span><span class="p">)</span><span class="o">-&gt;</span><span class="kd">function</span><span class="o">&lt;</span><span class="kr">int</span><span class="p">(</span><span class="kr">int</span><span class="p">)</span><span class="o">&gt;</span><span class="p">{</span>
+  <span class="k">return</span> <span class="cp">[</span><span class="nx">a</span><span class="cp">]</span><span class="p">(</span><span class="kr">int</span> <span class="nx">b</span><span class="p">){</span>
+    <span class="k">return</span> <span class="nx">a</span> <span class="o">+</span> <span class="nx">b</span><span class="p">;</span>
+  <span class="p">};</span>
+<span class="p">};</span>
+
+<span class="nx">vector</span><span class="o">&lt;</span><span class="kd">function</span><span class="o">&lt;</span><span class="kr">int</span><span class="p">(</span><span class="kr">int</span><span class="p">)</span><span class="o">&gt;&gt;</span> <span class="nx">adds</span><span class="p">(</span><span class="mi">10</span><span class="p">);</span>
+
+<span class="k">for</span> <span class="p">(</span><span class="kr">int</span> <span class="nx">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">i</span> <span class="o">&lt;</span> <span class="nx">adds</span><span class="p">.</span><span class="nx">size</span><span class="p">();</span> <span class="o">++</span><span class="nx">i</span><span class="p">)</span>
+  <span class="nx">adds</span><span class="cp">[</span><span class="nx">i</span><span class="cp">]</span> <span class="o">=</span> <span class="nx">add</span><span class="p">(</span><span class="nx">i</span><span class="p">);</span>
+
+<span class="k">for</span> <span class="p">(</span><span class="nx">auto</span> <span class="nx">_add</span> <span class="o">:</span> <span class="nx">adds</span><span class="p">)</span>
+  <span class="nx">cout</span> <span class="o">&lt;&lt;</span> <span class="nx">_add</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="nx">endl</span><span class="p">;</span>
+</pre></div>
+<p>上面几个例子太像奇技淫巧，实际中用处不大。还是来个实际的，大家都有可能遇到的：排序。</p>
+<div class="highlight"><pre><span class="k">struct</span> <span class="n">Student</span>
+<span class="p">{</span>
+  <span class="n">string</span> <span class="n">name</span><span class="p">;</span>
+  <span class="kt">int</span> <span class="n">age</span><span class="p">;</span>
+  <span class="n">Student</span><span class="p">(</span><span class="n">string</span> <span class="n">name</span><span class="p">,</span> <span class="kt">int</span> <span class="n">age</span><span class="p">)</span> <span class="o">:</span> <span class="n">name</span><span class="p">(</span><span class="n">name</span><span class="p">),</span> <span class="n">age</span><span class="p">(</span><span class="n">age</span><span class="p">){}</span>
+<span class="p">};</span>
+
+<span class="kt">int</span> <span class="nf">main</span><span class="p">()</span>
+<span class="p">{</span>
+  <span class="n">vector</span><span class="o">&lt;</span><span class="n">Student</span><span class="o">*&gt;</span> <span class="n">students</span><span class="p">;</span>
+
+  <span class="n">students</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="n">new</span> <span class="n">Student</span><span class="p">(</span><span class="s">&quot;aaa&quot;</span><span class="p">,</span> <span class="mi">12</span><span class="p">));</span>
+  <span class="n">students</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="n">new</span> <span class="n">Student</span><span class="p">(</span><span class="s">&quot;bbb&quot;</span><span class="p">,</span> <span class="mi">10</span><span class="p">));</span>
+
+  <span class="n">sort</span><span class="p">(</span><span class="n">students</span><span class="p">.</span><span class="n">begin</span><span class="p">(),</span> <span class="n">students</span><span class="p">.</span><span class="n">end</span><span class="p">(),</span> <span class="p">[](</span><span class="n">Student</span> <span class="o">*</span><span class="n">s1</span><span class="p">,</span> <span class="n">Student</span> <span class="o">*</span><span class="n">s2</span><span class="p">){</span>
+    <span class="k">return</span> <span class="n">s1</span><span class="o">-&gt;</span><span class="n">age</span> <span class="o">&lt;</span> <span class="n">s2</span><span class="o">-&gt;</span><span class="n">age</span><span class="p">;</span>
+  <span class="p">});</span>
+
+  <span class="k">for</span> <span class="p">(</span><span class="k">auto</span> <span class="n">s</span> <span class="o">:</span> <span class="n">students</span><span class="p">)</span>
+    <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">s</span><span class="o">-&gt;</span><span class="n">name</span> <span class="o">&lt;&lt;</span> <span class="s">&quot; &quot;</span> <span class="o">&lt;&lt;</span> <span class="n">s</span><span class="o">-&gt;</span><span class="n">age</span> <span class="o">&lt;&lt;</span> <span class="n">endl</span><span class="p">;</span>
+
+  <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+<p>这么小的函数，单独再写一个实在麻烦，lambda 函数就小的刚刚好，如果输入也能自动推断就更好了,直接就写 <code>[](auto s1, auto s2)</code></p>
+
+<h2>数组操作</h2>
+
+<p>用脚本语言 Python、Ruby 最大的感受就是数组操作非常方便。</p>
+
+<p>C++ 中我找到了几个类似函数，结合上 lambda 写起来杠杠的~</p>
+<div class="highlight"><pre><span class="n">transform</span>
+<span class="n">for_each</span>
+<span class="n">accumulate</span>
+</pre></div>
+<h2>Map</h2>
+<div class="highlight"><pre><span class="nx">vector</span><span class="o">&lt;</span><span class="nx">int</span><span class="o">&gt;</span> <span class="n">nums</span> <span class="o">=</span> <span class="p">{</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="mi">10</span> <span class="p">};</span>
+
+<span class="nb">transform</span><span class="p">(</span><span class="nx">nums.begin</span><span class="p">(),</span> <span class="nx">nums.end</span><span class="p">(),</span> <span class="nx">nums.begin</span><span class="p">(),</span> <span class="err">[</span><span class="cp">]</span>(int n){
+  return n*n;
+});
+
+for (auto n : nums)
+  cout <span class="err">&lt;</span><span class="nt">&lt; n</span> <span class="err">&lt;&lt;</span> <span class="err">&quot;</span> <span class="err">&quot;;</span>
+</pre></div>
+<h2>Reduce</h2>
+
+<p>这个看着比较靠谱的就是 <code>accumulate</code>
+<code>
+auto sum = accumulate(students.begin(), students.end(), new Student(&quot;&quot;, 0), [](Student* s1, Student* s2){
+  s1-&gt;age += s2-&gt;age;
+  return s1;
+});
+</code></p>
+
+<h2>Filter</h2>
+
+<p>找了半天没有找到对应 filter 的，所幸有 <code>for_each</code> 可以自己写</p>
+<div class="highlight"><pre><span class="nx">vector</span><span class="o">&lt;</span><span class="nx">int</span><span class="o">&gt;</span> <span class="nb">result</span><span class="p">;</span>
+<span class="nx">for_each</span><span class="p">(</span><span class="nx">nums.begin</span><span class="p">(),</span> <span class="nx">nums.end</span><span class="p">(),</span> <span class="err">[</span><span class="o">&amp;</span><span class="nb">result</span><span class="cp">]</span>(int n){
+  if (n % 3 == 1)
+    result.push_back(n);
+});
+
+for (auto n : result)
+  cout <span class="err">&lt;</span><span class="nt">&lt; n</span> <span class="err">&lt;&lt;</span> <span class="err">&quot;</span> <span class="err">&quot;;</span>
+</pre></div>
+<p>其实吧这些都是可以用 <code>for_each</code> 或者 <code>for(auto s : students)</code> 改写的。而且看着也都并不麻烦。
+不过要吐槽的一点就是写着越来越像 js 了。</p>
+
+<h2>One More Thing</h2>
+
+<p>还有一些函数也是经常配合使用的。</p>
+<div class="highlight"><pre><span class="n">iota</span>
+<span class="n">all_of</span>
+<span class="n">any_of</span>
+<span class="n">copy_if</span>
+<span class="n">count_if</span>
+<span class="n">remove_if</span>
+<span class="p">...</span>
+</pre></div>
+</div>
+
+  </article>
+
+  <div class="comments">
+    <!-- Duoshuo Comment BEGIN -->
+    <div class="ds-thread"></div>
+    <script type="text/javascript">
+    var duoshuoQuery = {short_name:"adousj"};
+      (function() {
+        var ds = document.createElement('script');
+        ds.type = 'text/javascript';ds.async = true;
+        ds.src = 'http://static.duoshuo.com/embed.js';
+        ds.charset = 'UTF-8';
+        (document.getElementsByTagName('head')[0] 
+        || document.getElementsByTagName('body')[0]).appendChild(ds);
+      })();
+      </script>
+    <!-- Duoshuo Comment END -->
+  </div>
+
+      </div>
+    </section>
+    
+    <footer>
+      <div class="copyright">
+        <p>2014&copy;Adou</p>
+      </div>
+    </footer>
+
+    <script type="text/javascript">
+
+      var _gaq = _gaq || [];
+      _gaq.push(['_setAccount', '']);
+      _gaq.push(['_trackPageview']);
+
+      (function() {
+        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+      })();
+
+    </script>
+  </body>
+</html>
