@@ -18,9 +18,11 @@
     <item>
       <title>C++11 函数式编程</title>
       <link>http://adou.gitcafe.com/c-11-functional-style-programing</link>
-      <description type="html">&lt;p&gt;C++11 支持了 lambda 表达式，lambda 的表达力增强了许多，特别是小小函数就轻松多了。而且主要是人家别的语言都支持了，再不支持就太不好意思了，再加上最近 Java 更新速度都快赶上 Chrome 了，7、8、9接踵而至。幸好 C++ 是以年份编号，03 之后就是 11 了 :)&lt;/p&gt;
+      <description type="html">&lt;p&gt;C++11 也支持了好多新特性，表达力增强了许多。其实我看主要是人家别的语言都原生或更新支持了，再不支持就太不好意思了，再加上最近 Java 更新速度都快赶上 Chrome 了，7、8、9接踵而至。相较好像 C++ 委员会好像天天无所事事似的，幸好 C++ 是以年份编号，03 之后就是 11 了 :)&lt;/p&gt;
 
-&lt;p&gt;对于 lamdba 表达式, 还是从 《黑客与画家》 上盗个题目吧。&lt;/p&gt;
+&lt;h2&gt;lambda&lt;/h2&gt;
+
+&lt;p&gt;不得不说 lamdba 实在是把利器, 从 《黑客与画家》 上盗个题目，高阶函数加法：&lt;/p&gt;
 
 &lt;blockquote&gt;
 &lt;p&gt;add(a)(b)&lt;/p&gt;
@@ -46,8 +48,10 @@
 
 &lt;span class="nx"&gt;cout&lt;/span&gt; &lt;span class="o"&gt;&amp;lt;&amp;lt;&lt;/span&gt; &lt;span class="nx"&gt;add&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;3&lt;/span&gt;&lt;span class="p"&gt;)(&lt;/span&gt;&lt;span class="mi"&gt;4&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="o"&gt;&amp;lt;&amp;lt;&lt;/span&gt; &lt;span class="nx"&gt;endl&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;这里 &lt;code&gt;-&amp;gt;function&amp;lt;int(int)&amp;gt;&lt;/code&gt; 的返回值不能省略，至少在 Visual Studio 2013 上，编译器表示不能自动推导返回值类型。
-这里我们也看到了 auto 的好处，再也不用写乱七八糟好长好恶心的声明，一个 auto 了事，多方便，比如这里：&lt;/p&gt;
+&lt;p&gt;在 Visual Studio 2013 里返回值声明 &lt;code&gt;-&amp;gt;function&amp;lt;int(int)&amp;gt;&lt;/code&gt; 不能省略，傻傻的 VS 编译器表示不能自动推导返回值类型。
+而试了 g++ 4.82 就不用写明这个返回类型。&lt;/p&gt;
+
+&lt;p&gt;这里我们也看到了 auto 的好处，再也不用写乱七八糟好长好恶心的声明，直接 auto 了事，比如这里：&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nx"&gt;auto&lt;/span&gt; &lt;span class="nx"&gt;add&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="cp"&gt;[]&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="kr"&gt;int&lt;/span&gt; &lt;span class="nx"&gt;a&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="o"&gt;-&amp;gt;&lt;/span&gt;&lt;span class="kd"&gt;function&lt;/span&gt;&lt;span class="o"&gt;&amp;lt;&lt;/span&gt;&lt;span class="kr"&gt;int&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="kr"&gt;int&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;
   &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="cp"&gt;[&lt;/span&gt;&lt;span class="nx"&gt;a&lt;/span&gt;&lt;span class="cp"&gt;]&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="kr"&gt;int&lt;/span&gt; &lt;span class="nx"&gt;b&lt;/span&gt;&lt;span class="p"&gt;){&lt;/span&gt;
     &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="nx"&gt;a&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt; &lt;span class="nx"&gt;b&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
@@ -62,7 +66,7 @@
 &lt;span class="k"&gt;for&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;auto&lt;/span&gt; &lt;span class="nx"&gt;_add&lt;/span&gt; &lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="nx"&gt;adds&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
   &lt;span class="nx"&gt;cout&lt;/span&gt; &lt;span class="o"&gt;&amp;lt;&amp;lt;&lt;/span&gt; &lt;span class="nx"&gt;_add&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="o"&gt;&amp;lt;&amp;lt;&lt;/span&gt; &lt;span class="nx"&gt;endl&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;上面几个例子太像奇技淫巧，实际中用处不大。还是来个实际的，大家都有可能遇到的：排序。&lt;/p&gt;
+&lt;p&gt;上面几个例子有点像是奇技淫巧，感觉实际中用处不大的样子。还是来个实际的，大家会遇到的：排序。&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="k"&gt;struct&lt;/span&gt; &lt;span class="n"&gt;Student&lt;/span&gt;
 &lt;span class="p"&gt;{&lt;/span&gt;
   &lt;span class="n"&gt;string&lt;/span&gt; &lt;span class="n"&gt;name&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
@@ -87,16 +91,15 @@
   &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
 &lt;span class="p"&gt;}&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;这么小的函数，单独再写一个实在麻烦，lambda 函数就小的刚刚好，如果输入也能自动推断就更好了,直接就写 &lt;code&gt;[](auto s1, auto s2)&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;这么小的函数，单独再写一个实在麻烦，而 lambda 函数就小的刚刚好，如果输入也能自动推断就更好了,直接就写 &lt;code&gt;[](auto s1, auto s2)&lt;/code&gt;&lt;/p&gt;
 
-&lt;h2&gt;数组操作&lt;/h2&gt;
+&lt;h2&gt;函数式编程&lt;/h2&gt;
 
-&lt;p&gt;用脚本语言 Python、Ruby 最大的感受就是数组操作非常方便。&lt;/p&gt;
-
-&lt;p&gt;C++ 中我找到了几个类似函数，结合上 lambda 写起来杠杠的~&lt;/p&gt;
+&lt;p&gt;Python 中函数式编程核心的三个方法是 map reduce filter，而 Ruby 中是 map inject select。大概的表达的意思都是映射、规约和筛选。
+在 C++ 中，我找到了几个类似函数，结合 lambda 写起来杠杠的~&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="n"&gt;transform&lt;/span&gt;
-&lt;span class="n"&gt;for_each&lt;/span&gt;
 &lt;span class="n"&gt;accumulate&lt;/span&gt;
+&lt;span class="n"&gt;for_each&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 &lt;h2&gt;Map&lt;/h2&gt;
 
@@ -112,16 +115,22 @@ for (auto n : nums)
 &lt;/pre&gt;&lt;/div&gt;
 &lt;h2&gt;Reduce&lt;/h2&gt;
 
-&lt;p&gt;迭加操作
-这个看着比较靠谱的就是 &lt;code&gt;accumulate&lt;/code&gt;&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="k"&gt;auto&lt;/span&gt; &lt;span class="n"&gt;sum&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;accumulate&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;students&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;begin&lt;/span&gt;&lt;span class="p"&gt;(),&lt;/span&gt; &lt;span class="n"&gt;students&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;end&lt;/span&gt;&lt;span class="p"&gt;(),&lt;/span&gt; &lt;span class="n"&gt;new&lt;/span&gt; &lt;span class="n"&gt;Student&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;),&lt;/span&gt; &lt;span class="p"&gt;[](&lt;/span&gt;&lt;span class="n"&gt;Student&lt;/span&gt;&lt;span class="o"&gt;*&lt;/span&gt; &lt;span class="n"&gt;s1&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;Student&lt;/span&gt;&lt;span class="o"&gt;*&lt;/span&gt; &lt;span class="n"&gt;s2&lt;/span&gt;&lt;span class="p"&gt;){&lt;/span&gt;
-  &lt;span class="n"&gt;s1&lt;/span&gt;&lt;span class="o"&gt;-&amp;gt;&lt;/span&gt;&lt;span class="n"&gt;age&lt;/span&gt; &lt;span class="o"&gt;+=&lt;/span&gt; &lt;span class="n"&gt;s2&lt;/span&gt;&lt;span class="o"&gt;-&amp;gt;&lt;/span&gt;&lt;span class="n"&gt;age&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
-  &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="n"&gt;s1&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
-&lt;span class="p"&gt;});&lt;/span&gt;
+&lt;p&gt;这个看着比较靠谱的就是 &lt;code&gt;accumulate&lt;/code&gt;&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;  &lt;span class="nx"&gt;auto&lt;/span&gt; &lt;span class="k"&gt;sum&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nx"&gt;accumulate&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;students.begin&lt;/span&gt;&lt;span class="p"&gt;(),&lt;/span&gt; &lt;span class="nx"&gt;students.end&lt;/span&gt;&lt;span class="p"&gt;(),&lt;/span&gt; &lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="err"&gt;[&lt;/span&gt;&lt;span class="cp"&gt;]&lt;/span&gt;(int acc, Student* s){
+    return acc + s-&amp;gt;age;
+  });
+
+  // 别被名字骗啦，不止是累加～
+  // 据说这种 begin / end 的写法是新推荐的，统一数组和 vector
+  // vector&lt;span class="nt"&gt;&amp;lt;int&amp;gt;&lt;/span&gt; nums = { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 };
+  int nums&lt;span class="cp"&gt;[]&lt;/span&gt; = { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 };
+  auto muti = accumulate(begin(nums), end(nums), 1, &lt;span class="cp"&gt;[]&lt;/span&gt;(int i, int j){
+    return i * j;
+  });
 &lt;/pre&gt;&lt;/div&gt;
 &lt;h2&gt;Filter&lt;/h2&gt;
 
-&lt;p&gt;选择具有某一性质的元素
+&lt;p&gt;选择元素
 找了半天没有找到对应 filter 的，所幸有 &lt;code&gt;for_each&lt;/code&gt; 可以自己写&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nx"&gt;vector&lt;/span&gt;&lt;span class="o"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nx"&gt;int&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt; &lt;span class="nb"&gt;result&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
 &lt;span class="nx"&gt;for_each&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;nums.begin&lt;/span&gt;&lt;span class="p"&gt;(),&lt;/span&gt; &lt;span class="nx"&gt;nums.end&lt;/span&gt;&lt;span class="p"&gt;(),&lt;/span&gt; &lt;span class="err"&gt;[&lt;/span&gt;&lt;span class="o"&gt;&amp;amp;&lt;/span&gt;&lt;span class="nb"&gt;result&lt;/span&gt;&lt;span class="cp"&gt;]&lt;/span&gt;(int n){
@@ -145,7 +154,39 @@ for (auto n : result)
 &lt;span class="n"&gt;count_if&lt;/span&gt;
 &lt;span class="n"&gt;remove_if&lt;/span&gt;
 &lt;span class="p"&gt;...&lt;/span&gt;
-&lt;/pre&gt;&lt;/div&gt;</description>
+&lt;/pre&gt;&lt;/div&gt;
+&lt;h2&gt;PS&lt;/h2&gt;
+
+&lt;p&gt;还有个不错的东东也挺不错的，元组 tuple。
+看到元组的时候，首先想到的应用是函数返回多个值。
+比如返回最大值及坐标，还能通过 &lt;code&gt;idx == -1&lt;/code&gt; 判断是否是有效值。&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nx"&gt;tuple&lt;/span&gt;&lt;span class="o"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nx"&gt;int&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="nx"&gt;int&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt; &lt;span class="k"&gt;max&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;vector&lt;/span&gt;&lt;span class="o"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nx"&gt;int&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt; &lt;span class="o"&gt;&amp;amp;&lt;/span&gt;&lt;span class="nx"&gt;vec&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="p"&gt;{&lt;/span&gt;
+  &lt;span class="nx"&gt;int&lt;/span&gt; &lt;span class="n"&gt;value&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;idx&lt;/span&gt;&lt;span class="o"&gt;=-&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+  &lt;span class="nb"&gt;for&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt; &lt;span class="nx"&gt;auto&lt;/span&gt; &lt;span class="n"&gt;it&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="nx"&gt;begin&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;vec&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt; &lt;span class="nx"&gt;it&lt;/span&gt;&lt;span class="o"&gt;!=&lt;/span&gt;&lt;span class="nb"&gt;end&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;vec&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt; &lt;span class="o"&gt;++&lt;/span&gt;&lt;span class="nx"&gt;it&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+  &lt;span class="p"&gt;{&lt;/span&gt;
+    &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt; &lt;span class="n"&gt;idx&lt;/span&gt;&lt;span class="o"&gt;=-&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt; &lt;span class="o"&gt;||&lt;/span&gt; &lt;span class="o"&gt;*&lt;/span&gt;&lt;span class="nx"&gt;it&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt;&lt;span class="nb"&gt;value&lt;/span&gt; &lt;span class="p"&gt;)&lt;/span&gt;
+      &lt;span class="nb"&gt;tie&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nb"&gt;value&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="nx"&gt;idx&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nx"&gt;make_tuple&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="o"&gt;*&lt;/span&gt;&lt;span class="nx"&gt;it&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="nx"&gt;it&lt;/span&gt;&lt;span class="na"&gt;-begin&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;vec&lt;/span&gt;&lt;span class="p"&gt;));&lt;/span&gt;
+  &lt;span class="p"&gt;}&lt;/span&gt;
+  &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="nx"&gt;make_tuple&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nb"&gt;value&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="nx"&gt;idx&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+&lt;span class="p"&gt;}&lt;/span&gt;
+
+&lt;span class="c1"&gt;// main()&lt;/span&gt;
+&lt;span class="nx"&gt;int&lt;/span&gt; &lt;span class="nb"&gt;value&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="nx"&gt;idx&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;span class="c1"&gt;// tie(value, idx) = max(nums);&lt;/span&gt;
+&lt;span class="nb"&gt;tie&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nb"&gt;value&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="nx"&gt;ignore&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="k"&gt;max&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;nums&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+
+&lt;span class="nx"&gt;auto&lt;/span&gt; &lt;span class="n"&gt;max_idx&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="k"&gt;max&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;nums&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+&lt;span class="nb"&gt;get&lt;/span&gt;&lt;span class="o"&gt;&amp;lt;&lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;max_idx&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;  &lt;span class="c1"&gt;// value&lt;/span&gt;
+&lt;span class="nb"&gt;get&lt;/span&gt;&lt;span class="o"&gt;&amp;lt;&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;max_idx&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;  &lt;span class="c1"&gt;// idx&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;然后想到的就是&lt;code&gt;鸭子类型&lt;/code&gt;，tuple 作为能容纳不同类型的容器，如果加上容器遍历，这样就能调用具有相同方法的对象。&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="err"&gt;当看到一只鸟走起来像鸭子、游泳起来像鸭子、叫起来也像鸭子，那么这只鸟就可以被称为鸭子。&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;很可惜，我没有找到这样的遍历方法，有用函数模板写的遍历方式，不够通用普遍。在想想要实现这个，貌似还需要动态类型和反射，估计很难办到～&lt;/p&gt;
+
+&lt;p&gt;不过总体来说 tuple 还是很有意思的～&lt;/p&gt;
+</description>
       <guid>tag:adou.gitcafe.com,article.url</guid>
       <pubDate>2014-10-09T15:15:00Z</pubDate>
       <category>C++11, lambda, auto</category>
@@ -153,9 +194,11 @@ for (auto n : result)
     <item>
       <title>解题 leetcode</title>
       <link>http://adou.gitcafe.com/ac-leetcode</link>
-      <description type="html">&lt;p&gt;眼见进入九月份，就要开始找工作了，赶紧开始复习 C++，顺便也要找题目练习，于是找到了 &lt;a href="https://oj.leetcode.com/problems/"&gt;leetcode&lt;/a&gt;。leetcode 题目难度不大，但是其中涉及到了很多基础知识，而且 leetcode 本身就是定位面试。还有就是题量比较少，就 151 题，赶紧刷完，以后终于也能说我也刷过一整套题库了 :)&lt;/p&gt;
+      <description type="html">&lt;p&gt;眼见进入九月份，就要开始找工作了，赶紧开始复习 C++，顺便也要找题目练习，于是找到了 &lt;a href="https://oj.leetcode.com/problems/"&gt;leetcode&lt;/a&gt;。
+leetcode 题目难度不大，但是其中涉及到了很多基础知识，而且 leetcode 本身就是定位面试。
+还有最重要的一点，就是题量少，只有 151 题，赶紧刷完，以后终于也能说我也刷过一整套题库了 :)&lt;/p&gt;
 
-&lt;p&gt;我都是用 C++ 做的，现在已经完成了 87/151，代码放在 &lt;a href="https://github.com/adousj/leetcode"&gt;github@adousj/leetcode&lt;/a&gt; 上。&lt;/p&gt;
+&lt;p&gt;我都是用 C++ 写的，现在已经完成了 115/151，代码放在 &lt;a href="https://github.com/adousj/leetcode"&gt;github@adousj/leetcode&lt;/a&gt; 上。&lt;/p&gt;
 
 &lt;p&gt;刚开始激情澎湃，事情也少，进度还算可以，这几天各种事儿又纷至沓来，就慢了下来，争取十一结束前能搞定吧。&lt;/p&gt;
 
@@ -170,7 +213,7 @@ for (auto n : result)
       <link>http://adou.gitcafe.com/conquer-codejam-with-ruby</link>
       <description type="html">&lt;p&gt;这几天开始注意到 Code Jam，规则还不是很熟悉，做了两个题目练习一下。貌似只用提交答案，所以语言并没有限制。我就用 Ruby 试着解了个题目。&lt;/p&gt;
 
-&lt;p&gt;虽然之前用过 Ruby 做过计算，对 Ruby 的计算能力表示堪忧，但是语法的表现力还是很令人满意的，简言之就是：写起来很爽，跑起来很慢，很慢。使用 JRuby 可以快点，但仅仅是快一点 :(&lt;/p&gt;
+&lt;p&gt;之前用过 Ruby 做过计算，Ruby 的计算能力实在堪忧，但是语法的表现力还是很令人满意的，简言之就是：写起来很爽，跑起来很慢，很慢。使用 JRuby 倒是可以快点，但仅仅是快一点点 :(&lt;/p&gt;
 
 &lt;h2&gt;题目&lt;/h2&gt;
 
@@ -281,7 +324,7 @@ for (auto n : result)
     <item>
       <title>Laravel 十分钟 Blog 教程</title>
       <link>http://adou.gitcafe.com/10-minutes-tutorial-for-laravel</link>
-      <description type="html">&lt;p&gt;像 Django Rails 大家都有个 《10分钟Blog教程》，我貌似没看到 php 有这种让初学者顿时肾上腺素激增立马跟打了鸡血似的的教程。难道学 php 的童鞋尽皆具有沉着冷静的高贵气质，不屑于做这种图样图森的事儿？&lt;/p&gt;
+      <description type="html">&lt;p&gt;像 Django、Rails 都有个 《** 10分钟Blog教程》，还没看到 php 的这种让初学者顿时肾上腺素激增立马跟打了鸡血似的的教程。难道学 php 的童鞋尽皆高贵沉着冷静，不屑做这种图样图森的事儿？&lt;/p&gt;
 
 &lt;p&gt;罢了罢了，这些降低逼格的事儿就由我来做吧，所幸我只是个初学者，也不怕被人骂菜鸟。&lt;/p&gt;
 
@@ -291,7 +334,7 @@ for (auto n : result)
 
 &lt;p&gt;其实也没有什么设计，就是一个最最简单的博客，可以增删改查文章（Post）&lt;/p&gt;
 
-&lt;p&gt;数据库为了简单，就用 sqlite，反正 Laravel 更换数据库方便，如果不爽可以自行更改过来。&lt;/p&gt;
+&lt;p&gt;为图方便，数据库就用 sqlite，反正 Laravel 更换数据库方便，如果不爽可以自行更改成其他数据库。&lt;/p&gt;
 
 &lt;h3&gt;环境安装&lt;/h3&gt;
 
@@ -316,11 +359,11 @@ for (auto n : result)
 &lt;p&gt;启动服务器吧 （有 php 内置服务器就是好）&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="n"&gt;php&lt;/span&gt; &lt;span class="n"&gt;artisan&lt;/span&gt; &lt;span class="n"&gt;serve&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;注意：当觉得有bug不能排除时，可以重启服务器试试。&lt;/p&gt;
+&lt;p&gt;注意：有莫名其妙的 bug 时，不妨重启服务器试试。&lt;/p&gt;
 
 &lt;h2&gt;2. 创建 posts 表&lt;/h2&gt;
 
-&lt;p&gt;这个时候就开始体现 Laravel 的方便之处了：能通过命令行生成你 migration 文件，而且是使用 php 编写，一种语言就解决所有。&lt;/p&gt;
+&lt;p&gt;这个时候就开始体现 Laravel 的方便之处了：通过命令行生成 migration 文件，而且是使用 php 编写，一站式解决方案。&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="n"&gt;php&lt;/span&gt; &lt;span class="n"&gt;artisan&lt;/span&gt; &lt;span class="n"&gt;migrate&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="n"&gt;make&lt;/span&gt; &lt;span class="n"&gt;create_posts_table&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 &lt;p&gt;这时就会在 app/database/migrations/ 目录下生成类似文件：&lt;/p&gt;
@@ -331,7 +374,7 @@ for (auto n : result)
 
 &lt;p&gt;前面编号就是创建时的时间。&lt;/p&gt;
 
-&lt;p&gt;里面就两个函数，up 用于更新数据库，down 用来回滚。&lt;/p&gt;
+&lt;p&gt;里面就两个函数，up 用于更改数据库，down 用来回滚数据库。&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;  &lt;span class="kr"&gt;public&lt;/span&gt; &lt;span class="kd"&gt;function&lt;/span&gt; &lt;span class="nx"&gt;up&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
   &lt;span class="p"&gt;{&lt;/span&gt;
       &lt;span class="nx"&gt;Schema&lt;/span&gt;&lt;span class="o"&gt;::&lt;/span&gt;&lt;span class="nx"&gt;create&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;posts&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="kd"&gt;function&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;$table&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
@@ -348,10 +391,10 @@ for (auto n : result)
       &lt;span class="nx"&gt;Schema&lt;/span&gt;&lt;span class="o"&gt;::&lt;/span&gt;&lt;span class="nx"&gt;drop&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;posts&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
   &lt;span class="p"&gt;}&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;写好了 migration 文件就能在数据库新建 posts 表了，说的高大上，其实就是一个命令:&lt;/p&gt;
+&lt;p&gt;写好了 migration 文件就能在数据库新建 posts 表了，也是使用命令行:&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="n"&gt;php&lt;/span&gt; &lt;span class="n"&gt;artisan&lt;/span&gt; &lt;span class="n"&gt;migrate&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;如果以后需要会滚的话，就是&lt;/p&gt;
+&lt;p&gt;如果以后需要回滚的话，可以这样&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="n"&gt;php&lt;/span&gt; &lt;span class="n"&gt;artisan&lt;/span&gt; &lt;span class="n"&gt;migrate&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="n"&gt;rollback&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 &lt;h2&gt;3. Post Model&lt;/h2&gt;
@@ -392,7 +435,7 @@ for (auto n : result)
 &lt;/pre&gt;&lt;/div&gt;
 &lt;h2&gt;4. Post Controller&lt;/h2&gt;
 
-&lt;p&gt;还是方便的命令行&lt;/p&gt;
+&lt;p&gt;依旧是方便的命令行&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="n"&gt;php&lt;/span&gt; &lt;span class="n"&gt;artisan&lt;/span&gt; &lt;span class="n"&gt;controller&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="n"&gt;make&lt;/span&gt; &lt;span class="n"&gt;PostController&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 &lt;p&gt;以上命令新建了文件：&lt;/p&gt;
@@ -506,7 +549,7 @@ PostController.php 的 create 函数&lt;/p&gt;
 
 &lt;p&gt;现在再看看 &lt;a href="http://localhost:8000/posts/create"&gt;http://localhost:8000/posts/create&lt;/a&gt;&lt;/p&gt;
 
-&lt;p&gt;不过现在还不能提交增加 post，需要完成下面的 create 函数才行.&lt;/p&gt;
+&lt;p&gt;不过现在还不能提交增加 post，需要完成下面的 store 函数才行.&lt;/p&gt;
 
 &lt;h2&gt;7. store&lt;/h2&gt;
 
@@ -577,7 +620,7 @@ PostController.php 的 create 函数&lt;/p&gt;
     &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="nx"&gt;View&lt;/span&gt;&lt;span class="o"&gt;::&lt;/span&gt;&lt;span class="nx"&gt;make&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;posts.edit&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="nx"&gt;array&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;post&amp;#39;&lt;/span&gt; &lt;span class="o"&gt;=&amp;gt;&lt;/span&gt; &lt;span class="nx"&gt;$post&lt;/span&gt;&lt;span class="p"&gt;));&lt;/span&gt; 
 &lt;span class="p"&gt;}&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;现在就能提交更新了 &lt;a href="http://localhost:8000/posts/1/edit"&gt;http://localhost:8000/posts/1/edit&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;现在就能更新文章了 &lt;a href="http://localhost:8000/posts/1/edit"&gt;http://localhost:8000/posts/1/edit&lt;/a&gt;&lt;/p&gt;
 
 &lt;h2&gt;11. destroy&lt;/h2&gt;
 
@@ -592,7 +635,7 @@ PostController.php 的 create 函数&lt;/p&gt;
 &lt;/pre&gt;&lt;/div&gt;
 &lt;h2&gt;12. 更新 index 模板&lt;/h2&gt;
 
-&lt;p&gt;现在功能都有了，但是页面还都是分的散单独页面，现在就在index模板添加到各个页面的链接。&lt;/p&gt;
+&lt;p&gt;现在功能都有了，但是页面还都是分的散单独页面，现在就在index页面将各个页面连接起来。&lt;/p&gt;
 
 &lt;blockquote&gt;
 &lt;p&gt;app/views/posts/index.blade.php&lt;/p&gt;
@@ -622,7 +665,7 @@ PostController.php 的 create 函数&lt;/p&gt;
 本来还想连 comments 一起加上，但是写的已经太长，以后的重复部分太多，太啰嗦，思路是一致的，就到此为止吧。&lt;/p&gt;
 
 &lt;p&gt;可以在 github 上查看项目 &lt;a href="https://github.com/adousj/laravel-blog"&gt;github.com/adousj/laravel-blog&lt;/a&gt;。
-我已经添加了 comments 功能，本教程的代码在 &lt;a href="https://github.com/adousj/laravel-blog/tree/stage/1-posts"&gt;stage/1-posts&lt;/a&gt; 分支下。&lt;/p&gt;
+master 分支上我已经添加了 comments 功能，本教程的代码在 &lt;a href="https://github.com/adousj/laravel-blog/tree/stage/1-posts"&gt;stage/1-posts&lt;/a&gt; 分支。&lt;/p&gt;
 </description>
       <guid>tag:adou.gitcafe.com,article.url</guid>
       <pubDate>2014-08-07T08:03:00Z</pubDate>
@@ -631,11 +674,11 @@ PostController.php 的 create 函数&lt;/p&gt;
     <item>
       <title>搭建 Laravel 开发环境</title>
       <link>http://adou.gitcafe.com/laravel-environment</link>
-      <description type="html">&lt;p&gt;一直使用 Ruby 开发 Web 项目，也慢慢适应了 Ruby 提供的种种方便的函数。之前也算接触过 Php，只是一些修修补补的小地方，从来没有好好学过。&lt;/p&gt;
+      <description type="html">&lt;p&gt;一直使用 Ruby 开发 Web 项目，也慢慢适应了 Ruby 提供的种种方便的函数。之前也算接触过 Php，做的只是些修修补补的小事儿，从来没有好好学过。&lt;/p&gt;
 
-&lt;p&gt;中间也关注过一些 Php 开发框架，Laravel 就是让我眼前一亮的那个。第一印象就是，Laravel 跟 Ruby on Rails / Sinatra 太像了。Laravel 充分利用 Php 5 的新特性，使用起来完全就是另一种语言，当然是另一种更好的语言，让 Php 终于有了脚本语言的样子。&lt;/p&gt;
+&lt;p&gt;期间关注过一些 Php 开发框架，Laravel 让我眼前一亮。第一印象就是，Laravel 跟 Ruby on Rails / Sinatra 太像了。Laravel 充分利用 Php 5 的新特性，使用起来完全就是另一种语言，当然是另一种更好的语言，Php 也终于有了脚本语言的样子。&lt;/p&gt;
 
-&lt;p&gt;我也开始学点学 Laravel，以后也能说自己回 Php了 :)&lt;/p&gt;
+&lt;p&gt;我也开始学点学 Laravel，以后就也能说自己会 Php了 :)&lt;/p&gt;
 
 &lt;p&gt;今天就先从安装开发环境开始。&lt;/p&gt;
 
@@ -667,7 +710,7 @@ PostController.php 的 create 函数&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="n"&gt;curl&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;sS&lt;/span&gt; &lt;span class="n"&gt;https&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="c1"&gt;//getcomposer.org/installer | php&lt;/span&gt;
 &lt;span class="n"&gt;mv&lt;/span&gt; &lt;span class="n"&gt;composer&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;phar&lt;/span&gt; &lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;usr&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;local&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;bin&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;composer&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;可能需要让 Composer 默认执行&lt;/p&gt;
+&lt;p&gt;改一下 Composer 的权限&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="n"&gt;chmod&lt;/span&gt; &lt;span class="mi"&gt;777&lt;/span&gt; &lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;usr&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;local&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;bin&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;composer&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 &lt;h3&gt;安装 Laravel&lt;/h3&gt;
@@ -676,7 +719,7 @@ PostController.php 的 create 函数&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="n"&gt;wget&lt;/span&gt; &lt;span class="n"&gt;http&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt;&lt;span class="c1"&gt;//laravel.com/laravel.phar&lt;/span&gt;
 &lt;span class="n"&gt;mv&lt;/span&gt; &lt;span class="n"&gt;laravel&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;phar&lt;/span&gt; &lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;usr&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;local&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;bin&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;laravel&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;让 Laravel 默认执行&lt;/p&gt;
+&lt;p&gt;改变 Laravel 权限：&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="n"&gt;chmod&lt;/span&gt; &lt;span class="mi"&gt;777&lt;/span&gt; &lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;usr&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;local&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;bin&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;laravel&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 &lt;h2&gt;测试&lt;/h2&gt;
@@ -691,7 +734,7 @@ PostController.php 的 create 函数&lt;/p&gt;
 &lt;span class="n"&gt;composer&lt;/span&gt; &lt;span class="n"&gt;install&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 &lt;p&gt;过一会儿依赖的包就能够安装好了。
-刚才安装的程序里并没有 Apache Nginx，我们就用 Php 5.4+ 内置的 Web Server。&lt;/p&gt;
+不用安装 Apache 或 Nginx，我们就用 Php 5.4+ 内置的 Web Server。&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="n"&gt;php&lt;/span&gt; &lt;span class="n"&gt;artisan&lt;/span&gt; &lt;span class="n"&gt;serve&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 &lt;p&gt;现在打开 &lt;a href="http://localhost:8000"&gt;http://localhost:8000&lt;/a&gt;，你就能看到新网站了。&lt;/p&gt;
@@ -807,11 +850,10 @@ PostController.php 的 create 函数&lt;/p&gt;
 &lt;p&gt;只会创建 adou 用户，但是并没有创建 /home/adou/ 文件夹，也没有创建密码，不能登录系统。&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="n"&gt;useradd&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;m&lt;/span&gt; &lt;span class="n"&gt;adou&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;这种方式是可以同时创建 /home/adou/，不过密码还是需要通过:
-&lt;code&gt;
-passwd adou
-&lt;/code&gt;
-设置&lt;/p&gt;
+&lt;p&gt;这种方式是可以同时创建 /home/adou/，不过密码还是需要通过:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="n"&gt;passwd&lt;/span&gt; &lt;span class="n"&gt;adou&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;设置&lt;/p&gt;
 
 &lt;h2&gt;adduser 添加用户&lt;/h2&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="n"&gt;adduser&lt;/span&gt; &lt;span class="n"&gt;adou&lt;/span&gt;
@@ -827,21 +869,19 @@ passwd adou
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="n"&gt;userdel&lt;/span&gt; &lt;span class="n"&gt;adou&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 &lt;p&gt;这个只会删除用户，并不会删除用户文件。
-如果想连同文件全都删除
-&lt;code&gt;
-userdel -r adou
-&lt;/code&gt;&lt;/p&gt;
-</description>
+如果想连同文件全都删除的话&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="n"&gt;userdel&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;r&lt;/span&gt; &lt;span class="n"&gt;adou&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;</description>
       <guid>tag:adou.gitcafe.com,article.url</guid>
       <pubDate>2014-07-18T10:21:00Z</pubDate>
-      <category>linux</category>
+      <category>linux， command</category>
     </item>
     <item>
       <title>Nginx + Passenger + Rails</title>
       <link>http://adou.gitcafe.com/nginx-passenger-rails</link>
       <description type="html">&lt;p&gt;最近开发一个 Rails 项目，项目 Demo 已经初步完成，需要部署到服务器。平时都是使用 Rails 自带 WebBrick, 或者使用 thin，很少配置 production 环境的。今天实践了一遍，虽然也遇到了几个坑，过程还算顺利。&lt;/p&gt;
 
-&lt;h3&gt;我的软件版本&lt;/h3&gt;
+&lt;h3&gt;相关软件版本&lt;/h3&gt;
 
 &lt;ul&gt;
 &lt;li&gt;Ubuntu Server 14.04&lt;/li&gt;
@@ -865,9 +905,9 @@ userdel -r adou
 &lt;p&gt;不可以使用官方的 Nginx，为跟 Passenger 集成，需要单独设置编译。不过你不用为“设置” “编译”苦恼，因为已经有编译安装脚本。&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="n"&gt;rvmsudo&lt;/span&gt; &lt;span class="n"&gt;passenger&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;install&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;nginx&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;modul&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;按着提示内容进行选择就行，我的原则就是“能默认就默认”，能直接 Enter 就回车走人。&lt;/p&gt;
+&lt;p&gt;按着提示内容进行选择就行，我的原则就是“能默认就默认”，一路回车就好。&lt;/p&gt;
 
-&lt;p&gt;编译可能需要一段时间，不过也不会很长，几分钟吧。&lt;/p&gt;
+&lt;p&gt;编译可能需要一段时间，大约几分钟吧。&lt;/p&gt;
 
 &lt;h3&gt;安装命令&lt;/h3&gt;
 

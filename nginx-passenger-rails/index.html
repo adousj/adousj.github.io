@@ -43,8 +43,8 @@
 
     <link href="/stylesheets/bootstrap/css/bootstrap.min.css?1411386285" media="screen" rel="stylesheet" type="text/css" />
 <link href="/stylesheets/bootstrap/css/bootstrap-theme.min.css?1411386285" media="screen" rel="stylesheet" type="text/css" />
-    <link href="/stylesheets/application.css?1412874212" media="screen" rel="stylesheet" type="text/css" />
-    <script src="/javascripts/application.js?1412874211" type="text/javascript"></script>
+    <link href="/stylesheets/application.css?1413279862" media="screen" rel="stylesheet" type="text/css" />
+    <script src="/javascripts/application.js?1413279862" type="text/javascript"></script>
 
   </head>
   <body class="nginx-passenger-rails nginx-passenger-rails_index">
@@ -104,7 +104,7 @@
 <div class="content">
   <p>最近开发一个 Rails 项目，项目 Demo 已经初步完成，需要部署到服务器。平时都是使用 Rails 自带 WebBrick, 或者使用 thin，很少配置 production 环境的。今天实践了一遍，虽然也遇到了几个坑，过程还算顺利。</p>
 
-<h3>我的软件版本</h3>
+<h3>相关软件版本</h3>
 
 <ul>
 <li>Ubuntu Server 14.04</li>
@@ -128,9 +128,9 @@
 <p>不可以使用官方的 Nginx，为跟 Passenger 集成，需要单独设置编译。不过你不用为“设置” “编译”苦恼，因为已经有编译安装脚本。</p>
 <div class="highlight"><pre><span class="n">rvmsudo</span> <span class="n">passenger</span><span class="o">-</span><span class="n">install</span><span class="o">-</span><span class="n">nginx</span><span class="o">-</span><span class="n">modul</span>
 </pre></div>
-<p>按着提示内容进行选择就行，我的原则就是“能默认就默认”，能直接 Enter 就回车走人。</p>
+<p>按着提示内容进行选择就行，我的原则就是“能默认就默认”，一路回车就好。</p>
 
-<p>编译可能需要一段时间，不过也不会很长，几分钟吧。</p>
+<p>编译可能需要一段时间，大约几分钟吧。</p>
 
 <h3>安装命令</h3>
 

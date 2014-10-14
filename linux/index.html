@@ -17,7 +17,7 @@
     </title>
 
     <meta name="description" content="~Adou got his ideas out of head.">
-    <meta name="keywords" content="  ["linux"]
+    <meta name="keywords" content="  ["linux， command"]
 ">
     <meta name="author" content="adou">
 
@@ -43,8 +43,8 @@
 
     <link href="/stylesheets/bootstrap/css/bootstrap.min.css?1411386285" media="screen" rel="stylesheet" type="text/css" />
 <link href="/stylesheets/bootstrap/css/bootstrap-theme.min.css?1411386285" media="screen" rel="stylesheet" type="text/css" />
-    <link href="/stylesheets/application.css?1412874212" media="screen" rel="stylesheet" type="text/css" />
-    <script src="/javascripts/application.js?1412874211" type="text/javascript"></script>
+    <link href="/stylesheets/application.css?1413279862" media="screen" rel="stylesheet" type="text/css" />
+    <script src="/javascripts/application.js?1413279862" type="text/javascript"></script>
 
   </head>
   <body class="linux linux_index">
@@ -95,7 +95,7 @@
     </li>
     <li class="tags">
       
-        <a href="/tags/linux">linux</a>
+        <a href="/tags/linux-command">linux， command</a>
       
     </li>
   </ul>
@@ -117,11 +117,10 @@
 <p>只会创建 adou 用户，但是并没有创建 /home/adou/ 文件夹，也没有创建密码，不能登录系统。</p>
 <div class="highlight"><pre><span class="n">useradd</span> <span class="o">-</span><span class="n">m</span> <span class="n">adou</span>
 </pre></div>
-<p>这种方式是可以同时创建 /home/adou/，不过密码还是需要通过:
-<code>
-passwd adou
-</code>
-设置</p>
+<p>这种方式是可以同时创建 /home/adou/，不过密码还是需要通过:</p>
+<div class="highlight"><pre><span class="n">passwd</span> <span class="n">adou</span>
+</pre></div>
+<p>设置</p>
 
 <h2>adduser 添加用户</h2>
 <div class="highlight"><pre><span class="n">adduser</span> <span class="n">adou</span>
@@ -137,11 +136,9 @@ passwd adou
 <div class="highlight"><pre><span class="n">userdel</span> <span class="n">adou</span>
 </pre></div>
 <p>这个只会删除用户，并不会删除用户文件。
-如果想连同文件全都删除
-<code>
-userdel -r adou
-</code></p>
-
+如果想连同文件全都删除的话</p>
+<div class="highlight"><pre><span class="n">userdel</span> <span class="o">-</span><span class="n">r</span> <span class="n">adou</span>
+</pre></div>
 </div>
 
   </article>

@@ -43,8 +43,8 @@
 
     <link href="/stylesheets/bootstrap/css/bootstrap.min.css?1411386285" media="screen" rel="stylesheet" type="text/css" />
 <link href="/stylesheets/bootstrap/css/bootstrap-theme.min.css?1411386285" media="screen" rel="stylesheet" type="text/css" />
-    <link href="/stylesheets/application.css?1412874212" media="screen" rel="stylesheet" type="text/css" />
-    <script src="/javascripts/application.js?1412874211" type="text/javascript"></script>
+    <link href="/stylesheets/application.css?1413279862" media="screen" rel="stylesheet" type="text/css" />
+    <script src="/javascripts/application.js?1413279862" type="text/javascript"></script>
 
   </head>
   <body class="c-11-functional-style-programing c-11-functional-style-programing_index">
@@ -106,9 +106,11 @@
 </aside>
 
 <div class="content">
-  <p>C++11 支持了 lambda 表达式，lambda 的表达力增强了许多，特别是小小函数就轻松多了。而且主要是人家别的语言都支持了，再不支持就太不好意思了，再加上最近 Java 更新速度都快赶上 Chrome 了，7、8、9接踵而至。幸好 C++ 是以年份编号，03 之后就是 11 了 :)</p>
+  <p>C++11 也支持了好多新特性，表达力增强了许多。其实我看主要是人家别的语言都原生或更新支持了，再不支持就太不好意思了，再加上最近 Java 更新速度都快赶上 Chrome 了，7、8、9接踵而至。相较好像 C++ 委员会好像天天无所事事似的，幸好 C++ 是以年份编号，03 之后就是 11 了 :)</p>
 
-<p>对于 lamdba 表达式, 还是从 《黑客与画家》 上盗个题目吧。</p>
+<h2>lambda</h2>
+
+<p>不得不说 lamdba 实在是把利器, 从 《黑客与画家》 上盗个题目，高阶函数加法：</p>
 
 <blockquote>
 <p>add(a)(b)</p>
@@ -134,8 +136,10 @@
 
 <span class="nx">cout</span> <span class="o">&lt;&lt;</span> <span class="nx">add</span><span class="p">(</span><span class="mi">3</span><span class="p">)(</span><span class="mi">4</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="nx">endl</span><span class="p">;</span>
 </pre></div>
-<p>这里 <code>-&gt;function&lt;int(int)&gt;</code> 的返回值不能省略，至少在 Visual Studio 2013 上，编译器表示不能自动推导返回值类型。
-这里我们也看到了 auto 的好处，再也不用写乱七八糟好长好恶心的声明，一个 auto 了事，多方便，比如这里：</p>
+<p>在 Visual Studio 2013 里返回值声明 <code>-&gt;function&lt;int(int)&gt;</code> 不能省略，傻傻的 VS 编译器表示不能自动推导返回值类型。
+而试了 g++ 4.82 就不用写明这个返回类型。</p>
+
+<p>这里我们也看到了 auto 的好处，再也不用写乱七八糟好长好恶心的声明，直接 auto 了事，比如这里：</p>
 <div class="highlight"><pre><span class="nx">auto</span> <span class="nx">add</span> <span class="o">=</span> <span class="cp">[]</span><span class="p">(</span><span class="kr">int</span> <span class="nx">a</span><span class="p">)</span><span class="o">-&gt;</span><span class="kd">function</span><span class="o">&lt;</span><span class="kr">int</span><span class="p">(</span><span class="kr">int</span><span class="p">)</span><span class="o">&gt;</span><span class="p">{</span>
   <span class="k">return</span> <span class="cp">[</span><span class="nx">a</span><span class="cp">]</span><span class="p">(</span><span class="kr">int</span> <span class="nx">b</span><span class="p">){</span>
     <span class="k">return</span> <span class="nx">a</span> <span class="o">+</span> <span class="nx">b</span><span class="p">;</span>
@@ -150,7 +154,7 @@
 <span class="k">for</span> <span class="p">(</span><span class="nx">auto</span> <span class="nx">_add</span> <span class="o">:</span> <span class="nx">adds</span><span class="p">)</span>
   <span class="nx">cout</span> <span class="o">&lt;&lt;</span> <span class="nx">_add</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="nx">endl</span><span class="p">;</span>
 </pre></div>
-<p>上面几个例子太像奇技淫巧，实际中用处不大。还是来个实际的，大家都有可能遇到的：排序。</p>
+<p>上面几个例子有点像是奇技淫巧，感觉实际中用处不大的样子。还是来个实际的，大家会遇到的：排序。</p>
 <div class="highlight"><pre><span class="k">struct</span> <span class="n">Student</span>
 <span class="p">{</span>
   <span class="n">string</span> <span class="n">name</span><span class="p">;</span>
@@ -175,16 +179,15 @@
   <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
 <span class="p">}</span>
 </pre></div>
-<p>这么小的函数，单独再写一个实在麻烦，lambda 函数就小的刚刚好，如果输入也能自动推断就更好了,直接就写 <code>[](auto s1, auto s2)</code></p>
+<p>这么小的函数，单独再写一个实在麻烦，而 lambda 函数就小的刚刚好，如果输入也能自动推断就更好了,直接就写 <code>[](auto s1, auto s2)</code></p>
 
-<h2>数组操作</h2>
+<h2>函数式编程</h2>
 
-<p>用脚本语言 Python、Ruby 最大的感受就是数组操作非常方便。</p>
-
-<p>C++ 中我找到了几个类似函数，结合上 lambda 写起来杠杠的~</p>
+<p>Python 中函数式编程核心的三个方法是 map reduce filter，而 Ruby 中是 map inject select。大概的表达的意思都是映射、规约和筛选。
+在 C++ 中，我找到了几个类似函数，结合 lambda 写起来杠杠的~</p>
 <div class="highlight"><pre><span class="n">transform</span>
-<span class="n">for_each</span>
 <span class="n">accumulate</span>
+<span class="n">for_each</span>
 </pre></div>
 <h2>Map</h2>
 
@@ -200,16 +203,22 @@ for (auto n : nums)
 </pre></div>
 <h2>Reduce</h2>
 
-<p>迭加操作
-这个看着比较靠谱的就是 <code>accumulate</code></p>
-<div class="highlight"><pre><span class="k">auto</span> <span class="n">sum</span> <span class="o">=</span> <span class="n">accumulate</span><span class="p">(</span><span class="n">students</span><span class="p">.</span><span class="n">begin</span><span class="p">(),</span> <span class="n">students</span><span class="p">.</span><span class="n">end</span><span class="p">(),</span> <span class="n">new</span> <span class="n">Student</span><span class="p">(</span><span class="s">&quot;&quot;</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span> <span class="p">[](</span><span class="n">Student</span><span class="o">*</span> <span class="n">s1</span><span class="p">,</span> <span class="n">Student</span><span class="o">*</span> <span class="n">s2</span><span class="p">){</span>
-  <span class="n">s1</span><span class="o">-&gt;</span><span class="n">age</span> <span class="o">+=</span> <span class="n">s2</span><span class="o">-&gt;</span><span class="n">age</span><span class="p">;</span>
-  <span class="k">return</span> <span class="n">s1</span><span class="p">;</span>
-<span class="p">});</span>
+<p>这个看着比较靠谱的就是 <code>accumulate</code></p>
+<div class="highlight"><pre>  <span class="nx">auto</span> <span class="k">sum</span> <span class="o">=</span> <span class="nx">accumulate</span><span class="p">(</span><span class="nx">students.begin</span><span class="p">(),</span> <span class="nx">students.end</span><span class="p">(),</span> <span class="mi">0</span><span class="p">,</span> <span class="err">[</span><span class="cp">]</span>(int acc, Student* s){
+    return acc + s-&gt;age;
+  });
+
+  // 别被名字骗啦，不止是累加～
+  // 据说这种 begin / end 的写法是新推荐的，统一数组和 vector
+  // vector<span class="nt">&lt;int&gt;</span> nums = { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 };
+  int nums<span class="cp">[]</span> = { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 };
+  auto muti = accumulate(begin(nums), end(nums), 1, <span class="cp">[]</span>(int i, int j){
+    return i * j;
+  });
 </pre></div>
 <h2>Filter</h2>
 
-<p>选择具有某一性质的元素
+<p>选择元素
 找了半天没有找到对应 filter 的，所幸有 <code>for_each</code> 可以自己写</p>
 <div class="highlight"><pre><span class="nx">vector</span><span class="o">&lt;</span><span class="nx">int</span><span class="o">&gt;</span> <span class="nb">result</span><span class="p">;</span>
 <span class="nx">for_each</span><span class="p">(</span><span class="nx">nums.begin</span><span class="p">(),</span> <span class="nx">nums.end</span><span class="p">(),</span> <span class="err">[</span><span class="o">&amp;</span><span class="nb">result</span><span class="cp">]</span>(int n){
@@ -234,6 +243,38 @@ for (auto n : result)
 <span class="n">remove_if</span>
 <span class="p">...</span>
 </pre></div>
+<h2>PS</h2>
+
+<p>还有个不错的东东也挺不错的，元组 tuple。
+看到元组的时候，首先想到的应用是函数返回多个值。
+比如返回最大值及坐标，还能通过 <code>idx == -1</code> 判断是否是有效值。</p>
+<div class="highlight"><pre><span class="nx">tuple</span><span class="o">&lt;</span><span class="nx">int</span><span class="p">,</span> <span class="nx">int</span><span class="o">&gt;</span> <span class="k">max</span><span class="p">(</span><span class="nx">vector</span><span class="o">&lt;</span><span class="nx">int</span><span class="o">&gt;</span> <span class="o">&amp;</span><span class="nx">vec</span><span class="p">)</span>
+<span class="p">{</span>
+  <span class="nx">int</span> <span class="n">value</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">idx</span><span class="o">=-</span><span class="mi">1</span><span class="p">;</span>
+  <span class="nb">for</span> <span class="p">(</span> <span class="nx">auto</span> <span class="n">it</span><span class="o">=</span><span class="nx">begin</span><span class="p">(</span><span class="nx">vec</span><span class="p">);</span> <span class="nx">it</span><span class="o">!=</span><span class="nb">end</span><span class="p">(</span><span class="nx">vec</span><span class="p">);</span> <span class="o">++</span><span class="nx">it</span><span class="p">)</span>
+  <span class="p">{</span>
+    <span class="k">if</span> <span class="p">(</span> <span class="n">idx</span><span class="o">=-</span><span class="mi">1</span> <span class="o">||</span> <span class="o">*</span><span class="nx">it</span><span class="o">&gt;</span><span class="nb">value</span> <span class="p">)</span>
+      <span class="nb">tie</span><span class="p">(</span><span class="nb">value</span><span class="p">,</span> <span class="nx">idx</span><span class="p">)</span> <span class="o">=</span> <span class="nx">make_tuple</span><span class="p">(</span><span class="o">*</span><span class="nx">it</span><span class="p">,</span> <span class="nx">it</span><span class="na">-begin</span><span class="p">(</span><span class="nx">vec</span><span class="p">));</span>
+  <span class="p">}</span>
+  <span class="k">return</span> <span class="nx">make_tuple</span><span class="p">(</span><span class="nb">value</span><span class="p">,</span> <span class="nx">idx</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="c1">// main()</span>
+<span class="nx">int</span> <span class="nb">value</span><span class="p">,</span> <span class="nx">idx</span><span class="p">;</span>
+<span class="c1">// tie(value, idx) = max(nums);</span>
+<span class="nb">tie</span><span class="p">(</span><span class="nb">value</span><span class="p">,</span> <span class="nx">ignore</span><span class="p">)</span> <span class="o">=</span> <span class="k">max</span><span class="p">(</span><span class="nx">nums</span><span class="p">);</span>
+
+<span class="nx">auto</span> <span class="n">max_idx</span> <span class="o">=</span> <span class="k">max</span><span class="p">(</span><span class="nx">nums</span><span class="p">);</span>
+<span class="nb">get</span><span class="o">&lt;</span><span class="mi">0</span><span class="o">&gt;</span><span class="p">(</span><span class="nx">max_idx</span><span class="p">);</span>  <span class="c1">// value</span>
+<span class="nb">get</span><span class="o">&lt;</span><span class="mi">1</span><span class="o">&gt;</span><span class="p">(</span><span class="nx">max_idx</span><span class="p">);</span>  <span class="c1">// idx</span>
+</pre></div>
+<p>然后想到的就是<code>鸭子类型</code>，tuple 作为能容纳不同类型的容器，如果加上容器遍历，这样就能调用具有相同方法的对象。</p>
+<div class="highlight"><pre><span class="err">当看到一只鸟走起来像鸭子、游泳起来像鸭子、叫起来也像鸭子，那么这只鸟就可以被称为鸭子。</span>
+</pre></div>
+<p>很可惜，我没有找到这样的遍历方法，有用函数模板写的遍历方式，不够通用普遍。在想想要实现这个，貌似还需要动态类型和反射，估计很难办到～</p>
+
+<p>不过总体来说 tuple 还是很有意思的～</p>
+
 </div>
 
   </article>

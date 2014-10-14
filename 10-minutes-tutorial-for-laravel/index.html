@@ -43,8 +43,8 @@
 
     <link href="/stylesheets/bootstrap/css/bootstrap.min.css?1411386285" media="screen" rel="stylesheet" type="text/css" />
 <link href="/stylesheets/bootstrap/css/bootstrap-theme.min.css?1411386285" media="screen" rel="stylesheet" type="text/css" />
-    <link href="/stylesheets/application.css?1412874212" media="screen" rel="stylesheet" type="text/css" />
-    <script src="/javascripts/application.js?1412874211" type="text/javascript"></script>
+    <link href="/stylesheets/application.css?1413279862" media="screen" rel="stylesheet" type="text/css" />
+    <script src="/javascripts/application.js?1413279862" type="text/javascript"></script>
 
   </head>
   <body class="10-minutes-tutorial-for-laravel 10-minutes-tutorial-for-laravel_index">
@@ -110,7 +110,7 @@
 </aside>
 
 <div class="content">
-  <p>像 Django Rails 大家都有个 《10分钟Blog教程》，我貌似没看到 php 有这种让初学者顿时肾上腺素激增立马跟打了鸡血似的的教程。难道学 php 的童鞋尽皆具有沉着冷静的高贵气质，不屑于做这种图样图森的事儿？</p>
+  <p>像 Django、Rails 都有个 《** 10分钟Blog教程》，还没看到 php 的这种让初学者顿时肾上腺素激增立马跟打了鸡血似的的教程。难道学 php 的童鞋尽皆高贵沉着冷静，不屑做这种图样图森的事儿？</p>
 
 <p>罢了罢了，这些降低逼格的事儿就由我来做吧，所幸我只是个初学者，也不怕被人骂菜鸟。</p>
 
@@ -120,7 +120,7 @@
 
 <p>其实也没有什么设计，就是一个最最简单的博客，可以增删改查文章（Post）</p>
 
-<p>数据库为了简单，就用 sqlite，反正 Laravel 更换数据库方便，如果不爽可以自行更改过来。</p>
+<p>为图方便，数据库就用 sqlite，反正 Laravel 更换数据库方便，如果不爽可以自行更改成其他数据库。</p>
 
 <h3>环境安装</h3>
 
@@ -145,11 +145,11 @@
 <p>启动服务器吧 （有 php 内置服务器就是好）</p>
 <div class="highlight"><pre><span class="n">php</span> <span class="n">artisan</span> <span class="n">serve</span>
 </pre></div>
-<p>注意：当觉得有bug不能排除时，可以重启服务器试试。</p>
+<p>注意：有莫名其妙的 bug 时，不妨重启服务器试试。</p>
 
 <h2>2. 创建 posts 表</h2>
 
-<p>这个时候就开始体现 Laravel 的方便之处了：能通过命令行生成你 migration 文件，而且是使用 php 编写，一种语言就解决所有。</p>
+<p>这个时候就开始体现 Laravel 的方便之处了：通过命令行生成 migration 文件，而且是使用 php 编写，一站式解决方案。</p>
 <div class="highlight"><pre><span class="n">php</span> <span class="n">artisan</span> <span class="n">migrate</span><span class="o">:</span><span class="n">make</span> <span class="n">create_posts_table</span>
 </pre></div>
 <p>这时就会在 app/database/migrations/ 目录下生成类似文件：</p>
@@ -160,7 +160,7 @@
 
 <p>前面编号就是创建时的时间。</p>
 
-<p>里面就两个函数，up 用于更新数据库，down 用来回滚。</p>
+<p>里面就两个函数，up 用于更改数据库，down 用来回滚数据库。</p>
 <div class="highlight"><pre>  <span class="kr">public</span> <span class="kd">function</span> <span class="nx">up</span><span class="p">()</span>
   <span class="p">{</span>
       <span class="nx">Schema</span><span class="o">::</span><span class="nx">create</span><span class="p">(</span><span class="s1">&#39;posts&#39;</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">$table</span><span class="p">)</span>
@@ -177,10 +177,10 @@
       <span class="nx">Schema</span><span class="o">::</span><span class="nx">drop</span><span class="p">(</span><span class="s1">&#39;posts&#39;</span><span class="p">);</span>
   <span class="p">}</span>
 </pre></div>
-<p>写好了 migration 文件就能在数据库新建 posts 表了，说的高大上，其实就是一个命令:</p>
+<p>写好了 migration 文件就能在数据库新建 posts 表了，也是使用命令行:</p>
 <div class="highlight"><pre><span class="n">php</span> <span class="n">artisan</span> <span class="n">migrate</span>
 </pre></div>
-<p>如果以后需要会滚的话，就是</p>
+<p>如果以后需要回滚的话，可以这样</p>
 <div class="highlight"><pre><span class="n">php</span> <span class="n">artisan</span> <span class="n">migrate</span><span class="o">:</span><span class="n">rollback</span>
 </pre></div>
 <h2>3. Post Model</h2>
@@ -221,7 +221,7 @@
 </pre></div>
 <h2>4. Post Controller</h2>
 
-<p>还是方便的命令行</p>
+<p>依旧是方便的命令行</p>
 <div class="highlight"><pre><span class="n">php</span> <span class="n">artisan</span> <span class="n">controller</span><span class="o">:</span><span class="n">make</span> <span class="n">PostController</span>
 </pre></div>
 <p>以上命令新建了文件：</p>
@@ -335,7 +335,7 @@ PostController.php 的 create 函数</p>
 
 <p>现在再看看 <a href="http://localhost:8000/posts/create">http://localhost:8000/posts/create</a></p>
 
-<p>不过现在还不能提交增加 post，需要完成下面的 create 函数才行.</p>
+<p>不过现在还不能提交增加 post，需要完成下面的 store 函数才行.</p>
 
 <h2>7. store</h2>
 
@@ -406,7 +406,7 @@ PostController.php 的 create 函数</p>
     <span class="k">return</span> <span class="nx">View</span><span class="o">::</span><span class="nx">make</span><span class="p">(</span><span class="s1">&#39;posts.edit&#39;</span><span class="p">,</span> <span class="nx">array</span><span class="p">(</span><span class="s1">&#39;post&#39;</span> <span class="o">=&gt;</span> <span class="nx">$post</span><span class="p">));</span> 
 <span class="p">}</span>
 </pre></div>
-<p>现在就能提交更新了 <a href="http://localhost:8000/posts/1/edit">http://localhost:8000/posts/1/edit</a></p>
+<p>现在就能更新文章了 <a href="http://localhost:8000/posts/1/edit">http://localhost:8000/posts/1/edit</a></p>
 
 <h2>11. destroy</h2>
 
@@ -421,7 +421,7 @@ PostController.php 的 create 函数</p>
 </pre></div>
 <h2>12. 更新 index 模板</h2>
 
-<p>现在功能都有了，但是页面还都是分的散单独页面，现在就在index模板添加到各个页面的链接。</p>
+<p>现在功能都有了，但是页面还都是分的散单独页面，现在就在index页面将各个页面连接起来。</p>
 
 <blockquote>
 <p>app/views/posts/index.blade.php</p>
@@ -451,7 +451,7 @@ PostController.php 的 create 函数</p>
 本来还想连 comments 一起加上，但是写的已经太长，以后的重复部分太多，太啰嗦，思路是一致的，就到此为止吧。</p>
 
 <p>可以在 github 上查看项目 <a href="https://github.com/adousj/laravel-blog">github.com/adousj/laravel-blog</a>。
-我已经添加了 comments 功能，本教程的代码在 <a href="https://github.com/adousj/laravel-blog/tree/stage/1-posts">stage/1-posts</a> 分支下。</p>
+master 分支上我已经添加了 comments 功能，本教程的代码在 <a href="https://github.com/adousj/laravel-blog/tree/stage/1-posts">stage/1-posts</a> 分支。</p>
 
 </div>
 
