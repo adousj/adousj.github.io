@@ -17,7 +17,7 @@
     </title>
 
     <meta name="description" content="~Adou got his ideas out of head.">
-    <meta name="keywords" content="  ["C++11", "lambda", "auto"]
+    <meta name="keywords" content="  ["C++11", "lambda", "auto", "tuple"]
 ">
     <meta name="author" content="adou">
 
@@ -43,8 +43,8 @@
 
     <link href="/stylesheets/bootstrap/css/bootstrap.min.css?1411386285" media="screen" rel="stylesheet" type="text/css" />
 <link href="/stylesheets/bootstrap/css/bootstrap-theme.min.css?1411386285" media="screen" rel="stylesheet" type="text/css" />
-    <link href="/stylesheets/application.css?1413279862" media="screen" rel="stylesheet" type="text/css" />
-    <script src="/javascripts/application.js?1413279862" type="text/javascript"></script>
+    <link href="/stylesheets/application.css?1413337600" media="screen" rel="stylesheet" type="text/css" />
+    <script src="/javascripts/application.js?1413337600" type="text/javascript"></script>
 
   </head>
   <body class="c-11-functional-style-programing c-11-functional-style-programing_index">
@@ -63,8 +63,10 @@
           <li><a href="/rss.xml"><i class="icon-rss"></i></a></li>
           <!-- <li><a href="//twitter.com/beenhero"><i class="icon-twitter"></i></a></li> -->
           <!-- <li><a href="//facebook.com/beenhero"><i class="icon-facebook"></i></a></li> -->
+          <li><a href="mailto:adousj@gmail.com"><i class="icon-envelope"></i></a></li>
           <li><a href="//weibo.com/u/1715225261"><i class="icon-weibo"></i></a></li>
-          <li><a href="//renren.com/261753537"><i class="icon-renren"></i></a></li>
+          <li><a href="http://github.com/adousj"><i class="icon-github"></i></a></li>
+          <!-- <li><a href="//renren.com/261753537"><i class="icon-renren"></i></a></li> -->
         </ul>
       </nav>
       
@@ -101,12 +103,14 @@
       
         <a href="/tags/auto">auto</a>
       
+        <a href="/tags/tuple">tuple</a>
+      
     </li>
   </ul>
 </aside>
 
 <div class="content">
-  <p>C++11 也支持了好多新特性，表达力增强了许多。其实我看主要是人家别的语言都原生或更新支持了，再不支持就太不好意思了，再加上最近 Java 更新速度都快赶上 Chrome 了，7、8、9接踵而至。相较好像 C++ 委员会好像天天无所事事似的，幸好 C++ 是以年份编号，03 之后就是 11 了 :)</p>
+  <p>C++11 也支持了好多新特性，表达力增强了许多。其实我看主要是人家别的语言都原生或更新支持了，再不支持就太不好意思了，再加上最近 Java 更新速度都快赶上 Chrome 了，7、8、9接踵而至。相较好像 C++ 居委会好像天天无所事事似的，幸好 C++ 是以年份编号，03 之后就是 11 了 :)</p>
 
 <h2>lambda</h2>
 
@@ -204,17 +208,17 @@ for (auto n : nums)
 <h2>Reduce</h2>
 
 <p>这个看着比较靠谱的就是 <code>accumulate</code></p>
-<div class="highlight"><pre>  <span class="nx">auto</span> <span class="k">sum</span> <span class="o">=</span> <span class="nx">accumulate</span><span class="p">(</span><span class="nx">students.begin</span><span class="p">(),</span> <span class="nx">students.end</span><span class="p">(),</span> <span class="mi">0</span><span class="p">,</span> <span class="err">[</span><span class="cp">]</span>(int acc, Student* s){
-    return acc + s-&gt;age;
-  });
+<div class="highlight"><pre><span class="nx">auto</span> <span class="k">sum</span> <span class="o">=</span> <span class="nx">accumulate</span><span class="p">(</span><span class="nx">students.begin</span><span class="p">(),</span> <span class="nx">students.end</span><span class="p">(),</span> <span class="mi">0</span><span class="p">,</span> <span class="err">[</span><span class="cp">]</span>(int acc, Student* s){
+  return acc + s-&gt;age;
+});
 
-  // 别被名字骗啦，不止是累加～
-  // 据说这种 begin / end 的写法是新推荐的，统一数组和 vector
-  // vector<span class="nt">&lt;int&gt;</span> nums = { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 };
-  int nums<span class="cp">[]</span> = { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 };
-  auto muti = accumulate(begin(nums), end(nums), 1, <span class="cp">[]</span>(int i, int j){
-    return i * j;
-  });
+// 别被名字骗啦，不止是累加～
+// 据说这种 begin / end 的写法是新推荐的，统一数组和 vector
+// vector<span class="nt">&lt;int&gt;</span> nums = { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 };
+int nums<span class="cp">[]</span> = { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 };
+auto muti = accumulate(begin(nums), end(nums), 1, <span class="cp">[]</span>(int i, int j){
+  return i * j;
+});
 </pre></div>
 <h2>Filter</h2>
 
@@ -245,8 +249,9 @@ for (auto n : result)
 </pre></div>
 <h2>PS</h2>
 
-<p>还有个不错的东东也挺不错的，元组 tuple。
-看到元组的时候，首先想到的应用是函数返回多个值。
+<p>还有个不错的东东也挺不错的，元组 tuple。</p>
+
+<p>看到元组的时候，首先想到的应用是函数返回多个值。
 比如返回最大值及坐标，还能通过 <code>idx == -1</code> 判断是否是有效值。</p>
 <div class="highlight"><pre><span class="nx">tuple</span><span class="o">&lt;</span><span class="nx">int</span><span class="p">,</span> <span class="nx">int</span><span class="o">&gt;</span> <span class="k">max</span><span class="p">(</span><span class="nx">vector</span><span class="o">&lt;</span><span class="nx">int</span><span class="o">&gt;</span> <span class="o">&amp;</span><span class="nx">vec</span><span class="p">)</span>
 <span class="p">{</span>
@@ -271,7 +276,7 @@ for (auto n : result)
 <p>然后想到的就是<code>鸭子类型</code>，tuple 作为能容纳不同类型的容器，如果加上容器遍历，这样就能调用具有相同方法的对象。</p>
 <div class="highlight"><pre><span class="err">当看到一只鸟走起来像鸭子、游泳起来像鸭子、叫起来也像鸭子，那么这只鸟就可以被称为鸭子。</span>
 </pre></div>
-<p>很可惜，我没有找到这样的遍历方法，有用函数模板写的遍历方式，不够通用普遍。在想想要实现这个，貌似还需要动态类型和反射，估计很难办到～</p>
+<p>很可惜，我没有找到这样的遍历方法，有用函数模板写的遍历方式，不够通用普遍。再想想要实现这个，貌似还需要动态类型和反射，估计很难办到～</p>
 
 <p>不过总体来说 tuple 还是很有意思的～</p>
 

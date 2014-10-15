@@ -18,7 +18,7 @@
     <item>
       <title>C++11 函数式编程</title>
       <link>http://adou.gitcafe.com/c-11-functional-style-programing</link>
-      <description type="html">&lt;p&gt;C++11 也支持了好多新特性，表达力增强了许多。其实我看主要是人家别的语言都原生或更新支持了，再不支持就太不好意思了，再加上最近 Java 更新速度都快赶上 Chrome 了，7、8、9接踵而至。相较好像 C++ 委员会好像天天无所事事似的，幸好 C++ 是以年份编号，03 之后就是 11 了 :)&lt;/p&gt;
+      <description type="html">&lt;p&gt;C++11 也支持了好多新特性，表达力增强了许多。其实我看主要是人家别的语言都原生或更新支持了，再不支持就太不好意思了，再加上最近 Java 更新速度都快赶上 Chrome 了，7、8、9接踵而至。相较好像 C++ 居委会好像天天无所事事似的，幸好 C++ 是以年份编号，03 之后就是 11 了 :)&lt;/p&gt;
 
 &lt;h2&gt;lambda&lt;/h2&gt;
 
@@ -116,17 +116,17 @@ for (auto n : nums)
 &lt;h2&gt;Reduce&lt;/h2&gt;
 
 &lt;p&gt;这个看着比较靠谱的就是 &lt;code&gt;accumulate&lt;/code&gt;&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;  &lt;span class="nx"&gt;auto&lt;/span&gt; &lt;span class="k"&gt;sum&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nx"&gt;accumulate&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;students.begin&lt;/span&gt;&lt;span class="p"&gt;(),&lt;/span&gt; &lt;span class="nx"&gt;students.end&lt;/span&gt;&lt;span class="p"&gt;(),&lt;/span&gt; &lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="err"&gt;[&lt;/span&gt;&lt;span class="cp"&gt;]&lt;/span&gt;(int acc, Student* s){
-    return acc + s-&amp;gt;age;
-  });
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nx"&gt;auto&lt;/span&gt; &lt;span class="k"&gt;sum&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nx"&gt;accumulate&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;students.begin&lt;/span&gt;&lt;span class="p"&gt;(),&lt;/span&gt; &lt;span class="nx"&gt;students.end&lt;/span&gt;&lt;span class="p"&gt;(),&lt;/span&gt; &lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="err"&gt;[&lt;/span&gt;&lt;span class="cp"&gt;]&lt;/span&gt;(int acc, Student* s){
+  return acc + s-&amp;gt;age;
+});
 
-  // 别被名字骗啦，不止是累加～
-  // 据说这种 begin / end 的写法是新推荐的，统一数组和 vector
-  // vector&lt;span class="nt"&gt;&amp;lt;int&amp;gt;&lt;/span&gt; nums = { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 };
-  int nums&lt;span class="cp"&gt;[]&lt;/span&gt; = { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 };
-  auto muti = accumulate(begin(nums), end(nums), 1, &lt;span class="cp"&gt;[]&lt;/span&gt;(int i, int j){
-    return i * j;
-  });
+// 别被名字骗啦，不止是累加～
+// 据说这种 begin / end 的写法是新推荐的，统一数组和 vector
+// vector&lt;span class="nt"&gt;&amp;lt;int&amp;gt;&lt;/span&gt; nums = { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 };
+int nums&lt;span class="cp"&gt;[]&lt;/span&gt; = { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 };
+auto muti = accumulate(begin(nums), end(nums), 1, &lt;span class="cp"&gt;[]&lt;/span&gt;(int i, int j){
+  return i * j;
+});
 &lt;/pre&gt;&lt;/div&gt;
 &lt;h2&gt;Filter&lt;/h2&gt;
 
@@ -157,8 +157,9 @@ for (auto n : result)
 &lt;/pre&gt;&lt;/div&gt;
 &lt;h2&gt;PS&lt;/h2&gt;
 
-&lt;p&gt;还有个不错的东东也挺不错的，元组 tuple。
-看到元组的时候，首先想到的应用是函数返回多个值。
+&lt;p&gt;还有个不错的东东也挺不错的，元组 tuple。&lt;/p&gt;
+
+&lt;p&gt;看到元组的时候，首先想到的应用是函数返回多个值。
 比如返回最大值及坐标，还能通过 &lt;code&gt;idx == -1&lt;/code&gt; 判断是否是有效值。&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="nx"&gt;tuple&lt;/span&gt;&lt;span class="o"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nx"&gt;int&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="nx"&gt;int&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt; &lt;span class="k"&gt;max&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nx"&gt;vector&lt;/span&gt;&lt;span class="o"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nx"&gt;int&lt;/span&gt;&lt;span class="o"&gt;&amp;gt;&lt;/span&gt; &lt;span class="o"&gt;&amp;amp;&lt;/span&gt;&lt;span class="nx"&gt;vec&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
 &lt;span class="p"&gt;{&lt;/span&gt;
@@ -183,13 +184,13 @@ for (auto n : result)
 &lt;p&gt;然后想到的就是&lt;code&gt;鸭子类型&lt;/code&gt;，tuple 作为能容纳不同类型的容器，如果加上容器遍历，这样就能调用具有相同方法的对象。&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="err"&gt;当看到一只鸟走起来像鸭子、游泳起来像鸭子、叫起来也像鸭子，那么这只鸟就可以被称为鸭子。&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;很可惜，我没有找到这样的遍历方法，有用函数模板写的遍历方式，不够通用普遍。在想想要实现这个，貌似还需要动态类型和反射，估计很难办到～&lt;/p&gt;
+&lt;p&gt;很可惜，我没有找到这样的遍历方法，有用函数模板写的遍历方式，不够通用普遍。再想想要实现这个，貌似还需要动态类型和反射，估计很难办到～&lt;/p&gt;
 
 &lt;p&gt;不过总体来说 tuple 还是很有意思的～&lt;/p&gt;
 </description>
       <guid>tag:adou.gitcafe.com,article.url</guid>
       <pubDate>2014-10-09T15:15:00Z</pubDate>
-      <category>C++11, lambda, auto</category>
+      <category>C++11, lambda, auto, tuple</category>
     </item>
     <item>
       <title>解题 leetcode</title>
