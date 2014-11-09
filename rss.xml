@@ -8,13 +8,42 @@
     <copyright>&amp;#x2117; &amp;amp; &amp;#xA9; 2014 Adou He</copyright>
     <link href="http://adou.gitcafe.com"/>
     <link href="http://adou.gitcafe.com/rss.xml" rel="self"/>
-    <updated>2014-10-09T15:15:00Z</updated>
-    <lastBuildDate>2014-10-09T15:15:00Z</lastBuildDate>
-    <pubDate>2014-10-09T15:15:00Z</pubDate>
+    <updated>2014-11-09T09:12:00Z</updated>
+    <lastBuildDate>2014-11-09T09:12:00Z</lastBuildDate>
+    <pubDate>2014-11-09T09:12:00Z</pubDate>
     <description>~Adou got his ideas out of head.</description>
     <author>
       <name>Adou</name>
     </author>
+    <item>
+      <title>CConsole 里的 offer</title>
+      <link>http://adou.gitcafe.com/console_offer</link>
+      <description type="html">&lt;p&gt;昨天没事儿，在网页里闲逛，百度搜索的时候，手一抖碰到了 F12，打开了浏览器的 Console，然后有趣的事情就发生了。
+&lt;img alt="百度" src="/images/2014-11-09/bd.png?1415525229" /&gt;&lt;/p&gt;
+
+&lt;p&gt;回想起来，好像前几天在微博上看见过有这样在 Console 里发招聘帖的，百度这还学的挺快。
+这倒是很好，很容易就区分出了志同道合的&amp;hellip;前端程序员，和我这种极少数的帕金森患者。&lt;/p&gt;
+
+&lt;p&gt;想来百度不会是唯一一个学这一招的吧，蛋疼有暇，我一个个的找，总算让我集齐了 7 个，终于能够召唤神龙了。&lt;/p&gt;
+
+&lt;p&gt;&lt;img alt="百度" src="/images/2014-11-09/baidu.png?1415525229" /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;img alt="经验" src="/images/2014-11-09/jingyan.png?1415525229" /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;img alt="豆瓣" src="/images/2014-11-09/douban.png?1415525229" /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;img alt="淘宝" src="/images/2014-11-09/taobao.png?1415525229" /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;img alt="天猫" src="/images/2014-11-09/tianmao.png?1415525229" /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;img alt="知乎" src="/images/2014-11-09/zhihu.png?1415525229" /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;img alt="迅雷" src="/images/2014-11-09/xunlei.png?1415525229" /&gt;&lt;/p&gt;
+</description>
+      <guid>tag:adou.gitcafe.com,article.url</guid>
+      <pubDate>2014-11-09T09:12:00Z</pubDate>
+      <category>招聘, 浏览器, 前端</category>
+    </item>
     <item>
       <title>C++11 函数式编程</title>
       <link>http://adou.gitcafe.com/c-11-functional-style-programing</link>

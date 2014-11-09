@@ -20,13 +20,13 @@
   </url>
   <url>
     <loc>http://adou.gitcafe.com/profile</loc>
-    <lastmod>2014-10-15T00:00:00+08:00</lastmod>
+    <lastmod>2014-11-09T00:00:00+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>http://adou.gitcafe.com/photo</loc>
-    <lastmod>2014-10-15T00:00:00+08:00</lastmod>
+    <lastmod>2014-11-09T00:00:00+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
@@ -49,6 +49,12 @@
     <priority>0.8</priority>
   </url>
   <url>
+    <loc>http://adou.gitcafe.com/console_offer</loc>
+    <lastmod>2014-11-09T17:12:00+08:00</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
     <loc>http://adou.gitcafe.com/nginx-passenger-rails</loc>
     <lastmod>2014-07-17T18:26:00+08:00</lastmod>
     <changefreq>monthly</changefreq>
@@ -56,7 +62,7 @@
   </url>
   <url>
     <loc>http://adou.gitcafe.com/</loc>
-    <lastmod>2014-10-15T00:00:00+08:00</lastmod>
+    <lastmod>2014-11-09T00:00:00+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1</priority>
   </url>
@@ -68,115 +74,133 @@
   </url>
   <url>
     <loc>http://adou.gitcafe.com/tags/c-11</loc>
-    <lastmod>2014-10-15T00:00:00+08:00</lastmod>
+    <lastmod>2014-11-09T00:00:00+08:00</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>http://adou.gitcafe.com/tags/lambda</loc>
-    <lastmod>2014-10-15T00:00:00+08:00</lastmod>
+    <lastmod>2014-11-09T00:00:00+08:00</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>http://adou.gitcafe.com/tags/auto</loc>
-    <lastmod>2014-10-15T00:00:00+08:00</lastmod>
+    <lastmod>2014-11-09T00:00:00+08:00</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>http://adou.gitcafe.com/tags/tuple</loc>
-    <lastmod>2014-10-15T00:00:00+08:00</lastmod>
+    <lastmod>2014-11-09T00:00:00+08:00</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>http://adou.gitcafe.com/tags/postgresql</loc>
-    <lastmod>2014-10-15T00:00:00+08:00</lastmod>
+    <lastmod>2014-11-09T00:00:00+08:00</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>http://adou.gitcafe.com/tags/linux</loc>
-    <lastmod>2014-10-15T00:00:00+08:00</lastmod>
+    <lastmod>2014-11-09T00:00:00+08:00</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>http://adou.gitcafe.com/tags/laravel</loc>
-    <lastmod>2014-10-15T00:00:00+08:00</lastmod>
+    <lastmod>2014-11-09T00:00:00+08:00</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>http://adou.gitcafe.com/tags/ubuntu</loc>
-    <lastmod>2014-10-15T00:00:00+08:00</lastmod>
+    <lastmod>2014-11-09T00:00:00+08:00</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>http://adou.gitcafe.com/tags/php</loc>
-    <lastmod>2014-10-15T00:00:00+08:00</lastmod>
+    <lastmod>2014-11-09T00:00:00+08:00</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>http://adou.gitcafe.com/tags/blog</loc>
-    <lastmod>2014-10-15T00:00:00+08:00</lastmod>
+    <lastmod>2014-11-09T00:00:00+08:00</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>http://adou.gitcafe.com/tags/github</loc>
-    <lastmod>2014-10-15T00:00:00+08:00</lastmod>
+    <lastmod>2014-11-09T00:00:00+08:00</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>http://adou.gitcafe.com/tags/composer</loc>
-    <lastmod>2014-10-15T00:00:00+08:00</lastmod>
+    <lastmod>2014-11-09T00:00:00+08:00</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>http://adou.gitcafe.com/tags/ruby</loc>
-    <lastmod>2014-10-15T00:00:00+08:00</lastmod>
+    <lastmod>2014-11-09T00:00:00+08:00</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>http://adou.gitcafe.com/tags/codejam</loc>
-    <lastmod>2014-10-15T00:00:00+08:00</lastmod>
+    <lastmod>2014-11-09T00:00:00+08:00</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>http://adou.gitcafe.com/tags/linux-command</loc>
-    <lastmod>2014-10-15T00:00:00+08:00</lastmod>
+    <lastmod>2014-11-09T00:00:00+08:00</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>http://adou.gitcafe.com/tags/.html</loc>
+    <lastmod>2014-11-09T00:00:00+08:00</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>http://adou.gitcafe.com/tags/.html</loc>
+    <lastmod>2014-11-09T00:00:00+08:00</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>http://adou.gitcafe.com/tags/.html</loc>
+    <lastmod>2014-11-09T00:00:00+08:00</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>http://adou.gitcafe.com/tags/rails</loc>
-    <lastmod>2014-10-15T00:00:00+08:00</lastmod>
+    <lastmod>2014-11-09T00:00:00+08:00</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>http://adou.gitcafe.com/tags/leetcode</loc>
-    <lastmod>2014-10-15T00:00:00+08:00</lastmod>
+    <lastmod>2014-11-09T00:00:00+08:00</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>http://adou.gitcafe.com/tags/c</loc>
-    <lastmod>2014-10-15T00:00:00+08:00</lastmod>
+    <lastmod>2014-11-09T00:00:00+08:00</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>http://adou.gitcafe.com/page/2</loc>
-    <lastmod>2014-10-15T00:00:00+08:00</lastmod>
+    <lastmod>2014-11-09T00:00:00+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1</priority>
   </url>
